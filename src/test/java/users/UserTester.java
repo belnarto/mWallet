@@ -21,7 +21,7 @@ class UserTester {
         }
 
         try {
-            new User("Test");
+            new User("Test","Test","Test");
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -30,7 +30,7 @@ class UserTester {
     @Test
     void getIdTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             id = user.getId();
             assertTrue( id > 0 );
@@ -43,7 +43,7 @@ class UserTester {
     @Test
     void setAndGetNameTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             id = user.getId();
             user.setName("Test2");
@@ -65,15 +65,15 @@ class UserTester {
     @Test
     void equalsTest() {
         try {
-            user = new User("Test");
-            user2 = new User("Test2");
+            user = new User("Test","Test","Test");
+            user = new User("Test2","Test2","Test2");
             assertFalse(user.equals(user2));
         } catch (Exception e) {
             fail(e.getMessage());
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             user2 = user;
             assertTrue(user.equals(user2));
         } catch (Exception e) {

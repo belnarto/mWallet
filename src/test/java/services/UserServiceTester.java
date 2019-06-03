@@ -25,7 +25,7 @@ class UserServiceTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             UserService.delete(user);
         } catch (Exception e) {
@@ -36,7 +36,7 @@ class UserServiceTester {
     @Test
     void findByIdTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             id = user.getId();
             assertEquals(UserService.findById(id),user);
@@ -49,7 +49,7 @@ class UserServiceTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             id = user.getId();
             user.setName("Test3");
@@ -64,7 +64,7 @@ class UserServiceTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
             id = user.getId();
             UserService.delete(user);
@@ -77,9 +77,9 @@ class UserServiceTester {
     @Test
     void findAllTest() {
         try {
-            user = new User("Test");
-            User user2 = new User("Test2");
-            User user3 = new User("Test3");
+            user = new User("Test","Test","Test");
+            User user2 = new User("Test2","Test2","Test2");
+            User user3 = new User("Test3","Test3","Test3");
             List<User> usersToCheck = new ArrayList<>();
             usersToCheck.add(user);
             usersToCheck.add(user2);
@@ -97,9 +97,9 @@ class UserServiceTester {
         }
 
         try {
-            user = new User("Test");
-            User user2 = new User("Test2");
-            User user3 = new User("Test3");
+            user = new User("Test","Test","Test");
+            User user2 = new User("Test2","Test2","Test2");
+            User user3 = new User("Test3","Test3","Test3");
             List<User> usersToCheck = new ArrayList<>();
             usersToCheck.add(user);
             usersToCheck.add(user2);

@@ -29,7 +29,7 @@ class WalletServiceTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -50,7 +50,7 @@ class WalletServiceTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             //UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -69,7 +69,7 @@ class WalletServiceTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -98,7 +98,7 @@ class WalletServiceTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -140,7 +140,7 @@ class WalletServiceTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -166,7 +166,7 @@ class WalletServiceTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -195,7 +195,7 @@ class WalletServiceTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -222,7 +222,7 @@ class WalletServiceTester {
     void findByIdTest() {
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -254,7 +254,7 @@ class WalletServiceTester {
     void findAllByUserTest() {
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -297,7 +297,7 @@ class WalletServiceTester {
     void findAllTest() {
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);

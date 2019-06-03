@@ -25,9 +25,12 @@ class UserDaoTester {
     @Test
     void findAllTest() {
         try {
-            User user1 = new User("Test");
-            User user2 = new User("Test2");
-            User user3 = new User("Test3");
+            User user1 = new User("Test","Test","Test");
+            user1.setRole("ROLE_USER");
+            User user2 = new User("Test2","Test2","Test2");
+            user2.setRole("ROLE_USER");
+            User user3 = new User("Test3","Test3","Test3");
+            user3.setRole("ROLE_USER");
 
             List<User> usersToCheck = new ArrayList<>();
             usersToCheck.add(user1);
@@ -54,7 +57,8 @@ class UserDaoTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
+            user.setRole("ROLE_USER");
             UserDao.save(user);
 
             List<User> users = UserDao.findAll().stream()
@@ -72,7 +76,8 @@ class UserDaoTester {
     @Test
     void findByIdTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
+            user.setRole("ROLE_USER");
             UserDao.save(user);
 
             assertEquals( UserDao.findById(user.getId()), user );
@@ -86,7 +91,8 @@ class UserDaoTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
+            user.setRole("ROLE_USER");
             UserDao.save(user);
 
             assertEquals( UserDao.findById(user.getId()).getName(),"Test" );
@@ -105,7 +111,8 @@ class UserDaoTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
+            user.setRole("ROLE_USER");
             UserDao.save(user);
 
             assertNotNull( UserDao.findById(user.getId()) );

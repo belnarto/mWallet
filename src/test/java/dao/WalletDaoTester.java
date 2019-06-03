@@ -31,7 +31,7 @@ class WalletDaoTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -52,7 +52,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             //UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -71,7 +71,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -100,7 +100,7 @@ class WalletDaoTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -142,7 +142,7 @@ class WalletDaoTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -168,7 +168,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -197,7 +197,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -224,7 +224,7 @@ class WalletDaoTester {
     void findAllTest() {
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -256,7 +256,7 @@ class WalletDaoTester {
     void findByIdTest() {
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);

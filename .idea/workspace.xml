@@ -6,13 +6,22 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a4b0297-a3d1-40e4-a049-cc617e42d7e7" name="Default Changelist" comment="WAR export configuration">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/mobile_wallet.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/mobile_wallet_war2.xml" beforeDir="false" />
+    <list default="true" id="0a4b0297-a3d1-40e4-a049-cc617e42d7e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/mobile_wallet_war2/mobile-wallet_war.war" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/users/UserTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/users/UserTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/UserDaoTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dao/UserDaoTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/WalletDaoTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dao/WalletDaoTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/services/UserServiceTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/services/UserServiceTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/services/WalletServiceTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/services/WalletServiceTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/users/UserTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/users/UserTester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/wallets/WalletTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/wallets/WalletTester.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -113,17 +122,7 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -149,13 +148,13 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/users/UserTester.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editUser.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/models/Currency.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/addUser.jsp" />
@@ -172,9 +171,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/wallets.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/transferMoney.jsp" />
         <option value="$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" />
         <option value="$PROJECT_DIR$/src/main/java/config/core/SpringSecurityInitializer.java" />
         <option value="$PROJECT_DIR$/src/main/java/config/WebConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
@@ -193,7 +189,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/wallets.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/registry.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/controllers/MainController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/models/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java" />
@@ -204,6 +199,13 @@
         <option value="$PROJECT_DIR$/README.txt" />
         <option value="$PROJECT_DIR$/README.MD" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/models/User.java" />
+        <option value="$PROJECT_DIR$/src/test/java/users/UserTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" />
       </list>
     </option>
   </component>
@@ -267,6 +269,37 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dao" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -319,21 +352,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.mobile-wallet">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Client" />
-      <module name="mobile-wallet" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="mobile-wallet" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in mobile-wallet">
     <configuration name="All in mobile-wallet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="mobile-wallet" />
       <option name="PACKAGE_NAME" value="" />
@@ -342,32 +361,64 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserDaoTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="mobile-wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="currency.*" />
+          <option name="PATTERN" value="dao.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="currency" />
-      <option name="MAIN_CLASS_NAME" value="currency.CurrencyTester" />
+      <option name="PACKAGE_NAME" value="dao" />
+      <option name="MAIN_CLASS_NAME" value="dao.UserDaoTester" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserDaoTester.saveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="mobile-wallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="users.*" />
+          <option name="PATTERN" value="dao.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="users" />
-      <option name="MAIN_CLASS_NAME" value="users.UserTester" />
+      <option name="PACKAGE_NAME" value="dao" />
+      <option name="MAIN_CLASS_NAME" value="dao.UserDaoTester" />
+      <option name="METHOD_NAME" value="saveTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mobile-wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="services" />
+      <option name="MAIN_CLASS_NAME" value="services.UserServiceTester" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTester.saveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mobile-wallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="services" />
+      <option name="MAIN_CLASS_NAME" value="services.UserServiceTester" />
+      <option name="METHOD_NAME" value="saveTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -445,20 +496,20 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Client" />
-      <item itemvalue="JUnit.UserTester" />
-      <item itemvalue="JUnit.CurrencyTester" />
       <item itemvalue="JUnit.All in mobile-wallet" />
       <item itemvalue="Tomcat Server.mobile-wallet" />
+      <item itemvalue="JUnit.UserDaoTester.saveTest" />
+      <item itemvalue="JUnit.UserServiceTester.saveTest" />
+      <item itemvalue="JUnit.UserServiceTester" />
+      <item itemvalue="JUnit.UserDaoTester" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Client" />
         <item itemvalue="JUnit.All in mobile-wallet" />
-        <item itemvalue="JUnit.CurrencyTester" />
-        <item itemvalue="JUnit.UserTester" />
+        <item itemvalue="JUnit.UserDaoTester" />
+        <item itemvalue="JUnit.UserServiceTester" />
+        <item itemvalue="JUnit.UserServiceTester.saveTest" />
+        <item itemvalue="JUnit.UserDaoTester.saveTest" />
       </list>
     </recent_temporary>
   </component>
@@ -479,7 +530,7 @@
       <workItem from="1559475521927" duration="19245000" />
       <workItem from="1559553413283" duration="607000" />
       <workItem from="1559557843896" duration="65000" />
-      <workItem from="1559557913838" duration="9650000" />
+      <workItem from="1559557913838" duration="10973000" />
     </task>
     <task id="LOCAL-00001" summary="Readme changed">
       <created>1559558364006</created>
@@ -488,43 +539,50 @@
       <option name="project" value="LOCAL" />
       <updated>1559558364006</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="WAR export configuration">
+      <created>1559577995325</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1559577995325</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="WalletServiceTester - 2019.06.01 at 20h 44m 15s.xml">
-      <configuration name="WalletServiceTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CurrencyDaoTester_and_6_more - 2019.06.01 at 20h 44m 26s.xml">
-      <configuration name="CurrencyDaoTester and 6 more" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WalletTester_transferMoneyTest - 2019.06.01 at 20h 48m 47s.xml">
-      <configuration name="WalletTester.transferMoneyTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WalletTester_transferMoneyTest - 2019.06.01 at 20h 49m 36s.xml">
-      <configuration name="WalletTester.transferMoneyTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="WalletTester - 2019.06.01 at 20h 50m 09s.xml">
-      <configuration name="WalletTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="UserTester - 2019.06.01 at 20h 50m 20s.xml">
-      <configuration name="UserTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CurrencyTester - 2019.06.01 at 20h 50m 29s.xml">
-      <configuration name="CurrencyTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_mobile-wallet - 2019.06.01 at 20h 50m 39s.xml">
+    <history-entry file="All_in_mobile-wallet - 2019.06.03 at 19h 07m 33s.xml">
       <configuration name="All in mobile-wallet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_mobile-wallet - 2019.06.01 at 20h 51m 00s.xml">
+    <history-entry file="All_in_mobile-wallet - 2019.06.03 at 19h 09m 10s.xml">
       <configuration name="All in mobile-wallet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="All_in_mobile-wallet - 2019.06.03 at 07h 38m 26s.xml">
+    <history-entry file="UserDaoTester_saveTest - 2019.06.03 at 19h 17m 16s.xml">
+      <configuration name="UserDaoTester.saveTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserDaoTester_saveTest - 2019.06.03 at 19h 19m 17s.xml">
+      <configuration name="UserDaoTester.saveTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserDaoTester_saveTest - 2019.06.03 at 19h 20m 48s.xml">
+      <configuration name="UserDaoTester.saveTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserServiceTester_saveTest - 2019.06.03 at 19h 22m 33s.xml">
+      <configuration name="UserServiceTester.saveTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserServiceTester_saveTest - 2019.06.03 at 19h 24m 15s.xml">
+      <configuration name="UserServiceTester.saveTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserServiceTester - 2019.06.03 at 19h 24m 25s.xml">
+      <configuration name="UserServiceTester" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="UserDaoTester - 2019.06.03 at 19h 26m 04s.xml">
+      <configuration name="UserDaoTester" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_mobile-wallet - 2019.06.03 at 19h 28m 02s.xml">
       <configuration name="All in mobile-wallet" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137655000" />
+    <option name="totallyTimeSpent" value="138978000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -536,11 +594,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <layout>
       <window_info id="Web" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2675906" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2675906" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -551,19 +608,19 @@
       <window_info anchor="bottom" id="Application Servers" order="1" weight="0.32694152" />
       <window_info anchor="bottom" id="Spring" order="2" weight="0.32981783" />
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Messages" order="4" visible="true" weight="0.32310644" />
+      <window_info anchor="bottom" id="Messages" order="4" weight="0.32310644" />
       <window_info anchor="bottom" id="Database Changes" order="5" weight="0.32981783" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32981783" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.3285968" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" weight="0.27708533" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" visible="true" weight="0.27708533" />
       <window_info anchor="bottom" id="Debug" order="10" weight="0.26653883" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="13" weight="0.32981783" />
       <window_info anchor="bottom" id="Terminal" order="14" weight="0.32885906" />
       <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.50053304" side_tool="true" weight="0.16395015" />
-      <window_info anchor="bottom" id="Version Control" order="16" weight="0.3285968" />
+      <window_info anchor="bottom" id="Version Control" order="16" weight="0.3279003" />
       <window_info anchor="right" id="Coverage" order="0" sideWeight="0.502551" side_tool="true" weight="0.25020242" />
       <window_info anchor="right" id="Database" order="1" sideWeight="0.49744898" weight="0.20682302" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
@@ -614,10 +671,10 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/users/UserTester.java</url>
-          <line>45</line>
+          <url>file://$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java</url>
+          <line>61</line>
           <properties />
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -636,7 +693,6 @@
     <SUITE FILE_PATH="coverage/mobilepursev2$All_in_mobile_purse_v_2.ic" NAME="All in mobile-purse-v.2 Coverage Results" MODIFIED="1559207714114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/test/java/users/UserTester.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -657,17 +713,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDao.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/services/CurrencyServiceTester.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/config/WebConfig.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/config/AppInitializer.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/config/core/SpringSecurityInitializer.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/currency/CurrencyTester.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/addCurrency.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/editCurrency.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/currencies.jsp" />
@@ -699,7 +749,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/addUser.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/registry.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/java/utils/HibernateSessionFactoryUtil.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/5.4.2.Final/hibernate-core-5.4.2.Final-sources.jar!/org/hibernate/internal/SessionImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
@@ -714,8 +763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserService.java" />
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java" />
@@ -740,7 +787,81 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
-          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+          <caret line="4" column="1" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/users/UserTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1241">
+          <caret line="77" column="43" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="327" selection-start-line="327" selection-end-line="327" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" column="21" lean-forward="true" selection-start-line="31" selection-start-column="21" selection-end-line="31" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+            <element signature="e#0#21#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/services/UserServiceTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/wallets/WalletTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3585">
+          <caret line="484" column="56" selection-start-line="484" selection-start-column="56" selection-end-line="484" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1691">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>

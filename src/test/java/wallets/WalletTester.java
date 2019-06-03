@@ -30,7 +30,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             currency = new Currency("TST", 0.01);
             wallet = new Wallet(user, currency);
         } catch (Exception e) {
@@ -41,7 +41,7 @@ class WalletTester {
     @Test
     void getIdTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -70,7 +70,7 @@ class WalletTester {
     @Test
     void setAndGetUserTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -95,7 +95,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -113,7 +113,7 @@ class WalletTester {
                     .stream()
                     .anyMatch( w -> w.getUser().equals(user)));
 
-            User user2 = new User("Test2");
+            User user2 = new User("Test2","Test2","Test2");
             UserService.save(user2);
 
             wallet.setUser(user2);
@@ -135,7 +135,7 @@ class WalletTester {
     @Test
     void setAndGetCurrencyTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -160,7 +160,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -204,7 +204,7 @@ class WalletTester {
     @Test
     void setAndGetBalanceTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -231,7 +231,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -268,7 +268,7 @@ class WalletTester {
     @Test
     void equalsTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -295,7 +295,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -330,7 +330,7 @@ class WalletTester {
     @Test
     void addBalanceTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -361,7 +361,7 @@ class WalletTester {
     @Test
     void reduceBalanceTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -390,7 +390,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -418,7 +418,7 @@ class WalletTester {
     @Test
     void transferMoneyTest() {
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -462,7 +462,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -482,7 +482,7 @@ class WalletTester {
             WalletService.save(wallet);
             id = wallet.getId();
 
-            User user2 = new User("Test2");
+            User user2 = new User("Test2","Test2","Test2");
             UserService.save(user2);
 
             Currency currency2 = new Currency("TST2", 0.02);
@@ -518,7 +518,7 @@ class WalletTester {
         }
 
         try {
-            user = new User("Test");
+            user = new User("Test","Test","Test");
             UserService.save(user);
 
             Optional<Currency> currencyOpt = CurrencyService.findAll().stream()

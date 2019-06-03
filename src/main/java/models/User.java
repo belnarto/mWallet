@@ -16,8 +16,10 @@ public class User {
 
     public User() {}
 
-    public User(String name) {
+    public User(String name, String login, String password) {
         setName(name);
+        setLogin(login);
+        setPassword(password);
     }
 
     public void setId(int newId) {
@@ -33,7 +35,11 @@ public class User {
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        if(login!=null && !login.equals("")) {
+            this.login = login;
+        } else {
+            throw new IllegalArgumentException("String is null or empty");
+        }
     }
 
     public String getPassword() {
@@ -41,7 +47,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if(login!=null && !login.equals("")) {
+            this.password = password;
+        } else {
+            throw new IllegalArgumentException("String is null or empty");
+        }
     }
 
     public String getRole() {
