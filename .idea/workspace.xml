@@ -8,20 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0a4b0297-a3d1-40e4-a049-cc617e42d7e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/users/UserTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/users/UserTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/models/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/UserDaoTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dao/UserDaoTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/WalletDaoTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/dao/WalletDaoTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/services/UserServiceTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/services/UserServiceTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/services/WalletServiceTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/services/WalletServiceTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/users/UserTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/users/UserTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/wallets/WalletTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/wallets/WalletTester.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -282,7 +268,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
@@ -290,15 +276,8 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="core" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -315,7 +294,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -530,7 +509,7 @@
       <workItem from="1559475521927" duration="19245000" />
       <workItem from="1559553413283" duration="607000" />
       <workItem from="1559557843896" duration="65000" />
-      <workItem from="1559557913838" duration="10973000" />
+      <workItem from="1559557913838" duration="12071000" />
     </task>
     <task id="LOCAL-00001" summary="Readme changed">
       <created>1559558364006</created>
@@ -546,7 +525,14 @@
       <option name="project" value="LOCAL" />
       <updated>1559577995325</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Unit tests changed and verified">
+      <created>1559579401868</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1559579401868</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -582,7 +568,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138978000" />
+    <option name="totallyTimeSpent" value="140076000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -613,7 +599,7 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32981783" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.3285968" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" visible="true" weight="0.27708533" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" weight="0.27708533" />
       <window_info anchor="bottom" id="Debug" order="10" weight="0.26653883" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
@@ -665,7 +651,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Readme changed" />
     <MESSAGE value="WAR export configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="WAR export configuration" />
+    <MESSAGE value="Unit tests changed and verified" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unit tests changed and verified" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -693,16 +680,6 @@
     <SUITE FILE_PATH="coverage/mobilepursev2$All_in_mobile_purse_v_2.ic" NAME="All in mobile-purse-v.2 Coverage Results" MODIFIED="1559207714114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/jre/lib/rt.jar!/sun/reflect/NativeMethodAccessorImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/Currency.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/Wallet.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/WalletDao.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/services/WalletService.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/services/CurrencyService.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.5.0-M1/junit-platform-commons-1.5.0-M1.jar!/org/junit/platform/commons/util/ReflectionUtils.class">
@@ -823,13 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/services/UserServiceTester.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -862,6 +832,123 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JavaScript-modules-diagram/C:/Users/Belnarto/git/mobile-wallet/src/main/java/config;C:/Users/Belnarto/git/mobile-wallet/src/main/java/controllers;C:/Users/Belnarto/git/mobile-wallet/src/main/java/dao;C:/Users/Belnarto/git/mobile-wallet/src/main/java/models;C:/Users/Belnarto/git/mobile-wallet/src/main/java/services;C:/Users/Belnarto/git/mobile-wallet/src/main/java/utils;">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JavaScript-modules-diagram</ID>
+          <OriginalElement>$PROJECT_DIR$/src/main/java/config;C:/Users/Belnarto/git/mobile-wallet/src/main/java/controllers;C:/Users/Belnarto/git/mobile-wallet/src/main/java/dao;C:/Users/Belnarto/git/mobile-wallet/src/main/java/models;C:/Users/Belnarto/git/mobile-wallet/src/main/java/services;C:/Users/Belnarto/git/mobile-wallet/src/main/java/utils;</OriginalElement>
+          <nodes />
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="687.0" y="327.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>All</Category>
+          </Categories>
+          <VISIBILITY>Details</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement />
+          <nodes>
+            <node x="" y="">dao</node>
+            <node x="" y="">utils</node>
+            <node x="" y="">controllers</node>
+            <node x="" y="">currency</node>
+            <node x="" y="">models</node>
+            <node x="" y="">wallets</node>
+            <node x="" y="">services</node>
+            <node x="" y="">users</node>
+            <node x="" y="">config</node>
+            <node x="" y="">Main</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.0" x="309.5" y="301.5" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Inner Classes</Category>
+            <Category>Properties</Category>
+            <Category>Methods</Category>
+            <Category>Constructors</Category>
+            <Category>Fields</Category>
+          </Categories>
+          <SCOPE>Project Files</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://JAVA/config">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement>config</OriginalElement>
+          <nodes>
+            <node x="" y="">config.WebConfig</node>
+            <node x="" y="">config.SecurityConfig</node>
+            <node x="" y="">config.AppInitializer</node>
+            <node x="" y="">config.core</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="1.1" x="134.0" y="85.49999999999997" />
+          <SelectedNodes />
+          <Categories />
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Class diagramm.uml">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>JAVA</ID>
+          <OriginalElement />
+          <nodes>
+            <node x="" y="">dao.WalletDao</node>
+            <node x="" y="">config.AppInitializer</node>
+            <node x="" y="">controllers.WalletController</node>
+            <node x="" y="">controllers.MainController</node>
+            <node x="" y="">controllers.UserController</node>
+            <node x="" y="">config.WebConfig</node>
+            <node x="" y="">services.WalletService</node>
+            <node x="" y="">models.Wallet</node>
+            <node x="" y="">dao.CurrencyDao</node>
+            <node x="" y="">config.SecurityConfig</node>
+            <node x="" y="">services.CurrencyService</node>
+            <node x="" y="">utils.HibernateSessionFactoryUtil</node>
+            <node x="" y="">services.UserService</node>
+            <node x="" y="">models.Currency</node>
+            <node x="" y="">dao.UserDao</node>
+            <node x="" y="">models.User</node>
+            <node x="" y="">controllers.CurrencyController</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.501010101010101" x="1110.2298387096773" y="980.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Fields</Category>
+            <Category>Constructors</Category>
+            <Category>Methods</Category>
+            <Category>Properties</Category>
+          </Categories>
+          <SCOPE>All</SCOPE>
+          <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
     </entry>
