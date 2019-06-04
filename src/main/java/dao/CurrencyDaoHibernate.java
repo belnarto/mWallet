@@ -3,7 +3,6 @@ package dao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import models.Currency;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 import utils.HibernateSessionFactoryUtil;
 
