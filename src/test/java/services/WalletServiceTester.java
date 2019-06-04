@@ -16,6 +16,7 @@ class WalletServiceTester {
     private User user;
     private Wallet wallet;
     private Currency currency;
+    CurrencyService currencyService = new CurrencyService();
 
     @Test
     void constructorTest() {
@@ -33,17 +34,17 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
-            currencyOpt.ifPresent( c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user,currency);
             WalletService.save(wallet);
 
             WalletService.delete(wallet);
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
             UserService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -54,18 +55,18 @@ class WalletServiceTester {
             //UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
-            currencyOpt.ifPresent( c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user,currency);
             WalletService.save(wallet);
 
             fail();
         } catch (Exception e) {
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
         }
 
         try {
@@ -73,10 +74,10 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
-            currencyOpt.ifPresent( c -> CurrencyService.delete(c));
+            currencyOpt.ifPresent( c -> currencyService.delete(c));
             //CurrencyService.save(currency);
 
             wallet = new Wallet(user,currency);
@@ -102,18 +103,18 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
-            currencyOpt.ifPresent( c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             Currency currency2 = new Currency("TST2", 0.02);
-            Optional<Currency> currencyOpt2 = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt2 = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST2") )
                     .findAny();
-            currencyOpt2.ifPresent( c -> CurrencyService.delete(c));
-            CurrencyService.save(currency2);
+            currencyOpt2.ifPresent( c -> currencyService.delete(c));
+            currencyService.save(currency2);
 
             wallet = new Wallet(user,currency);
             WalletService.save(wallet);
@@ -129,8 +130,8 @@ class WalletServiceTester {
                     .orElse(false));
 
             WalletService.delete(wallet);
-            CurrencyService.delete(currency);
-            CurrencyService.delete(currency2);
+            currencyService.delete(currency);
+            currencyService.delete(currency2);
             UserService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -144,11 +145,11 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             WalletService.save(wallet);
@@ -159,7 +160,7 @@ class WalletServiceTester {
                     .stream()
                     .anyMatch( w -> w.equals(wallet)) );
 
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
             UserService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -170,11 +171,11 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             WalletService.save(wallet);
@@ -185,11 +186,11 @@ class WalletServiceTester {
                     .stream()
                     .anyMatch( w -> w.equals(wallet)) );
 
-            assertTrue( CurrencyService.findAll()
+            assertTrue( currencyService.findAll()
                     .stream()
                     .anyMatch( c -> c.equals(currency)) );
 
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -199,22 +200,22 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             WalletService.save(wallet);
 
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
             fail();
 
 
         } catch (Exception e) {
             UserService.delete(user);
-            CurrencyService.delete(currency);
+            currencyService.delete(currency);
         }
     }
 
@@ -226,11 +227,11 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             WalletService.save(wallet);
@@ -258,22 +259,22 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             wallet.setBalance(0.2);
             WalletService.save(wallet);
 
             Currency currency2 = new Currency("TST2", 0.02);
-            currencyOpt = CurrencyService.findAll().stream()
+            currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST2"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency2);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency2);
 
             Wallet wallet2 = new Wallet(user, currency2);
             wallet2.setBalance(0.1);
@@ -286,8 +287,8 @@ class WalletServiceTester {
             WalletService.delete(wallet);
             WalletService.delete(wallet2);
             UserService.delete(user);
-            CurrencyService.delete(currency);
-            CurrencyService.delete(currency2);
+            currencyService.delete(currency);
+            currencyService.delete(currency2);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -301,11 +302,11 @@ class WalletServiceTester {
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
-            Optional<Currency> currencyOpt = CurrencyService.findAll().stream()
+            Optional<Currency> currencyOpt = currencyService.findAll().stream()
                     .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent(c -> CurrencyService.delete(c));
-            CurrencyService.save(currency);
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
+            currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
             WalletService.save(wallet);

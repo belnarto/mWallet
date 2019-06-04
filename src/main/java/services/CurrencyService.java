@@ -1,6 +1,8 @@
 package services;
 
 import dao.CurrencyDao;
+import dao.CurrencyDaoHibernate;
+import dao.CurrencyDaoJDBC;
 import dao.WalletDao;
 import models.Currency;
 import models.Wallet;
@@ -11,35 +13,37 @@ import java.util.List;
 @Service
 public class CurrencyService {
 
+    CurrencyDao currencyDao = new CurrencyDaoJDBC();
+
     public CurrencyService() {}
 
-    public static Currency findById(int id) {
-        return CurrencyDao.findById(id);
+    public Currency findById(int id) {
+        return currencyDao.findById(id);
     }
 
-    public static Currency findByName(String name) {
-        return CurrencyDao.findByName(name);
+    public Currency findByName(String name) {
+        return currencyDao.findByName(name);
     }
 
-    public static List<Currency> findAll() {
-        return CurrencyDao.findAll();
+    public List<Currency> findAll() {
+        return currencyDao.findAll();
     }
 
-    public static void save(Currency currency) {
-        CurrencyDao.save(currency);
+    public void save(Currency currency) {
+        currencyDao.save(currency);
     }
 
-    public static void delete(Currency currency) {
+    public void delete(Currency currency) {
         List<Wallet> wallets = WalletDao.findAllByCurrency(currency);
         if (wallets.size() == 0) {
-            CurrencyDao.delete(currency);
+            currencyDao.delete(currency);
         } else {
             throw new IllegalArgumentException("There are "+wallets.size()+" wallets associated with this currency");
         }
     }
 
-    public static void update(Currency currency) {
-        CurrencyDao.update(currency);
+    public void update(Currency currency) {
+        currencyDao.update(currency);
     }
 
 

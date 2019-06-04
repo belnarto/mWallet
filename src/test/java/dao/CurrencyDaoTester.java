@@ -11,11 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CurrencyDaoTester {
 
     private Currency currency;
+    CurrencyDao currencyDao = new CurrencyDaoJDBC();
 
     @Test
     public void constructorTest() {
         try {
-            new CurrencyDao();
+            new CurrencyDaoHibernate();
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -25,7 +26,7 @@ public class CurrencyDaoTester {
     public void findAllTest() {
         try {
             List<Currency> currencies;
-            currencies = CurrencyDao.findAll();
+            currencies = currencyDao.findAll();
             assertTrue( currencies != null && currencies.size() > 0 );
         } catch (Exception e) {
             fail(e.getMessage());
@@ -37,14 +38,14 @@ public class CurrencyDaoTester {
         try {
             currency = new Currency("TST", 0.01);
 
-            Optional<Currency> currencyOpt = CurrencyDao.findAll().stream()
+            Optional<Currency> currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
-            currencyOpt.ifPresent( c -> CurrencyDao.delete(c));
+            currencyOpt.ifPresent( c -> currencyDao.delete(c));
 
-            CurrencyDao.save(currency);
+            currencyDao.save(currency);
 
-            currencyOpt = CurrencyDao.findAll().stream()
+            currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
@@ -52,7 +53,7 @@ public class CurrencyDaoTester {
                     currencyOpt.get().getName().equals("TST") &&
                     Math.abs(currencyOpt.get().getRate() - 0.01) < 0.00001 );
 
-            CurrencyDao.delete(currency);
+            currencyDao.delete(currency);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -61,21 +62,21 @@ public class CurrencyDaoTester {
     @Test
     public void updateTest() {
         try {
-            Optional<Currency> currencyOpt = CurrencyDao.findAll().stream()
+            Optional<Currency> currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
             if ( !currencyOpt.isPresent() ) {
                 currency = new Currency("TST", 0.01);
-                CurrencyDao.save(currency);
+                currencyDao.save(currency);
             } else {
                 currency = currencyOpt.get();
             }
 
             currency.setRate(0.02);
 
-            CurrencyDao.update(currency);
+            currencyDao.update(currency);
 
-            currencyOpt = CurrencyDao.findAll().stream()
+            currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
@@ -83,7 +84,7 @@ public class CurrencyDaoTester {
                     currencyOpt.get().getName().equals("TST") &&
                     Math.abs(currencyOpt.get().getRate() - 0.02) < 0.00001 );
 
-            CurrencyDao.delete(currency);
+            currencyDao.delete(currency);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -92,22 +93,22 @@ public class CurrencyDaoTester {
     @Test
     public void deleteTest() {
         try {
-            Optional<Currency> currencyOpt = CurrencyDao.findAll().stream()
+            Optional<Currency> currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
             if ( !currencyOpt.isPresent() ) {
                 currency = new Currency("TST", 0.01);
-                CurrencyDao.save(currency);
+                currencyDao.save(currency);
             }
 
-            currencyOpt = CurrencyDao.findAll().stream()
+            currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
-            currencyOpt.ifPresent( c -> CurrencyDao.delete(c));
+            currencyOpt.ifPresent( c -> currencyDao.delete(c));
 
-            currencyOpt = CurrencyDao.findAll().stream()
+            currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
@@ -122,23 +123,23 @@ public class CurrencyDaoTester {
         try {
             currency = new Currency("TST", 0.01);
 
-            Optional<Currency> currencyOpt = CurrencyDao.findAll().stream()
+            Optional<Currency> currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
-            currencyOpt.ifPresent( c -> CurrencyDao.delete(c));
+            currencyOpt.ifPresent( c -> currencyDao.delete(c));
 
-            CurrencyDao.save(currency);
+            currencyDao.save(currency);
             int id = currency.getId();
 
-            currencyOpt = CurrencyDao.findAll().stream()
+            currencyOpt = currencyDao.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
             assertTrue( currencyOpt.isPresent() &&
                     currencyOpt.get().getId() == id );
 
-            CurrencyDao.delete(currency);
+            currencyDao.delete(currency);
         } catch (Exception e) {
             fail(e.getMessage());
         }

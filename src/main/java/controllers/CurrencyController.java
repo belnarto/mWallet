@@ -1,6 +1,9 @@
 package controllers;
 
+import dao.CurrencyDao;
+import dao.CurrencyDaoHibernate;
 import models.Currency;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,11 +15,13 @@ import services.CurrencyService;
 @Controller
 public class CurrencyController {
 
+    CurrencyService currencyService = new CurrencyService();
+
     @RequestMapping(value = "/currencies", method = RequestMethod.GET)
     public ModelAndView allCurrencies() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("currencyPages/currencies");
-        modelAndView.addObject("currencies", CurrencyService.findAll());
+        modelAndView.addObject("currencies", currencyService.findAll());
         return modelAndView;
     }
 
@@ -31,13 +36,13 @@ public class CurrencyController {
     public ModelAndView addCurrency(@ModelAttribute("currency") Currency currency) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/currencies");
-        CurrencyService.save(currency);
+        currencyService.save(currency);
         return modelAndView;
     }
 
     @RequestMapping(value = "/currencies/editCurrency/{id}", method = RequestMethod.GET)
     public ModelAndView editCurrencyPage(@PathVariable("id") int id) {
-        Currency currency = CurrencyService.findById(id);
+        Currency currency = currencyService.findById(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("currencyPages/editCurrency");
         modelAndView.addObject("currency", currency);
@@ -48,13 +53,13 @@ public class CurrencyController {
     public ModelAndView editCurrency(@ModelAttribute("currency") Currency currency) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/currencies");
-        CurrencyService.update(currency);
+        currencyService.update(currency);
         return modelAndView;
     }
 
     @RequestMapping(value = "/currencies/deleteCurrency/{id}", method = RequestMethod.GET)
     public ModelAndView delete(@PathVariable("id") int id) {
-        CurrencyService.delete(CurrencyService.findById(id));
+        currencyService.delete(currencyService.findById(id));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/currencies");
         return modelAndView;

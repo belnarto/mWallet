@@ -50,6 +50,7 @@ class UserDaoTester {
             UserDao.delete(user3);
         } catch (Exception e) {
             fail(e.getMessage());
+            UserDao.delete(user);
         }
 
     }
@@ -70,6 +71,7 @@ class UserDaoTester {
             UserDao.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
+            UserDao.delete(user);
         }
     }
 
@@ -85,6 +87,7 @@ class UserDaoTester {
             UserDao.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
+            UserDao.delete(user);
         }
     }
 
@@ -105,6 +108,7 @@ class UserDaoTester {
             UserDao.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
+            UserDao.delete(user);
         }
     }
 
@@ -122,6 +126,7 @@ class UserDaoTester {
             assertNull( UserDao.findById(user.getId()) );
         } catch (Exception e) {
             fail(e.getMessage());
+            UserDao.delete(user);
         }
     }
 }

@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @Controller
 public class WalletController {
 
+    CurrencyService currencyService = new CurrencyService();
+
     @RequestMapping(value = "/users/{id}/wallets", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView userWalletsPage(@PathVariable("id") int id, Authentication authentication) {
@@ -64,7 +66,7 @@ public class WalletController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("walletPages/addWallet");
         modelAndView.addObject("id", id );
-        modelAndView.addObject("currencies", CurrencyService.findAll());
+        modelAndView.addObject("currencies", currencyService.findAll());
         return modelAndView;
     }
 
@@ -73,7 +75,7 @@ public class WalletController {
                                   @ModelAttribute("wallet") Currency currency) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/users/{id}/wallets");
-        currency = CurrencyService.findByName(currency.getName());
+        currency = currencyService.findByName(currency.getName());
         User user = UserService.findById(id);
         WalletService.save(new Wallet(user,currency));
         return modelAndView;
@@ -87,7 +89,7 @@ public class WalletController {
         modelAndView.setViewName("walletPages/editWallet");
         modelAndView.addObject("id", id);
         modelAndView.addObject("wallet", wallet);
-        modelAndView.addObject("currencies", CurrencyService.findAll()
+        modelAndView.addObject("currencies", currencyService.findAll()
                 .stream()
                 .filter( c -> !c.equals(wallet.getCurrency()))
                 .collect(Collectors.toList()));
@@ -99,7 +101,7 @@ public class WalletController {
                                    @PathVariable("id2") int id2,
                                    @ModelAttribute("wallet") Currency currencyNew) {
         ModelAndView modelAndView = new ModelAndView();
-        currencyNew = CurrencyService.findByName(currencyNew.getName());
+        currencyNew = currencyService.findByName(currencyNew.getName());
         Wallet wallet = WalletService.findById(id2);
         double balance = wallet.getBalance();
         Currency currencyOld = wallet.getCurrency();
