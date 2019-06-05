@@ -11,7 +11,7 @@
 <head>
     <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="<c:url value="/res/favicon.png"/>"/>
-    <title>Add currency</title>
+    <title>Add com.vironit.mWallet.currency</title>
 </head>
 <body>
 <c:url value="/currencies/addCurrency" var="var"/>
@@ -22,7 +22,7 @@
     <label for="rate">rate</label>
     <input type="text" name="rate" id="rate">
 
-    <input type="submit" value="Add currency">
+    <input type="submit" value="Add com.vironit.mWallet.currency">
 
     <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 

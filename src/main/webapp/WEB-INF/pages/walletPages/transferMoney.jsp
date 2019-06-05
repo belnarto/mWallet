@@ -14,7 +14,7 @@
     <title>Transfer money</title>
 </head>
 <body>
-<c:url value="/users/${id}/wallets/transferMoney/${wallet.id}" var="var"/>
+<c:url value="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/transferMoney/${wallet.id}" var="var"/>
 <form action="${var}" method="POST">
     <label for="targetWallet">target wallet</label>
     <input type="text" name="targetWallet" id="targetWallet">
@@ -27,7 +27,7 @@
     <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 
     <br>
-    <a href="/users/${id}/wallets">Back to wallets</a>
+    <a href="/com.vironit.users/${id}/com.vironit.mWallet.wallets">Back to com.vironit.mWallet.wallets</a>
 </form>
 </body>
 </html>

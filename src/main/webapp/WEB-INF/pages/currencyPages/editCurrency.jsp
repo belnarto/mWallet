@@ -11,20 +11,20 @@
 <head>
     <link href="<c:url value="/res/style.css"/>" rel="stylesheet" type="text/css"/>
     <link rel="icon" type="image/png" href="<c:url value="/res/favicon.png"/>"/>
-    <title>Edit currency</title>
+    <title>Edit com.vironit.mWallet.currency</title>
 </head>
 <body>
 <c:url value="/currencies/editCurrency" var="var"/>
 <form action="${var}" method="POST">
-    <input type="hidden" name="id" value="${currency.id}">
+    <input type="hidden" name="id" value="${com.vironit.mWallet.currency.id}">
 
     <label for="name">new name</label>
-    <input type="text" name="name" id="name" value="${currency.name}">
+    <input type="text" name="name" id="name" value="${com.vironit.mWallet.currency.name}">
 
     <label for="rate">new rate</label>
-    <input type="text" name="rate" id="rate" value="${currency.rate}">
+    <input type="text" name="rate" id="rate" value="${com.vironit.mWallet.currency.rate}">
 
-    <input type="submit" value="Edit currency">
+    <input type="submit" value="Edit com.vironit.mWallet.currency">
 
     <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 

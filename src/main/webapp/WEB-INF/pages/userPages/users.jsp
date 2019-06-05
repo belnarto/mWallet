@@ -21,14 +21,14 @@
             <th>name</th>
             <th>actions</th>
         </tr>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="user" items="${com.vironit.mWallet.users}">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
                 <td>
-                    <a href="/users/${user.id}/wallets">wallets</a>
-                    <a href="/users/editUser/${user.id}">edit</a>
-                    <a href="/users/deleteUser/${user.id}">delete</a>
+                    <a href="/com.vironit.users/${user.id}/com.vironit.mWallet.wallets">com.vironit.mWallet.wallets</a>
+                    <a href="/com.vironit.mWallet.users/editUser/${user.id}">edit</a>
+                    <a href="/com.vironit.mWallet.users/deleteUser/${user.id}">delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -37,7 +37,7 @@
     <h3>Operations:</h3>
     <ul>
         <li>
-            <c:url value="/users/addUser" var="add"/>
+            <c:url value="/com.vironit.mWallet.users/addUser" var="add"/>
             <a href="${add}">Add new user</a>
         </li>
     </ul>

@@ -3,304 +3,345 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="650.6522020202015" y="880.5">dao.WalletDao</node>
-    <node x="1169.7183333333332" y="1991.0">config.AppInitializer</node>
-    <node x="80.15220202020146" y="836.0">dao.CurrencyDaoJDBC</node>
-    <node x="799.2183333333331" y="1484.0">controllers.WalletController</node>
-    <node x="1456.2183333333332" y="1605.5">controllers.MainController</node>
-    <node x="1663.2183333333332" y="1572.5">controllers.UserController</node>
-    <node x="1125.7183333333332" y="1870.0">config.WebConfig</node>
-    <node x="784.6522020202015" y="1166.0">services.WalletService</node>
-    <node x="817.5625" y="352.0">models.Wallet</node>
-    <node x="196.15220202020146" y="627.0">dao.CurrencyDao</node>
-    <node x="1125.2183333333332" y="1616.5">config.SecurityConfig</node>
-    <node x="130.10424242424256" y="1187.5">services.CurrencyService</node>
-    <node x="608.1522020202015" y="659.0">utils.HibernateSessionFactoryUtil</node>
-    <node x="1190.3433333333332" y="1188.0">services.UserService</node>
-    <node x="316.25" y="44.5">models.Currency</node>
-    <node x="1187.0933333333332" y="891.5">dao.UserDao</node>
-    <node x="1016.125" y="0.0">models.User</node>
-    <node x="402.1522020202015" y="891.5">dao.CurrencyDaoHibernate</node>
-    <node x="18.354242424242557" y="1561.0">controllers.CurrencyController</node>
+    <node x="772.625" y="1186.0">com.vironit.mWallet.services.WalletService</node>
+    <node x="1144.7048835125452" y="372.0">com.vironit.mWallet.models.Wallet</node>
+    <node x="525.6249999999999" y="911.5">com.vironit.mWallet.dao.UserDao</node>
+    <node x="742.625" y="0.0">com.vironit.mWallet.models.User</node>
+    <node x="435.0" y="1666.5">com.vironit.mWallet.config.SecurityConfig</node>
+    <node x="2779.241666666667" y="1655.0">com.vironit.mWallet.servlets.AddCurrencyServlet</node>
+    <node x="606.0" y="1915.0">com.vironit.mWallet.config.AppInitializer</node>
+    <node x="0.0" y="1915.0">com.vironit.mWallet.config.WebConfig</node>
+    <node x="1862.2416666666666" y="1666.0">com.vironit.mWallet.servlets.DeleteCurrencyServlet</node>
+    <node x="1117.375" y="679.0">com.vironit.mWallet.utils.HibernateSessionFactoryUtil</node>
+    <node x="0.0" y="1655.5">com.vironit.mWallet.controllers.MainController</node>
+    <node x="1941.9833333333331" y="647.0">com.vironit.mWallet.dao.CurrencyDao</node>
+    <node x="440.375" y="1208.0">com.vironit.mWallet.services.UserService</node>
+    <node x="2447.241666666667" y="1655.0">com.vironit.mWallet.servlets.EditCurrencyServlet</node>
+    <node x="1535.2416666666666" y="1666.0">com.vironit.mWallet.servlets.CurrenciesServlet</node>
+    <node x="351.0" y="1915.0">com.vironit.mWallet.config.core.SpringSecurityInitializer</node>
+    <node x="2042.9833333333331" y="856.0">com.vironit.mWallet.dao.CurrencyDaoJDBC</node>
+    <node x="2194.241666666667" y="1611.0">com.vironit.mWallet.controllers.CurrencyController</node>
+    <node x="2013.2833333333328" y="1207.5">com.vironit.mWallet.services.CurrencyService</node>
+    <node x="1473.634050179212" y="911.5">com.vironit.mWallet.dao.CurrencyDaoHibernate</node>
+    <node x="1953.4833333333331" y="44.5">com.vironit.mWallet.models.Currency</node>
+    <node x="934.3881720430114" y="1534.0">com.vironit.mWallet.controllers.WalletController</node>
+    <node x="1044.625" y="900.5">com.vironit.mWallet.dao.WalletDao</node>
+    <node x="203.0" y="1622.5">com.vironit.mWallet.controllers.UserController</node>
   </nodes>
   <notes />
   <edges>
-    <edge source="dao.CurrencyDaoHibernate" target="models.Currency">
+    <edge source="com.vironit.mWallet.dao.CurrencyDaoHibernate" target="com.vironit.mWallet.models.Currency">
       <point x="0.0" y="-79.5" />
-      <point x="494.6522020202015" y="332.0" />
-      <point x="411.9772727272727" y="332.0" />
-      <point x="14.727272727272691" y="91.5" />
+      <point x="1564.134050179212" y="342.0" />
+      <point x="2011.4166666666665" y="342.0" />
+      <point x="-21.066666666666606" y="91.5" />
     </edge>
-    <edge source="controllers.CurrencyController" target="models.Currency">
-      <point x="-79.0" y="-91.0" />
-      <point x="57.85424242424256" y="1464.0" />
-      <point x="0.0" y="1464.0" />
-      <point x="0.0" y="292.0" />
-      <point x="323.6136363636364" y="292.0" />
-      <point x="-73.63636363636363" y="91.5" />
+    <edge source="com.vironit.mWallet.servlets.EditCurrencyServlet" target="com.vironit.mWallet.models.Currency">
+      <point x="104.0" y="-47.0" />
+      <point x="2707.241666666667" y="1514.0" />
+      <point x="2648.7041218637996" y="1514.0" />
+      <point x="2648.7041218637996" y="312.0" />
+      <point x="2085.1499999999996" y="312.0" />
+      <point x="52.666666666666515" y="91.5" />
     </edge>
-    <edge source="config.WebConfig" target="config.SecurityConfig">
+    <edge source="com.vironit.mWallet.config.SecurityConfig" target="com.vironit.mWallet.services.UserService">
       <point x="0.0" y="-35.5" />
-      <point x="0.0" y="35.5" />
+      <point x="29.625" y="102.0" />
     </edge>
-    <edge source="dao.CurrencyDaoHibernate" target="dao.CurrencyDao">
-      <point x="-61.666666666666686" y="-79.5" />
-      <point x="432.98553535353483" y="816.0" />
-      <point x="350.3188686868681" y="816.0" />
-      <point x="61.66666666666663" y="79.5" />
+    <edge source="com.vironit.mWallet.controllers.MainController" target="com.vironit.mWallet.services.UserService">
+      <point x="45.75" y="-46.5" />
+      <point x="137.25" y="1504.0" />
+      <point x="470.0" y="1504.0" />
+      <point x="-88.875" y="102.0" />
     </edge>
-    <edge source="controllers.WalletController" target="models.Wallet">
-      <point x="57.375" y="-168.0" />
-      <point x="1009.5933333333331" y="1444.0" />
-      <point x="1081.6140909090905" y="1444.0" />
-      <point x="1081.6140909090905" y="597.0" />
-      <point x="956.8958333333333" y="597.0" />
-      <point x="63.33333333333326" y="102.5" />
-    </edge>
-    <edge source="models.Wallet" target="models.Currency">
-      <point x="-57.0" y="-102.5" />
-      <point x="836.5625" y="302.0" />
-      <point x="456.1590909090909" y="302.0" />
-      <point x="58.90909090909088" y="91.5" />
-    </edge>
-    <edge source="controllers.WalletController" target="services.UserService">
-      <point x="133.875" y="-168.0" />
-      <point x="1086.0933333333332" y="1464.0" />
-      <point x="1220.4683333333332" y="1464.0" />
-      <point x="-90.375" y="102.0" />
-    </edge>
-    <edge source="controllers.WalletController" target="models.User">
-      <point x="95.625" y="-168.0" />
-      <point x="1047.8433333333332" y="1454.0" />
-      <point x="1114.6140909090905" y="1454.0" />
-      <point x="1114.6140909090905" y="312.0" />
-      <point x="1108.525" y="312.0" />
-      <point x="8.400000000000091" y="136.0" />
-    </edge>
-    <edge source="services.CurrencyService" target="models.Wallet">
-      <point x="37.0" y="-102.5" />
-      <point x="259.60424242424256" y="1136.0" />
-      <point x="597.6522020202015" y="1136.0" />
-      <point x="597.6522020202015" y="587.0" />
-      <point x="830.2291666666665" y="587.0" />
-      <point x="-63.33333333333337" y="102.5" />
-    </edge>
-    <edge source="config.SecurityConfig" target="services.UserService">
-      <point x="0.0" y="-35.5" />
-      <point x="-30.125" y="102.0" />
-    </edge>
-    <edge source="controllers.WalletController" target="services.CurrencyService">
-      <point x="-95.625" y="-168.0" />
-      <point x="856.5933333333331" y="1454.0" />
-      <point x="291.97924242424256" y="1454.0" />
-      <point x="69.375" y="102.5" />
-    </edge>
-    <edge source="controllers.CurrencyController" target="services.CurrencyService">
-      <point x="79.0" y="-91.0" />
-      <point x="215.85424242424256" y="1464.0" />
-      <point x="199.47924242424256" y="1464.0" />
-      <point x="-23.125" y="102.5" />
-    </edge>
-    <edge source="utils.HibernateSessionFactoryUtil" target="models.Currency">
-      <point x="-72.33333333333326" y="-47.5" />
-      <point x="644.3188686868682" y="577.0" />
-      <point x="639.6042424242426" y="577.0" />
-      <point x="639.6042424242426" y="312.0" />
-      <point x="441.4318181818182" y="312.0" />
-      <point x="44.18181818181819" y="91.5" />
-    </edge>
-    <edge source="dao.WalletDao" target="models.User">
-      <point x="94.125" y="-90.5" />
-      <point x="870.2772020202015" y="816.0" />
-      <point x="1092.6140909090905" y="816.0" />
-      <point x="1092.6140909090905" y="332.0" />
-      <point x="1074.925" y="332.0" />
-      <point x="-25.200000000000045" y="136.0" />
-    </edge>
-    <edge source="services.CurrencyService" target="dao.WalletDao">
-      <point x="74.0" y="-102.5" />
-      <point x="296.60424242424256" y="1146.0" />
-      <point x="713.4022020202015" y="1146.0" />
-      <point x="-62.75" y="90.5" />
-    </edge>
-    <edge source="services.WalletService" target="models.Wallet">
-      <point x="0.0" y="-124.0" />
-      <point x="912.1522020202015" y="607.0" />
-      <point x="906.2291666666665" y="607.0" />
-      <point x="12.666666666666629" y="102.5" />
-    </edge>
-    <edge source="dao.CurrencyDao" target="models.Currency">
+    <edge source="com.vironit.mWallet.dao.CurrencyDao" target="com.vironit.mWallet.models.Currency">
       <point x="0.0" y="-79.5" />
-      <point x="288.65220202020146" y="332.0" />
-      <point x="382.5227272727273" y="332.0" />
-      <point x="-14.727272727272691" y="91.5" />
-    </edge>
-    <edge source="dao.CurrencyDaoJDBC" target="models.Currency">
-      <point x="-66.0" y="-135.0" />
-      <point x="113.15220202020146" y="816.0" />
-      <point x="124.40220202020146" y="816.0" />
-      <point x="124.40220202020146" y="312.0" />
-      <point x="353.0681818181818" y="312.0" />
-      <point x="-44.18181818181819" y="91.5" />
-    </edge>
-    <edge source="config.AppInitializer" target="config.WebConfig">
-      <point x="0.0" y="-57.5" />
-      <point x="0.0" y="35.5" />
-    </edge>
-    <edge source="services.CurrencyService" target="models.Currency">
-      <point x="-74.0" y="-102.5" />
-      <point x="148.60424242424256" y="1146.0" />
-      <point x="69.65220202020146" y="1146.0" />
-      <point x="69.65220202020146" y="302.0" />
-      <point x="338.3409090909091" y="302.0" />
-      <point x="-58.90909090909088" y="91.5" />
-    </edge>
-    <edge source="dao.UserDao" target="utils.HibernateSessionFactoryUtil">
-      <point x="-39.5" y="-79.5" />
-      <point x="1226.5933333333332" y="806.0" />
-      <point x="788.9855353535347" y="806.0" />
-      <point x="72.33333333333326" y="47.5" />
-    </edge>
-    <edge source="dao.WalletDao" target="utils.HibernateSessionFactoryUtil">
-      <point x="-31.375" y="-90.5" />
-      <point x="744.7772020202015" y="816.0" />
-      <point x="716.6522020202015" y="816.0" />
-      <point x="0.0" y="47.5" />
-    </edge>
-    <edge source="utils.HibernateSessionFactoryUtil" target="models.Wallet">
-      <point x="72.33333333333337" y="-47.5" />
-      <point x="788.9855353535349" y="597.0" />
-      <point x="855.5625" y="597.0" />
-      <point x="-38.0" y="102.5" />
-    </edge>
-    <edge source="services.UserService" target="models.User">
-      <point x="60.25000000000006" y="-102.0" />
-      <point x="1371.0933333333332" y="1146.0" />
-      <point x="1355.5933333333332" y="1146.0" />
-      <point x="1355.5933333333332" y="322.0" />
-      <point x="1142.125" y="322.0" />
-      <point x="42.0" y="136.0" />
-    </edge>
-    <edge source="services.CurrencyService" target="dao.CurrencyDaoJDBC">
-      <point x="-37.0" y="-102.5" />
-      <point x="185.60424242424256" y="1146.0" />
-      <point x="179.15220202020146" y="1146.0" />
-      <point x="0.0" y="135.0" />
-    </edge>
-    <edge source="utils.HibernateSessionFactoryUtil" target="models.User">
-      <point x="0.0" y="-47.5" />
-      <point x="716.6522020202015" y="577.0" />
-      <point x="650.6042424242426" y="577.0" />
-      <point x="650.6042424242426" y="312.0" />
-      <point x="1024.5249999999999" y="312.0" />
-      <point x="-75.60000000000002" y="136.0" />
-    </edge>
-    <edge source="controllers.WalletController" target="services.WalletService">
-      <point x="-19.125" y="-168.0" />
-      <point x="933.0933333333331" y="1464.0" />
-      <point x="912.1522020202015" y="1464.0" />
-      <point x="0.0" y="124.0" />
-    </edge>
-    <edge source="services.UserService" target="dao.UserDao">
-      <point x="-60.25" y="-102.0" />
-      <point x="1250.5933333333332" y="1146.0" />
-      <point x="1266.0933333333332" y="1146.0" />
-      <point x="0.0" y="79.5" />
-    </edge>
-    <edge source="services.CurrencyService" target="dao.CurrencyDao">
-      <point x="0.0" y="-102.5" />
-      <point x="222.60424242424256" y="1126.0" />
-      <point x="288.65220202020146" y="1126.0" />
-      <point x="0.0" y="79.5" />
-    </edge>
-    <edge source="controllers.MainController" target="models.User">
-      <point x="46.75" y="-46.5" />
-      <point x="1596.4683333333332" y="312.0" />
-      <point x="1158.925" y="312.0" />
-      <point x="58.799999999999955" y="136.0" />
-    </edge>
-    <edge source="controllers.UserController" target="models.User">
-      <point x="54.0" y="-79.5" />
-      <point x="1825.2183333333332" y="302.0" />
-      <point x="1175.7250000000001" y="302.0" />
-      <point x="75.60000000000014" y="136.0" />
-    </edge>
-    <edge source="dao.WalletDao" target="models.Wallet">
-      <point x="31.375" y="-90.5" />
-      <point x="807.5272020202015" y="816.0" />
-      <point x="835.6522020202015" y="816.0" />
-      <point x="835.6522020202015" y="607.0" />
-      <point x="880.8958333333333" y="607.0" />
-      <point x="-12.666666666666629" y="102.5" />
-    </edge>
-    <edge source="controllers.MainController" target="services.UserService">
-      <point x="-46.75" y="-46.5" />
-      <point x="1502.9683333333332" y="1464.0" />
-      <point x="1340.9683333333332" y="1464.0" />
-      <point x="30.125" y="102.0" />
-    </edge>
-    <edge source="controllers.UserController" target="services.UserService">
-      <point x="-54.0" y="-79.5" />
-      <point x="1717.2183333333332" y="1454.0" />
-      <point x="1401.2183333333332" y="1454.0" />
-      <point x="90.375" y="102.0" />
-    </edge>
-    <edge source="controllers.WalletController" target="models.Currency">
-      <point x="-57.375" y="-168.0" />
-      <point x="894.8433333333331" y="1444.0" />
-      <point x="391.6522020202015" y="1444.0" />
-      <point x="391.6522020202015" y="332.0" />
-      <point x="397.25" y="332.0" />
       <point x="0.0" y="91.5" />
     </edge>
-    <edge source="services.WalletService" target="dao.WalletDao">
-      <point x="-85.0" y="-124.0" />
-      <point x="827.1522020202015" y="1146.0" />
-      <point x="838.9022020202015" y="1146.0" />
-      <point x="62.75" y="90.5" />
+    <edge source="com.vironit.mWallet.utils.HibernateSessionFactoryUtil" target="com.vironit.mWallet.models.User">
+      <point x="-74.66666666666674" y="-47.5" />
+      <point x="1154.7083333333333" y="597.0" />
+      <point x="1100.9548835125452" y="597.0" />
+      <point x="1100.9548835125452" y="342.0" />
+      <point x="865.625" y="342.0" />
+      <point x="41.0" y="136.0" />
     </edge>
-    <edge source="dao.WalletDao" target="models.Currency">
-      <point x="-94.125" y="-90.5" />
-      <point x="682.0272020202015" y="806.0" />
-      <point x="546.1522020202015" y="806.0" />
-      <point x="546.1522020202015" y="322.0" />
-      <point x="426.70454545454544" y="322.0" />
-      <point x="29.45454545454544" y="91.5" />
+    <edge source="com.vironit.mWallet.dao.CurrencyDaoHibernate" target="com.vironit.mWallet.utils.HibernateSessionFactoryUtil">
+      <point x="-60.33333333333326" y="-79.5" />
+      <point x="1503.8007168458787" y="826.0" />
+      <point x="1304.0416666666667" y="826.0" />
+      <point x="74.66666666666674" y="47.5" />
     </edge>
-    <edge source="dao.CurrencyDaoJDBC" target="dao.CurrencyDao">
-      <point x="66.0" y="-135.0" />
-      <point x="245.15220202020146" y="816.0" />
-      <point x="226.98553535353483" y="816.0" />
-      <point x="-61.66666666666666" y="79.5" />
+    <edge source="com.vironit.mWallet.models.Wallet" target="com.vironit.mWallet.models.User">
+      <point x="-18.5" y="-102.5" />
+      <point x="1200.2048835125452" y="322.0" />
+      <point x="898.4250000000001" y="322.0" />
+      <point x="73.80000000000007" y="136.0" />
     </edge>
-    <edge source="dao.CurrencyDaoHibernate" target="utils.HibernateSessionFactoryUtil">
-      <point x="61.666666666666686" y="-79.5" />
-      <point x="556.3188686868682" y="816.0" />
-      <point x="644.3188686868682" y="816.0" />
-      <point x="-72.33333333333337" y="47.5" />
+    <edge source="com.vironit.mWallet.controllers.UserController" target="com.vironit.mWallet.services.UserService">
+      <point x="53.0" y="-79.5" />
+      <point x="362.0" y="1514.0" />
+      <point x="529.25" y="1514.0" />
+      <point x="-29.625" y="102.0" />
     </edge>
-    <edge source="models.Wallet" target="models.User">
-      <point x="57.0" y="-102.5" />
-      <point x="950.5625" y="332.0" />
-      <point x="1058.125" y="332.0" />
-      <point x="-42.0" y="136.0" />
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.services.WalletService">
+      <point x="-56.625" y="-168.0" />
+      <point x="1028.7631720430113" y="1494.0" />
+      <point x="898.125" y="1494.0" />
+      <point x="0.0" y="124.0" />
     </edge>
-    <edge source="dao.UserDao" target="models.User">
-      <point x="39.5" y="-79.5" />
-      <point x="1305.5933333333332" y="332.0" />
-      <point x="1125.325" y="332.0" />
-      <point x="25.200000000000045" y="136.0" />
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.services.UserService">
+      <point x="-132.125" y="-168.0" />
+      <point x="953.2631720430114" y="1514.0" />
+      <point x="647.75" y="1514.0" />
+      <point x="88.875" y="102.0" />
     </edge>
-    <edge source="services.WalletService" target="models.User">
-      <point x="85.0" y="-124.0" />
-      <point x="997.1522020202015" y="1146.0" />
-      <point x="1103.6140909090905" y="1146.0" />
-      <point x="1103.6140909090905" y="322.0" />
-      <point x="1091.725" y="322.0" />
-      <point x="-8.399999999999977" y="136.0" />
+    <edge source="com.vironit.mWallet.controllers.CurrencyController" target="com.vironit.mWallet.models.Currency">
+      <point x="77.66666666666652" y="-91.0" />
+      <point x="2388.4083333333333" y="322.0" />
+      <point x="2074.6166666666663" y="322.0" />
+      <point x="42.13333333333321" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.CurrencyDaoHibernate" target="com.vironit.mWallet.dao.CurrencyDao">
+      <point x="60.33333333333326" y="-79.5" />
+      <point x="1624.4673835125452" y="836.0" />
+      <point x="1972.1499999999996" y="836.0" />
+      <point x="-60.33333333333326" y="79.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.WalletService" target="com.vironit.mWallet.models.User">
+      <point x="-83.66666666666663" y="-124.0" />
+      <point x="814.4583333333334" y="1166.0" />
+      <point x="842.1423835125454" y="1166.0" />
+      <point x="842.1423835125454" y="352.0" />
+      <point x="832.825" y="352.0" />
+      <point x="8.200000000000045" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.WalletService" target="com.vironit.mWallet.dao.WalletDao">
+      <point x="83.66666666666663" y="-124.0" />
+      <point x="981.7916666666666" y="1166.0" />
+      <point x="1106.375" y="1166.0" />
+      <point x="-61.75" y="90.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.UserDao" target="com.vironit.mWallet.models.User">
+      <point x="-38.5" y="-79.5" />
+      <point x="564.1249999999999" y="342.0" />
+      <point x="800.025" y="342.0" />
+      <point x="-24.600000000000023" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.CurrenciesServlet" target="com.vironit.mWallet.models.Currency">
+      <point x="-102.33333333333326" y="-36.0" />
+      <point x="1586.4083333333333" y="1464.0" />
+      <point x="1665.134050179212" y="1464.0" />
+      <point x="1665.134050179212" y="352.0" />
+      <point x="2021.9499999999998" y="352.0" />
+      <point x="-10.533333333333303" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.CurrenciesServlet" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="102.33333333333326" y="-36.0" />
+      <point x="1791.0749999999998" y="1504.0" />
+      <point x="2066.0749999999994" y="1504.0" />
+      <point x="-37.708333333333485" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.utils.HibernateSessionFactoryUtil" target="com.vironit.mWallet.models.Currency">
+      <point x="74.66666666666674" y="-47.5" />
+      <point x="1304.0416666666667" y="627.0" />
+      <point x="1313.875" y="627.0" />
+      <point x="1313.875" y="312.0" />
+      <point x="1979.8166666666662" y="312.0" />
+      <point x="-52.66666666666674" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.UserController" target="com.vironit.mWallet.models.User">
+      <point x="-53.0" y="-79.5" />
+      <point x="256.0" y="322.0" />
+      <point x="767.225" y="322.0" />
+      <point x="-57.39999999999998" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.UserService" target="com.vironit.mWallet.dao.UserDao">
+      <point x="59.25" y="-102.0" />
+      <point x="618.125" y="1166.0" />
+      <point x="602.6249999999999" y="1166.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.CurrencyService" target="com.vironit.mWallet.dao.CurrencyDao">
+      <point x="0.0" y="-102.5" />
+      <point x="2103.783333333333" y="1146.0" />
+      <point x="2032.4833333333331" y="1146.0" />
+      <point x="0.0" y="79.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.CurrencyService" target="com.vironit.mWallet.models.Wallet">
+      <point x="-36.19999999999982" y="-102.5" />
+      <point x="2067.583333333333" y="1156.0" />
+      <point x="1441.6007168458787" y="1156.0" />
+      <point x="1441.6007168458787" y="607.0" />
+      <point x="1280.3715501792121" y="607.0" />
+      <point x="61.66666666666674" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="94.375" y="-168.0" />
+      <point x="1179.7631720430113" y="1474.0" />
+      <point x="2020.8249999999998" y="1474.0" />
+      <point x="-82.95833333333326" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.models.Currency">
+      <point x="56.625" y="-168.0" />
+      <point x="1142.0131720430113" y="1464.0" />
+      <point x="1463.134050179212" y="1464.0" />
+      <point x="1463.134050179212" y="332.0" />
+      <point x="2000.8833333333332" y="332.0" />
+      <point x="-31.59999999999991" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.UserService" target="com.vironit.mWallet.models.User">
+      <point x="-59.25" y="-102.0" />
+      <point x="499.625" y="1166.0" />
+      <point x="515.1249999999999" y="1166.0" />
+      <point x="515.1249999999999" y="332.0" />
+      <point x="783.625" y="332.0" />
+      <point x="-41.0" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.AddCurrencyServlet" target="com.vironit.mWallet.models.Currency">
+      <point x="117.0" y="-47.0" />
+      <point x="3052.241666666667" y="1514.0" />
+      <point x="3018.741666666667" y="1514.0" />
+      <point x="3018.741666666667" y="292.0" />
+      <point x="2106.2166666666662" y="292.0" />
+      <point x="73.73333333333312" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.AddCurrencyServlet" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="-39.0" y="-47.0" />
+      <point x="2896.241666666667" y="1464.0" />
+      <point x="2186.7416666666663" y="1464.0" />
+      <point x="82.95833333333348" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.WalletDao" target="com.vironit.mWallet.models.Currency">
+      <point x="92.625" y="-90.5" />
+      <point x="1260.75" y="836.0" />
+      <point x="1452.6007168458787" y="836.0" />
+      <point x="1452.6007168458787" y="322.0" />
+      <point x="1990.35" y="322.0" />
+      <point x="-42.13333333333321" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.UserDao" target="com.vironit.mWallet.utils.HibernateSessionFactoryUtil">
+      <point x="38.5" y="-79.5" />
+      <point x="641.1249999999999" y="836.0" />
+      <point x="1154.7083333333333" y="836.0" />
+      <point x="-74.66666666666674" y="47.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.WalletService" target="com.vironit.mWallet.models.Wallet">
+      <point x="0.0" y="-124.0" />
+      <point x="898.125" y="1166.0" />
+      <point x="861.7916666666667" y="1166.0" />
+      <point x="861.7916666666667" y="607.0" />
+      <point x="1157.0382168458787" y="607.0" />
+      <point x="-61.66666666666674" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.EditCurrencyServlet" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="-104.0" y="-47.0" />
+      <point x="2499.241666666667" y="1494.0" />
+      <point x="2141.4916666666663" y="1494.0" />
+      <point x="37.708333333333485" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.utils.HibernateSessionFactoryUtil" target="com.vironit.mWallet.models.Wallet">
+      <point x="0.0" y="-47.5" />
+      <point x="1229.375" y="627.0" />
+      <point x="1231.0382168458787" y="627.0" />
+      <point x="12.333333333333258" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.servlets.DeleteCurrencyServlet" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="-78.0" y="-36.0" />
+      <point x="1940.2416666666666" y="1514.0" />
+      <point x="2081.158333333333" y="1514.0" />
+      <point x="-22.625" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.CurrencyDaoJDBC" target="com.vironit.mWallet.dao.CurrencyDao">
+      <point x="-64.66666666666652" y="-135.0" />
+      <point x="2075.3166666666666" y="836.0" />
+      <point x="2092.8166666666666" y="836.0" />
+      <point x="60.333333333333485" y="79.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.CurrencyDaoJDBC" target="com.vironit.mWallet.models.Currency">
+      <point x="0.0" y="-135.0" />
+      <point x="2139.983333333333" y="836.0" />
+      <point x="2166.816666666666" y="836.0" />
+      <point x="2166.816666666666" y="352.0" />
+      <point x="2043.0166666666664" y="352.0" />
+      <point x="10.533333333333303" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.CurrencyService" target="com.vironit.mWallet.dao.CurrencyDaoJDBC">
+      <point x="36.19999999999982" y="-102.5" />
+      <point x="0.0" y="135.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.models.Wallet" target="com.vironit.mWallet.models.Currency">
+      <point x="55.5" y="-102.5" />
+      <point x="1274.2048835125452" y="302.0" />
+      <point x="1969.2833333333328" y="302.0" />
+      <point x="-63.200000000000045" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.CurrencyController" target="com.vironit.mWallet.services.CurrencyService">
+      <point x="-77.66666666666652" y="-91.0" />
+      <point x="2233.0750000000003" y="1514.0" />
+      <point x="2111.3249999999994" y="1514.0" />
+      <point x="7.541666666666515" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.WalletDao" target="com.vironit.mWallet.models.Wallet">
+      <point x="-30.875" y="-90.5" />
+      <point x="1137.25" y="826.0" />
+      <point x="1106.875" y="826.0" />
+      <point x="1106.875" y="627.0" />
+      <point x="1206.3715501792121" y="627.0" />
+      <point x="-12.333333333333258" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.WalletDao" target="com.vironit.mWallet.models.User">
+      <point x="-92.625" y="-90.5" />
+      <point x="1075.5" y="826.0" />
+      <point x="914.8958333333333" y="826.0" />
+      <point x="914.8958333333333" y="352.0" />
+      <point x="849.225" y="352.0" />
+      <point x="24.600000000000023" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.MainController" target="com.vironit.mWallet.models.User">
+      <point x="-45.75" y="-46.5" />
+      <point x="45.75" y="312.0" />
+      <point x="750.825" y="312.0" />
+      <point x="-73.79999999999995" y="136.0" />
+    </edge>
+    <edge source="com.vironit.mWallet.dao.WalletDao" target="com.vironit.mWallet.utils.HibernateSessionFactoryUtil">
+      <point x="30.875" y="-90.5" />
+      <point x="1199.0" y="836.0" />
+      <point x="1229.375" y="836.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.CurrencyService" target="com.vironit.mWallet.dao.WalletDao">
+      <point x="-72.40000000000009" y="-102.5" />
+      <point x="2031.3833333333328" y="1166.0" />
+      <point x="1229.875" y="1166.0" />
+      <point x="61.75" y="90.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.services.CurrencyService" target="com.vironit.mWallet.models.Currency">
+      <point x="72.40000000000009" y="-102.5" />
+      <point x="2176.183333333333" y="1166.0" />
+      <point x="2247.483333333333" y="1166.0" />
+      <point x="2247.483333333333" y="332.0" />
+      <point x="2064.083333333333" y="332.0" />
+      <point x="31.59999999999991" y="91.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.models.Wallet">
+      <point x="-18.875" y="-168.0" />
+      <point x="1066.5131720430113" y="1514.0" />
+      <point x="1034.125" y="1514.0" />
+      <point x="1034.125" y="617.0" />
+      <point x="1181.7048835125452" y="617.0" />
+      <point x="-37.0" y="102.5" />
+    </edge>
+    <edge source="com.vironit.mWallet.controllers.WalletController" target="com.vironit.mWallet.models.User">
+      <point x="-94.375" y="-168.0" />
+      <point x="991.0131720430114" y="1504.0" />
+      <point x="762.1249999999999" y="1504.0" />
+      <point x="762.1249999999999" y="352.0" />
+      <point x="816.4250000000001" y="352.0" />
+      <point x="-8.199999999999932" y="136.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="0.4666039510818438" x="940.0" y="1053.0" />
+  <settings layout="Hierarchic Group" zoom="0.3424725822532403" x="1509.5" y="1438.2911208151384" />
   <SelectedNodes />
   <Categories>
     <Category>Fields</Category>
@@ -308,7 +349,7 @@
     <Category>Methods</Category>
     <Category>Properties</Category>
   </Categories>
-  <SCOPE>All</SCOPE>
+  <SCOPE>Project Files</SCOPE>
   <VISIBILITY>private</VISIBILITY>
 </Diagram>
 

@@ -14,7 +14,7 @@
     <title>Add user</title>
 </head>
 <body>
-<c:url value="/users/addUser" var="var"/>
+<c:url value="/com.vironit.mWallet.users/addUser" var="var"/>
 <form action="${var}" method="POST">
     <label for="name">name</label>
     <input type="text" name="name" id="name">
@@ -24,7 +24,7 @@
     <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 
     <br>
-    <a href="/users">Back to users</a>
+    <a href="/com.vironit.mWallet.users">Back to com.vironit.mWallet.users</a>
 </form>
 </body>
 </html>

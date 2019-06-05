@@ -2,12 +2,90 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="mobile-wallet:war exploded" />
+      <artifact name="mWallet" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a4b0297-a3d1-40e4-a049-cc617e42d7e7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/core/SpringSecurityInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/mobile_wallet.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/mWallet.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Class diagramm.png" beforeDir="false" afterPath="$PROJECT_DIR$/Class diagramm.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Class diagramm.uml" beforeDir="false" afterPath="$PROJECT_DIR$/Class diagramm.uml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/config/AppInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/AppInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/config/core/SpringSecurityInitializer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/controllers/CurrencyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/controllers/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controllers/WalletController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/controllers/WalletController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CurrencyDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/CurrencyDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoHibernate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/CurrencyDaoHibernate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/CurrencyDaoJDBC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/WalletDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/WalletDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/models/Wallet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Wallet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/CurrencyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/services/WalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/WalletService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/HibernateSessionFactoryUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/utils/HibernateSessionFactoryUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/addCurrency.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/addCurrency.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/currencies.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/currencies.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/editCurrency.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/editCurrency.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/addUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/addUser.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/editUser.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/editUser.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/users.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/users.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addBalance.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addBalance.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addWallet.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addWallet.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/editWallet.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/editWallet.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/reduceBalance.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/reduceBalance.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/transferMoney.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/transferMoney.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/wallets.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/wallets.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/currency/CurrencyTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/currency/CurrencyTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/CurrencyDaoTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/UserDaoTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/WalletDaoTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/CurrencyServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/CurrencyServiceTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/UserServiceTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/WalletServiceTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/users/UserTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/users/UserTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/vironit/mWallet/wallets/WalletTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config/AppInitializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config/WebConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config/core/SpringSecurityInitializer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/CurrencyController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/MainController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/controllers/WalletController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/CurrencyDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/UserDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/dao/WalletDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/Currency.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/models/Wallet.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/services/CurrencyService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/services/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/services/WalletService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/utils/HibernateSessionFactoryUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/currency/CurrencyTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/CurrencyDaoTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/UserDaoTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/dao/WalletDaoTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/services/CurrencyServiceTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/services/UserServiceTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/services/WalletServiceTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/users/UserTester.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/wallets/WalletTester.class" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -108,24 +186,79 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/addCurrency.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+            <state relative-caret-position="129">
+              <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/currencies.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1224">
+              <caret line="72" column="133" selection-start-line="72" selection-start-column="133" selection-end-line="72" selection-end-column="133" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Wallet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Currency.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+              <folding>
+                <element signature="e#601#602#0" expanded="true" />
+                <element signature="e#626#627#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/editCurrency.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="42" column="144" selection-start-line="42" selection-start-column="144" selection-end-line="42" selection-end-column="144" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC.java">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="34">
+              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -147,6 +280,11 @@
       <find>getFirstName</find>
       <find>walle</find>
       <find>wall</find>
+      <find>servlet</find>
+      <find>models</find>
+      <find>user1</find>
+      <find>align</find>
+      <find>bold</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -163,57 +301,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/addWallet.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editWallet.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/WalletDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/WalletService.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/wallets.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/transferMoney.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/config/core/SpringSecurityInitializer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/config/WebConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/currencies.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/addCurrency.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/editCurrency.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/editUser.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/addUser.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controllers/UserController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/users.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addBalance.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/addWallet.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/editWallet.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/reduceBalance.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/transferMoney.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/wallets.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/registry.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controllers/MainController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/services/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/config/SecurityConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-        <option value="$PROJECT_DIR$/README.txt" />
         <option value="$PROJECT_DIR$/README.MD" />
         <option value="$PROJECT_DIR$/src/main/java/models/User.java" />
-        <option value="$PROJECT_DIR$/src/test/java/users/UserTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" />
         <option value="$PROJECT_DIR$/src/main/java/dao/CurrencyDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoHibernate.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controllers/WalletController.java" />
-        <option value="$PROJECT_DIR$/src/test/java/currency/CurrencyTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/services/CurrencyServiceTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" />
-        <option value="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" />
         <option value="$PROJECT_DIR$/src/main/java/utils/DriverSource.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/utils/jdbcConnection.java" />
         <option value="$PROJECT_DIR$/src/main/java/utils/CurrencyDaoJDBC.java" />
         <option value="$PROJECT_DIR$/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/services/CurrencyService.java" />
-        <option value="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" />
-        <option value="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoHibernate.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/AddServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/ListServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/config/AppInitializer.java" />
+        <option value="$PROJECT_DIR$/src/main/web/WEB-INF/index.html" />
+        <option value="$PROJECT_DIR$/src/main/web/index.html" />
+        <option value="$PROJECT_DIR$/src/main/java/config/WebConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controllers/MainController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controllers/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/controllers/WalletController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/config/core/SpringSecurityInitializer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/config/SecurityConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/AddCurrencyServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/CurrenciesServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/DeleteCurrencyServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/servlets/EditCurrencyServlet.java" />
+        <option value="$PROJECT_DIR$/src/test/java/currency/CurrencyTester.java" />
         <option value="$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/services/CurrencyServiceTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/services/UserServiceTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/users/UserTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/wallets/WalletTester.java" />
+        <option value="$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java" />
+        <option value="$PROJECT_DIR$/src/main/java/models/Currency.java" />
+        <option value="$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java" />
+        <option value="$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC.java" />
+        <option value="$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/dao/CurrencyDaoHibernate.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/utils/HibernateSessionFactoryUtil.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/User.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Wallet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Currency.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/pages/addCurrency.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/pages/currencies.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/pages/editCurrency.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -259,153 +397,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="currency" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="dao" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="services" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mobile-wallet" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mobile-wallet" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="wallets" type="462c0819:PsiDirectoryNode" />
+              <item name="mWallet" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mWallet" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="CatdeaLogs" />
     </panes>
@@ -416,36 +419,43 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../IntroductionToJava/Assignment 4" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages\walletPages" />
-      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages\currencyPages" />
-      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages\userPages" />
-      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF" />
-    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="utils" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp\pages" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp\currencies" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp\pages\currencies" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp\WEB-INF" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.vironit.mWallet" />
+      <recent name="com.vironit" />
       <recent name="dao" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="servlets" />
       <recent name="dao" />
       <recent name="currency" />
       <recent name="services" />
       <recent name="wallets" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp\WEB-INF\pages" />
-      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\webapp" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\web" />
+      <recent name="C:\Users\Belnarto\git\mobile-wallet\src\main\web\WEB-INF" />
+      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages\walletPages" />
+      <recent name="C:\Users\Belnarto\git\mobile-purse-v.2\src\main\webapp\WEB-INF\pages\currencyPages" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -460,80 +470,78 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Tomcat Server.mobile-wallet">
+  <component name="RunManager" selected="JUnit.com.vironit.mWallet in mWallet">
     <configuration name="All in mobile-wallet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mobile-wallet" />
+      <module name="mWallet" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyDaoTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mobile-wallet" />
+    <configuration name="UserTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mWallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="dao.*" />
+          <option name="PATTERN" value="com.vironit.mWallet.users.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="dao" />
-      <option name="MAIN_CLASS_NAME" value="dao.CurrencyDaoTester" />
+      <option name="PACKAGE_NAME" value="com.vironit.mWallet.users" />
+      <option name="MAIN_CLASS_NAME" value="com.vironit.mWallet.users.UserTester" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyServiceTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mobile-wallet" />
+    <configuration name="WalletServiceTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mWallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="services.*" />
+          <option name="PATTERN" value="com.vironit.mWallet.services.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="services" />
-      <option name="MAIN_CLASS_NAME" value="services.CurrencyServiceTester" />
+      <option name="MAIN_CLASS_NAME" value="com.vironit.services.WalletServiceTester" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CurrencyServiceTester.findByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mobile-wallet" />
+    <configuration name="WalletTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mWallet" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="services.*" />
+          <option name="PATTERN" value="com.vironit.mWallet.wallets.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="services" />
-      <option name="MAIN_CLASS_NAME" value="services.CurrencyServiceTester" />
-      <option name="METHOD_NAME" value="findByIdTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UserDaoTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="mobile-wallet" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dao.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="dao" />
-      <option name="MAIN_CLASS_NAME" value="dao.UserDaoTester" />
+      <option name="PACKAGE_NAME" value="com.vironit.mWallet.wallets" />
+      <option name="MAIN_CLASS_NAME" value="com.vironit.mWallet.wallets.WalletTester" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="mobile-wallet" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.20" ALTERNATIVE_JRE_ENABLED="false">
+    <configuration name="com.vironit.mWallet in mWallet" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="mWallet" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vironit.mWallet.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.vironit.mWallet" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="mWallet" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.20" ALTERNATIVE_JRE_ENABLED="false">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="mobile-wallet:war exploded">
+        <artifact name="mWallet">
           <settings>
             <option name="CONTEXT_PATH" value="/" />
           </settings>
@@ -599,24 +607,25 @@
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
           <artifact name="mobile-wallet:war exploded" />
+          <artifact name="mWallet" />
         </option>
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.WalletServiceTester" />
+      <item itemvalue="JUnit.UserTester" />
+      <item itemvalue="JUnit.WalletTester" />
       <item itemvalue="JUnit.All in mobile-wallet" />
-      <item itemvalue="Tomcat Server.mobile-wallet" />
-      <item itemvalue="JUnit.UserDaoTester" />
-      <item itemvalue="JUnit.CurrencyServiceTester.findByIdTest" />
-      <item itemvalue="JUnit.CurrencyServiceTester" />
-      <item itemvalue="JUnit.CurrencyDaoTester" />
+      <item itemvalue="Tomcat Server.mWallet" />
+      <item itemvalue="JUnit.com.vironit.mWallet in mWallet" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.com.vironit.mWallet in mWallet" />
         <item itemvalue="JUnit.All in mobile-wallet" />
-        <item itemvalue="JUnit.CurrencyDaoTester" />
-        <item itemvalue="JUnit.CurrencyServiceTester" />
-        <item itemvalue="JUnit.CurrencyServiceTester.findByIdTest" />
-        <item itemvalue="JUnit.UserDaoTester" />
+        <item itemvalue="JUnit.WalletTester" />
+        <item itemvalue="JUnit.UserTester" />
+        <item itemvalue="JUnit.WalletServiceTester" />
       </list>
     </recent_temporary>
   </component>
@@ -637,7 +646,9 @@
       <workItem from="1559475521927" duration="19245000" />
       <workItem from="1559553413283" duration="607000" />
       <workItem from="1559557843896" duration="65000" />
-      <workItem from="1559557913838" duration="24481000" />
+      <workItem from="1559557913838" duration="61085000" />
+      <workItem from="1559766716703" duration="13000" />
+      <workItem from="1559766756822" duration="1647000" />
     </task>
     <task id="LOCAL-00001" summary="Readme changed">
       <created>1559558364006</created>
@@ -674,43 +685,50 @@
       <option name="project" value="LOCAL" />
       <updated>1559633215474</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="CurrencyDao was realized as interface.&#10;There are two implementation of it via Hibernate and via JDBC.&#10;In Currency service JDBC is in use now.">
+      <created>1559633540581</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1559633540581</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 08m 37s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
+    <history-entry file="WalletServiceTester - 2019.06.05 at 22h 16m 09s.xml">
+      <configuration name="WalletServiceTester" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 10m 06s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
+    <history-entry file="UserTester - 2019.06.05 at 22h 16m 20s.xml">
+      <configuration name="UserTester" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 10m 19s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
+    <history-entry file="WalletTester - 2019.06.05 at 22h 16m 33s.xml">
+      <configuration name="WalletTester" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 13m 38s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 16m 04s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CurrencyServiceTester_findByIdTest - 2019.06.04 at 10h 16m 22s.xml">
-      <configuration name="CurrencyServiceTester.findByIdTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="CurrencyServiceTester - 2019.06.04 at 10h 16m 41s.xml">
-      <configuration name="CurrencyServiceTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_mobile-wallet - 2019.06.04 at 10h 17m 01s.xml">
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 22h 16m 53s.xml">
       <configuration name="All in mobile-wallet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="CurrencyDaoTester - 2019.06.04 at 10h 18m 24s.xml">
-      <configuration name="CurrencyDaoTester" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="All_in_mobile-wallet - 2019.06.04 at 10h 19m 14s.xml">
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 23h 34m 57s.xml">
       <configuration name="All in mobile-wallet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 23h 36m 36s.xml">
+      <configuration name="All in mobile-wallet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 23h 37m 15s.xml">
+      <configuration name="All in mobile-wallet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 23h 38m 05s.xml">
+      <configuration name="All in mobile-wallet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="All_in_mobile-wallet - 2019.06.05 at 23h 39m 08s.xml">
+      <configuration name="All in mobile-wallet" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="com_vironit_mWallet_in_mWallet - 2019.06.05 at 23h 58m 28s.xml">
+      <configuration name="com.vironit.mWallet in mWallet" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152486000" />
+    <option name="totallyTimeSpent" value="190750000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -726,7 +744,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Web" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2675906" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1663113" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -737,13 +755,13 @@
       <window_info anchor="bottom" id="Application Servers" order="1" weight="0.32694152" />
       <window_info anchor="bottom" id="Spring" order="2" weight="0.32981783" />
       <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="4" weight="0.32310644" />
+      <window_info anchor="bottom" id="Messages" order="4" weight="0.32149202" />
       <window_info anchor="bottom" id="Database Changes" order="5" weight="0.32981783" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32981783" />
-      <window_info anchor="bottom" id="Find" order="8" weight="0.3285968" />
-      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" weight="0.27708533" />
-      <window_info anchor="bottom" id="Debug" order="10" weight="0.26653883" />
+      <window_info anchor="bottom" id="Find" order="8" weight="0.3279003" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" visible="true" weight="0.2924257" />
+      <window_info anchor="bottom" id="Debug" order="10" weight="0.22339405" />
       <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="13" weight="0.32981783" />
@@ -761,6 +779,43 @@
       <window_info anchor="right" id="Capture Analysis" order="8" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Web" order="0" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.23076923" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Designer" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Java Enterprise" order="0" weight="0.32981783" />
+      <window_info anchor="bottom" id="Application Servers" order="1" weight="0.32694152" />
+      <window_info anchor="bottom" id="Spring" order="2" weight="0.32981783" />
+      <window_info anchor="bottom" id="Docker" order="3" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="4" weight="0.32149202" />
+      <window_info anchor="bottom" id="Database Changes" order="5" weight="0.32981783" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="Database Console" order="7" weight="0.32981783" />
+      <window_info anchor="bottom" id="Find" order="8" weight="0.3285968" />
+      <window_info anchor="bottom" id="Run" order="9" sideWeight="0.49946696" visible="true" weight="0.29307282" />
+      <window_info anchor="bottom" id="Debug" order="10" weight="0.41385436" />
+      <window_info anchor="bottom" id="Cvs" order="11" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="12" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="13" weight="0.32981783" />
+      <window_info anchor="bottom" id="Terminal" order="14" weight="0.32885906" />
+      <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.50053304" side_tool="true" weight="0.16395015" />
+      <window_info anchor="bottom" id="Version Control" order="16" weight="0.3279003" />
+      <window_info anchor="right" id="Coverage" order="0" sideWeight="0.502551" side_tool="true" weight="0.25020242" />
+      <window_info anchor="right" id="Database" order="1" sideWeight="0.49744898" weight="0.20682302" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="5" />
+      <window_info anchor="right" id="Maven" order="6" weight="0.3033049" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="8" />
+      <window_info anchor="right" id="Palette&#9;" order="9" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -790,6 +845,20 @@
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Readme changed" />
@@ -803,10 +872,22 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java</url>
-          <line>62</line>
+          <url>file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/CurrencyServiceTester.java</url>
+          <line>39</line>
           <properties />
-          <option name="timeStamp" value="4" />
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/wallets/WalletTester.java</url>
+          <line>77</line>
+          <properties />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/WalletDaoTester.java</url>
+          <line>35</line>
+          <properties />
+          <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -825,281 +906,110 @@
     <SUITE FILE_PATH="coverage/mobilepursev2$All_in_mobile_purse_v_2.ic" NAME="All in mobile-purse-v.2 Coverage Results" MODIFIED="1559207714114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/transferMoney.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/users.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/walletPages/wallets.jsp" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.1.1.RELEASE/spring-webmvc-5.1.1.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.class">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/currencies/addCurrency.jsp" />
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/currencies.jsp" />
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/currencies/currencies.jsp" />
+    <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/javax.servlet-api/4.0.1/javax.servlet-api-4.0.1.jar!/javax/servlet/ServletRequest.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="569" selection-start-line="569" selection-end-line="569" />
+        <state relative-caret-position="124">
+          <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-core/3.2.3.RELEASE/spring-security-core-3.2.3.RELEASE.jar!/org/springframework/security/core/userdetails/User.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="e#2024#2025#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/userPages/addUser.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/registry.jsp" />
-    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/5.4.2.Final/hibernate-core-5.4.2.Final-sources.jar!/org/hibernate/internal/SessionImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="699" selection-start-line="699" selection-end-line="699" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.1.1.RELEASE/spring-web-5.1.1.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="126" selection-start-line="126" selection-end-line="126" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp" />
-    <entry file="file://$PROJECT_DIR$/README.MD">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="24" lean-forward="true" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JavaScript-modules-diagram/C:/Users/Belnarto/git/mobile-wallet/src/main/java/config;C:/Users/Belnarto/git/mobile-wallet/src/main/java/controllers;C:/Users/Belnarto/git/mobile-wallet/src/main/java/dao;C:/Users/Belnarto/git/mobile-wallet/src/main/java/models;C:/Users/Belnarto/git/mobile-wallet/src/main/java/services;C:/Users/Belnarto/git/mobile-wallet/src/main/java/utils;">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JavaScript-modules-diagram</ID>
-          <OriginalElement>$PROJECT_DIR$/src/main/java/config;C:/Users/Belnarto/git/mobile-wallet/src/main/java/controllers;C:/Users/Belnarto/git/mobile-wallet/src/main/java/dao;C:/Users/Belnarto/git/mobile-wallet/src/main/java/models;C:/Users/Belnarto/git/mobile-wallet/src/main/java/services;C:/Users/Belnarto/git/mobile-wallet/src/main/java/utils;</OriginalElement>
-          <nodes />
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="687.0" y="327.5" />
-          <SelectedNodes />
-          <Categories>
-            <Category>All</Category>
-          </Categories>
-          <VISIBILITY>Details</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement />
-          <nodes>
-            <node x="" y="">dao</node>
-            <node x="" y="">utils</node>
-            <node x="" y="">controllers</node>
-            <node x="" y="">currency</node>
-            <node x="" y="">models</node>
-            <node x="" y="">wallets</node>
-            <node x="" y="">services</node>
-            <node x="" y="">users</node>
-            <node x="" y="">config</node>
-            <node x="" y="">Main</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="309.5" y="301.5" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Inner Classes</Category>
-            <Category>Properties</Category>
-            <Category>Methods</Category>
-            <Category>Constructors</Category>
-            <Category>Fields</Category>
-          </Categories>
-          <SCOPE>Project Files</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="uml://JAVA/config">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>JAVA</ID>
-          <OriginalElement>config</OriginalElement>
-          <nodes>
-            <node x="" y="">config.WebConfig</node>
-            <node x="" y="">config.SecurityConfig</node>
-            <node x="" y="">config.AppInitializer</node>
-            <node x="" y="">config.core</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.1" x="134.0" y="85.49999999999997" />
-          <SelectedNodes />
-          <Categories />
-          <SCOPE>All</SCOPE>
-          <VISIBILITY>private</VISIBILITY>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/config/AppInitializer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/config/SecurityConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/config/WebConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/controllers/CurrencyController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <caret line="31" column="28" lean-forward="true" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controllers/MainController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/servlets/AddCurrencyServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controllers/UserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-263">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/Currency.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="30" lean-forward="true" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/models/Wallet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controllers/WalletController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="24" selection-start-line="24" selection-end-line="24" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/WalletService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controllers/CurrencyController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="17" selection-start-line="17" selection-end-line="17" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="16" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utils/DriverSource.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/javax/naming/InitialContext.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="415" column="18" selection-start-line="415" selection-start-column="18" selection-end-line="415" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/postgresql/postgresql/9.4.1212.jre7/postgresql-9.4.1212.jre7.jar!/org/postgresql/ds/common/BaseDataSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="75" column="16" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/postgresql/postgresql/9.4.1212.jre7/postgresql-9.4.1212.jre7.jar!/org/postgresql/ds/PGPoolingDataSource.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="78" column="23" selection-start-line="78" selection-start-column="23" selection-end-line="78" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="536">
-          <caret line="98" column="21" selection-start-line="98" selection-start-column="21" selection-end-line="98" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        <state relative-caret-position="163">
+          <caret line="27" column="8" lean-forward="true" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC2.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/servlets/CurrenciesServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="53" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="53" />
+        <state relative-caret-position="187">
+          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#156#157#0" expanded="true" />
-            <element signature="e#183#184#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utils/HibernateSessionFactoryUtil.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="34" column="47" selection-start-line="34" selection-start-column="47" selection-end-line="34" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/currencyPages/editCurrency.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="15" column="6" lean-forward="true" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/servlets/DeleteCurrencyServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/CurrencyService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="15" selection-start-line="15" selection-end-line="15" selection-end-column="52" />
+          <caret line="18" column="5" lean-forward="true" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#657#658#0" expanded="true" />
-            <element signature="e#699#700#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/servlets/EditCurrencyServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+          <caret line="31" column="39" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/WalletService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="40" column="4" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="4" />
+          <folding>
+            <element signature="e#615#616#0" expanded="true" />
+            <element signature="e#653#654#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.5.0-M1/junit-platform-commons-1.5.0-M1.jar!/org/junit/platform/commons/util/ReflectionUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="356" selection-start-line="356" selection-end-line="356" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/CurrencyDaoTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="147" column="41" selection-start-line="147" selection-start-column="41" selection-end-line="147" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/CurrencyServiceTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="149" column="45" selection-start-line="149" selection-start-column="45" selection-end-line="149" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="47" column="12" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
             <element signature="e#0#21#1" expanded="true" />
@@ -1107,10 +1017,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/WalletDao.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/WalletServiceTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        <state relative-caret-position="271">
+          <caret line="103" column="45" selection-start-line="103" selection-start-column="45" selection-end-line="103" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="1256" selection-start-line="1256" selection-end-line="1256" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="36" column="16" selection-start-line="36" selection-start-column="16" selection-end-line="36" selection-end-column="16" />
+          <folding>
+            <element signature="e#1019#1020#0" expanded="true" />
+            <element signature="e#1055#1056#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/wallets/WalletTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="560" column="9" lean-forward="true" selection-start-line="560" selection-start-column="9" selection-end-line="560" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/hibernate/hibernate-core/5.4.2.Final/hibernate-core-5.4.2.Final-sources.jar!/org/hibernate/internal/SessionImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="699" selection-start-line="699" selection-end-line="699" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/WalletDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
           <folding>
             <element signature="e#0#42#1" expanded="true" />
             <element signature="e#0#46#1" expanded="true" />
@@ -1119,59 +1068,185 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/UserService.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/users/UserTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        <state relative-caret-position="422">
+          <caret line="74" column="37" selection-start-line="74" selection-start-column="37" selection-end-line="74" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/currency/CurrencyTester.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/services/UserServiceTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="43" column="51" selection-start-line="43" selection-start-column="51" selection-end-line="43" selection-end-column="51" />
+        <state relative-caret-position="1955">
+          <caret line="121" column="37" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/UserDaoTester.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/services/CurrencyService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2057">
-          <caret line="128" column="33" selection-start-line="128" selection-start-column="33" selection-end-line="128" selection-end-column="33" />
+        <state relative-caret-position="306">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#722#723#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/WalletDaoTester.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/WalletDaoTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="20" selection-start-line="20" selection-end-line="20" selection-end-column="60" />
+        <state relative-caret-position="145">
+          <caret line="36" selection-start-line="36" selection-end-line="39" selection-end-column="59" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/services/CurrencyServiceTester.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/currency/CurrencyTester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2346">
-          <caret line="144" selection-start-line="144" selection-end-line="144" />
+        <state relative-caret-position="248">
+          <caret line="119" selection-start-line="119" selection-end-line="119" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/services/UserServiceTester.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/vironit/mWallet/dao/UserDaoTester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="33" column="59" lean-forward="true" selection-start-line="33" selection-start-column="59" selection-end-line="33" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/res/w3.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="13" column="76" selection-start-line="13" selection-start-column="72" selection-end-line="13" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fqw.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/rewr2.java" />
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/utils/HibernateSessionFactoryUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+          <caret line="6" column="5" lean-forward="true" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/services/WalletServiceTester.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/core/SpringSecurityInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="18" selection-start-line="18" selection-end-line="18" selection-end-column="60" />
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/users/UserTester.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/AppInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="77" column="43" selection-start-line="77" selection-start-column="43" selection-end-line="77" selection-end-column="43" />
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/SecurityConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/config/WebConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/CurrencyDaoHibernate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/dao/CurrencyDaoJDBC.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1105">
+          <caret line="65" column="25" selection-start-line="65" selection-start-column="25" selection-end-line="65" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Wallet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/vironit/mWallet/models/Currency.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="e#601#602#0" expanded="true" />
+            <element signature="e#626#627#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/addCurrency.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="25" column="46" selection-start-line="25" selection-start-column="46" selection-end-line="25" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/currencies.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1224">
+          <caret line="72" column="133" selection-start-line="72" selection-start-column="133" selection-end-line="72" selection-end-column="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/editCurrency.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="42" column="144" selection-start-line="42" selection-start-column="144" selection-end-line="42" selection-end-column="144" />
         </state>
       </provider>
     </entry>
@@ -1181,29 +1256,34 @@
           <ID>JAVA</ID>
           <OriginalElement />
           <nodes>
-            <node x="" y="">dao.WalletDao</node>
-            <node x="" y="">config.AppInitializer</node>
-            <node x="" y="">dao.CurrencyDaoJDBC</node>
-            <node x="" y="">controllers.WalletController</node>
-            <node x="" y="">controllers.MainController</node>
-            <node x="" y="">controllers.UserController</node>
-            <node x="" y="">config.WebConfig</node>
-            <node x="" y="">services.WalletService</node>
-            <node x="" y="">models.Wallet</node>
-            <node x="" y="">dao.CurrencyDao</node>
-            <node x="" y="">config.SecurityConfig</node>
-            <node x="" y="">services.CurrencyService</node>
-            <node x="" y="">utils.HibernateSessionFactoryUtil</node>
-            <node x="" y="">services.UserService</node>
-            <node x="" y="">models.Currency</node>
-            <node x="" y="">dao.UserDao</node>
-            <node x="" y="">models.User</node>
-            <node x="" y="">dao.CurrencyDaoHibernate</node>
-            <node x="" y="">controllers.CurrencyController</node>
+            <node x="" y="">com.vironit.mWallet.services.WalletService</node>
+            <node x="" y="">com.vironit.mWallet.models.Wallet</node>
+            <node x="" y="">com.vironit.mWallet.dao.UserDao</node>
+            <node x="" y="">com.vironit.mWallet.models.User</node>
+            <node x="" y="">com.vironit.mWallet.config.SecurityConfig</node>
+            <node x="" y="">com.vironit.mWallet.servlets.AddCurrencyServlet</node>
+            <node x="" y="">com.vironit.mWallet.config.AppInitializer</node>
+            <node x="" y="">com.vironit.mWallet.config.WebConfig</node>
+            <node x="" y="">com.vironit.mWallet.servlets.DeleteCurrencyServlet</node>
+            <node x="" y="">com.vironit.mWallet.utils.HibernateSessionFactoryUtil</node>
+            <node x="" y="">com.vironit.mWallet.controllers.MainController</node>
+            <node x="" y="">com.vironit.mWallet.dao.CurrencyDao</node>
+            <node x="" y="">com.vironit.mWallet.services.UserService</node>
+            <node x="" y="">com.vironit.mWallet.servlets.EditCurrencyServlet</node>
+            <node x="" y="">com.vironit.mWallet.servlets.CurrenciesServlet</node>
+            <node x="" y="">com.vironit.mWallet.config.core.SpringSecurityInitializer</node>
+            <node x="" y="">com.vironit.mWallet.dao.CurrencyDaoJDBC</node>
+            <node x="" y="">com.vironit.mWallet.controllers.CurrencyController</node>
+            <node x="" y="">com.vironit.mWallet.services.CurrencyService</node>
+            <node x="" y="">com.vironit.mWallet.dao.CurrencyDaoHibernate</node>
+            <node x="" y="">com.vironit.mWallet.models.Currency</node>
+            <node x="" y="">com.vironit.mWallet.controllers.WalletController</node>
+            <node x="" y="">com.vironit.mWallet.dao.WalletDao</node>
+            <node x="" y="">com.vironit.mWallet.controllers.UserController</node>
           </nodes>
           <notes />
           <edges />
-          <settings layout="Hierarchic Group" zoom="0.4666039510818438" x="402.070564516129" y="743.3155241935484" />
+          <settings layout="Hierarchic Group" zoom="0.3424725822532403" x="1509.5" y="1438.2911208151384" />
           <SelectedNodes />
           <Categories>
             <Category>Fields</Category>
@@ -1211,52 +1291,22 @@
             <Category>Methods</Category>
             <Category>Properties</Category>
           </Categories>
-          <SCOPE>All</SCOPE>
+          <SCOPE>Project Files</SCOPE>
           <VISIBILITY>private</VISIBILITY>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/wallets/WalletTester.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="25" lean-forward="true" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="25" />
+        <state relative-caret-position="357">
+          <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDao.java">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="32" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDaoHibernate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="55" column="73" selection-start-line="55" selection-start-column="73" selection-end-line="55" selection-end-column="73" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/dao/CurrencyDaoTester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="5" lean-forward="true" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/CurrencyDaoJDBC.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -1266,11 +1316,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>mobile-wallet</last-edited>
+          <last-edited>mWallet</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -1313,7 +1364,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>mobile-wallet</last-edited>
+          <last-edited>mWallet</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

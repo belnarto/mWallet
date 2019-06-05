@@ -19,20 +19,20 @@
         <tr>
             <th>id</th>
             <th>balance</th>
-            <th>currency</th>
+            <th>com.vironit.mWallet.currency</th>
             <th>actions</th>
         </tr>
-        <c:forEach var="wallet" items="${wallets}">
+        <c:forEach var="wallet" items="${com.vironit.mWallet.wallets}">
             <tr>
                 <td>${wallet.id}</td>
                 <td>${wallet.balance}</td>
-                <td>${wallet.currency}</td>
+                <td>${wallet.com.vironit.mWallet.currency}</td>
                 <td>
-                    <a href="/users/${id}/wallets/addBalance/${wallet.id}">add money</a>
-                    <a href="/users/${id}/wallets/reduceBalance/${wallet.id}">spend money</a>
-                    <a href="/users/${id}/wallets/transferMoney/${wallet.id}">transfer money</a>
-                    <a href="/users/${id}/wallets/editWallet/${wallet.id}">edit</a>
-                    <a href="/users/${id}/wallets/deleteWallet/${wallet.id}">delete</a>
+                    <a href="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/addBalance/${wallet.id}">add money</a>
+                    <a href="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/reduceBalance/${wallet.id}">spend money</a>
+                    <a href="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/transferMoney/${wallet.id}">transfer money</a>
+                    <a href="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/editWallet/${wallet.id}">edit</a>
+                    <a href="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/deleteWallet/${wallet.id}">delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -41,7 +41,7 @@
     <h3>Operations:</h3>
     <ul>
         <li>
-            <c:url value="/users/${id}/wallets/addWallet" var="add"/>
+            <c:url value="/com.vironit.mWallet.users/${id}/com.vironit.mWallet.wallets/addWallet" var="add"/>
             <a href="${add}">Add new wallet</a>
         </li>
     </ul>

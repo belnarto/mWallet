@@ -14,7 +14,7 @@
     <title>Edit user</title>
 </head>
 <body>
-<c:url value="/users/editUser" var="var"/>
+<c:url value="/com.vironit.mWallet.users/editUser" var="var"/>
 <form action="${var}" method="POST">
     <input type="hidden" name="id" value="${user.id}">
 
@@ -26,7 +26,7 @@
     <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 
     <br>
-    <a href="/users">Back to users</a>
+    <a href="/com.vironit.mWallet.users">Back to com.vironit.mWallet.users</a>
 </form>
 </body>
 </html>

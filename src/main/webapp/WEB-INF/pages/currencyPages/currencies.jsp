@@ -23,14 +23,14 @@
             <th>rate</th>
             <th>actions</th>
         </tr>
-        <c:forEach var="currency" items="${currencies}">
+        <c:forEach var="com.vironit.mWallet.currency" items="${currencies}">
             <tr>
-                <td>${currency.id}</td>
-                <td>${currency.name}</td>
-                <td>${currency.rate}</td>
+                <td>${com.vironit.mWallet.currency.id}</td>
+                <td>${com.vironit.mWallet.currency.name}</td>
+                <td>${com.vironit.mWallet.currency.rate}</td>
                 <td>
-                    <a href="/currencies/editCurrency/${currency.id}">edit</a>
-                    <a href="/currencies/deleteCurrency/${currency.id}">delete</a>
+                    <a href="/currencies/editCurrency/${com.vironit.mWallet.currency.id}">edit</a>
+                    <a href="/currencies/deleteCurrency/${com.vironit.mWallet.currency.id}">delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -40,11 +40,11 @@
     <ul>
         <li>
             <c:url value="/currencies/addCurrency" var="add"/>
-            <a href="${add}">Add new currency</a>
+            <a href="${add}">Add new com.vironit.mWallet.currency</a>
         </li>
     </ul>
     <br>
-    <a href="/${currency.id}">Back to main</a>
+    <a href="/${com.vironit.mWallet.currency.id}">Back to main</a>
 
     <c:if test="${pageContext.request.userPrincipal.name != null}">
         <h3>You are logged as : ${pageContext.request.userPrincipal.name}
