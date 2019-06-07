@@ -4,6 +4,8 @@ import com.vironit.mWallet.models.User;
 import org.junit.jupiter.api.Test;
 import com.vironit.mWallet.services.UserService;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTester {
@@ -31,6 +33,11 @@ class UserTester {
     void getIdTest() {
         try {
             user = new User("Test","Test","Test");
+            Optional<User> userOpt = UserService.findAll().stream()
+                    .filter( u -> u.getLogin().equals("Test") )
+                    .findAny();
+            userOpt.ifPresent( u -> UserService.delete(u));
+            user.setRole("ROLE_USER");
             UserService.save(user);
             id = user.getId();
             assertTrue( id > 0 );
@@ -45,6 +52,11 @@ class UserTester {
     void setAndGetNameTest() {
         try {
             user = new User("Test","Test","Test");
+            Optional<User> userOpt = UserService.findAll().stream()
+                    .filter( u -> u.getLogin().equals("Test") )
+                    .findAny();
+            userOpt.ifPresent( u -> UserService.delete(u));
+            user.setRole("ROLE_USER");
             UserService.save(user);
             id = user.getId();
             user.setName("Test2");
@@ -68,7 +80,17 @@ class UserTester {
     void equalsTest() {
         try {
             user = new User("Test","Test","Test");
+            Optional<User> userOpt = UserService.findAll().stream()
+                    .filter( u -> u.getLogin().equals("Test") )
+                    .findAny();
+            userOpt.ifPresent( u -> UserService.delete(u));
+            user.setRole("ROLE_USER");
             user = new User("Test2","Test2","Test2");
+            userOpt = UserService.findAll().stream()
+                    .filter( u -> u.getLogin().equals("Test2") )
+                    .findAny();
+            userOpt.ifPresent( u -> UserService.delete(u));
+            user.setRole("ROLE_USER");
             assertFalse(user.equals(user2));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -77,6 +99,11 @@ class UserTester {
 
         try {
             user = new User("Test","Test","Test");
+            Optional<User> userOpt = UserService.findAll().stream()
+                    .filter( u -> u.getLogin().equals("Test") )
+                    .findAny();
+            userOpt.ifPresent( u -> UserService.delete(u));
+            user.setRole("ROLE_USER");
             user2 = user;
             assertTrue(user.equals(user2));
         } catch (Exception e) {
