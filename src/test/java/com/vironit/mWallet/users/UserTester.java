@@ -23,7 +23,7 @@ class UserTester {
         }
 
         try {
-            new User("Test","Test","Test");
+            new User("Test", "Test", "Test");
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -32,15 +32,15 @@ class UserTester {
     @Test
     void getIdTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserService.save(user);
             id = user.getId();
-            assertTrue( id > 0 );
+            assertTrue(id > 0);
             UserService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -51,11 +51,11 @@ class UserTester {
     @Test
     void setAndGetNameTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserService.save(user);
             id = user.getId();
@@ -63,12 +63,12 @@ class UserTester {
             UserService.update(user);
             boolean result = UserService.findAll()
                     .stream()
-                    .filter( u -> u.getId() == id)
+                    .filter(u -> u.getId() == id)
                     .findFirst()
-                    .get()
+                    .orElseThrow(null)
                     .getName()
                     .equals("Test2");
-            assertTrue( result );
+            assertTrue(result);
             UserService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -79,33 +79,33 @@ class UserTester {
     @Test
     void equalsTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
-            user = new User("Test2","Test2","Test2");
+            user = new User("Test2", "Test2", "Test2");
             userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test2") )
+                    .filter(u -> u.getLogin().equals("Test2"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
-            assertFalse(user.equals(user2));
+            assertNotEquals(user,user2);
         } catch (Exception e) {
             fail(e.getMessage());
             UserService.delete(user);
         }
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             user2 = user;
-            assertTrue(user.equals(user2));
+            assertEquals(user,user2);
         } catch (Exception e) {
             fail(e.getMessage());
             UserService.delete(user);

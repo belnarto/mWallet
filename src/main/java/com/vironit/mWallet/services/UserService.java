@@ -16,7 +16,8 @@ import java.util.Set;
 @Service
 public class UserService implements UserDetailsService {
 
-    public UserService() {}
+    public UserService() {
+    }
 
     public static User findById(int id) {
         return UserDao.findById(id);
@@ -50,10 +51,8 @@ public class UserService implements UserDetailsService {
         User user = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(user.getRole()));
-        UserDetails userDetails =
-                new org.springframework.security.core.userdetails.User(user.getLogin(),
-                        user.getPassword(),
-                        roles);
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+                                                                    user.getPassword(),
+                                                                    roles);
     }
 }

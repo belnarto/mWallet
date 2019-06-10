@@ -34,6 +34,7 @@ public class User {
         return login;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setLogin(String login) {
         if(login!=null && !login.equals("")) {
             this.login = login;
@@ -46,6 +47,7 @@ public class User {
         return password;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setPassword(String password) {
         if(login!=null && !login.equals("")) {
             this.password = password;
@@ -58,6 +60,7 @@ public class User {
         return role;
     }
 
+    @SuppressWarnings("unused")
     public void setRole(String role) {
         this.role = "ROLE_USER";
     }

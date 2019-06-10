@@ -1,5 +1,6 @@
 package com.vironit.mWallet.config;
 
+@SuppressWarnings("unused")
 public class AppInitializer {
     //extends AbstractAnnotationConfigDispatcherServletInitializer {
  /*   @Override

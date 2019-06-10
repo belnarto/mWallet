@@ -14,7 +14,8 @@
       </property>
       
       <property name = "hibernate.connection.url">
-         jdbc:postgresql://87.252.246.155:58360/postgres
+<!--         jdbc:postgresql://87.252.246.155:58360/postgres   -->
+         jdbc:postgresql://localhost:5432/postgres
       </property>
       
       <property name = "hibernate.connection.username">

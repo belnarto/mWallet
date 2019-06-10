@@ -12,9 +12,10 @@ import java.util.List;
 @Service
 public class CurrencyService {
 
-    CurrencyDao currencyDao = new CurrencyDaoJDBC();
+    private CurrencyDao currencyDao = new CurrencyDaoJDBC();
 
-    public CurrencyService() {}
+    public CurrencyService() {
+    }
 
     public Currency findById(int id) {
         return currencyDao.findById(id);
@@ -37,14 +38,14 @@ public class CurrencyService {
         if (wallets.size() == 0) {
             currencyDao.delete(currency);
         } else {
-            throw new IllegalArgumentException("There are "+wallets.size()+" com.vironit.mWallet.wallets associated with this com.vironit.mWallet.currency");
+            throw new IllegalArgumentException("There are " + wallets.size() +
+                    " com.vironit.mWallet.wallets associated with this com.vironit.mWallet.currency");
         }
     }
 
     public void update(Currency currency) {
         currencyDao.update(currency);
     }
-
 
 
 }

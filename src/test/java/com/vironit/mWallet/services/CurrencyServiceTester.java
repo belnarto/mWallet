@@ -11,8 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CurrencyServiceTester {
 
     private Currency currency;
-    private int id;
-    CurrencyService currencyService = new CurrencyService();
+    private CurrencyService currencyService = new CurrencyService();
 
     @Test
     void constructorTest() {
@@ -109,7 +108,7 @@ class CurrencyServiceTester {
                     .filter( c -> c.getName().equals("TST") )
                     .findAny();
 
-            currencyService.delete(currencyOpt.get());
+            currencyService.delete(currencyOpt.orElse(null));
 
             currencyOpt = currencyService.findAll().stream()
                     .filter( c -> c.getName().equals("TST") )
@@ -125,6 +124,7 @@ class CurrencyServiceTester {
 
     @Test
     void findByIdTest() {
+        int id;
         try {
             currency = new Currency("TST", 0.01);
 

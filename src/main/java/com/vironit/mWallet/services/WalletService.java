@@ -12,8 +12,6 @@ import java.util.List;
 @Service
 public class WalletService {
 
-    public WalletService() {}
-
     public static Wallet findById(int id) {
         return WalletDao.findById(id);
     }

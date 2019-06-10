@@ -8,10 +8,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("WeakerAccess")
 public class CurrencyDaoTester {
 
     private Currency currency;
-    CurrencyDao currencyDao = new CurrencyDaoJDBC();
+    private CurrencyDao currencyDao = new CurrencyDaoJDBC();
 
     @Test
     public void constructorTest() {

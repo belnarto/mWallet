@@ -16,7 +16,7 @@ class WalletServiceTester {
     private User user;
     private Wallet wallet;
     private Currency currency;
-    CurrencyService currencyService = new CurrencyService();
+    private CurrencyService currencyService = new CurrencyService();
 
     @Test
     void constructorTest() {
@@ -259,7 +259,7 @@ class WalletServiceTester {
                     .filter( w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
                     .collect(Collectors.toList());
 
-            assertTrue( wallets.size() == 2 );
+            assertEquals( wallets.size(), 2 );
 
             UserService.delete(user);
         } catch (Exception e) {
@@ -338,7 +338,7 @@ class WalletServiceTester {
                     .filter( w -> w.equals(wallet) || w.equals(wallet2))
                     .collect(Collectors.toList());
 
-            assertTrue( wallets.size() == 2 );
+            assertEquals( wallets.size(), 2 );
 
             UserService.delete(user);
         } catch (Exception e) {

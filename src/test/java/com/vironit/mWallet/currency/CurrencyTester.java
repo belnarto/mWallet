@@ -8,11 +8,13 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SuppressWarnings("WeakerAccess")
 public class CurrencyTester {
 
-    Currency currency;
-    CurrencyService currencyService = new CurrencyService();
+    private Currency currency;
+    private CurrencyService currencyService = new CurrencyService();
 
+    @SuppressWarnings("WeakerAccess")
     @Test
     public void constructorTest() {
         try {
@@ -28,6 +30,7 @@ public class CurrencyTester {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     @Test
     public void getIdTest() {
         try {
@@ -56,6 +59,7 @@ public class CurrencyTester {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     @Test
     public void setAndGetNameTest() {
         try {
@@ -100,6 +104,7 @@ public class CurrencyTester {
         }
     }
 
+    @SuppressWarnings("WeakerAccess")
     @Test
     public void setAndGetRateTest() {
         try {

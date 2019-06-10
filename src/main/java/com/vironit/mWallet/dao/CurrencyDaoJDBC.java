@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vironit.mWallet.models.Currency;
-import com.vironit.mWallet.utils.DataSource;
+import com.vironit.mWallet.config.DataSource;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 
 public class CurrencyDaoJDBC implements CurrencyDao {

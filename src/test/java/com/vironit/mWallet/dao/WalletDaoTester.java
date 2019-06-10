@@ -19,8 +19,9 @@ class WalletDaoTester {
     private User user;
     private Currency currency;
     private Currency currency2;
-    CurrencyService currencyService = new CurrencyService();
+    private CurrencyService currencyService = new CurrencyService();
 
+    @SuppressWarnings("WeakerAccess")
     @Test
     public void constructorTest() {
         try {
@@ -33,21 +34,21 @@ class WalletDaoTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
-            wallet = new Wallet(user,currency);
+            wallet = new Wallet(user, currency);
             WalletDao.save(wallet);
 
             WalletDao.delete(wallet);
@@ -61,17 +62,17 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             //UserService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
-            wallet = new Wallet(user,currency);
+            wallet = new Wallet(user, currency);
             WalletDao.save(wallet);
 
             fail();
@@ -83,17 +84,17 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             //CurrencyService.save(com.vironit.mWallet.currency);
 
-            wallet = new Wallet(user,currency);
+            wallet = new Wallet(user, currency);
             WalletDao.save(wallet);
 
             fail();
@@ -115,24 +116,24 @@ class WalletDaoTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
             currency2 = new Currency("TST2", 0.02);
             Optional<Currency> currencyOpt2 = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST2") )
+                    .filter(c -> c.getName().equals("TST2"))
                     .findAny();
-            currencyOpt2.ifPresent( c -> currencyService.delete(c));
+            currencyOpt2.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency2);
 
-            wallet = new Wallet(user,currency);
+            wallet = new Wallet(user, currency);
             WalletDao.save(wallet);
 
             wallet.setCurrency(currency2);
@@ -140,9 +141,9 @@ class WalletDaoTester {
 
             assertTrue(WalletDao.findAll()
                     .stream()
-                    .filter( w -> w.equals(wallet))
+                    .filter(w -> w.equals(wallet))
                     .findAny()
-                    .map( w -> w.getCurrency().getName().equals("TST2"))
+                    .map(w -> w.getCurrency().getName().equals("TST2"))
                     .orElse(false));
 
             WalletDao.delete(wallet);
@@ -161,7 +162,7 @@ class WalletDaoTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -176,9 +177,9 @@ class WalletDaoTester {
 
             WalletDao.delete(wallet);
 
-            assertFalse( WalletDao.findAll()
+            assertFalse(WalletDao.findAll()
                     .stream()
-                    .anyMatch( w -> w.equals(wallet)) );
+                    .anyMatch(w -> w.equals(wallet)));
 
             currencyService.delete(currency);
             UserService.delete(user);
@@ -189,7 +190,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -204,13 +205,13 @@ class WalletDaoTester {
 
             UserService.delete(user);
 
-            assertFalse( WalletDao.findAll()
+            assertFalse(WalletDao.findAll()
                     .stream()
-                    .anyMatch( w -> w.equals(wallet)) );
+                    .anyMatch(w -> w.equals(wallet)));
 
-            assertTrue( currencyService.findAll()
+            assertTrue(currencyService.findAll()
                     .stream()
-                    .anyMatch( c -> c.equals(currency)) );
+                    .anyMatch(c -> c.equals(currency)));
 
             currencyService.delete(currency);
         } catch (Exception e) {
@@ -220,7 +221,7 @@ class WalletDaoTester {
         }
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -247,7 +248,7 @@ class WalletDaoTester {
     void findAllTest() {
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -264,10 +265,10 @@ class WalletDaoTester {
 
             List<Wallet> wallets = WalletDao.findAll()
                     .stream()
-                    .filter( w -> w.equals(wallet) || w.equals(wallet2))
+                    .filter(w -> w.equals(wallet) || w.equals(wallet2))
                     .collect(Collectors.toList());
 
-            assertTrue( wallets.size() == 2 );
+            assertEquals(wallets.size(), 2);
 
             UserService.delete(user);
         } catch (Exception e) {
@@ -281,7 +282,7 @@ class WalletDaoTester {
     void findByIdTest() {
 
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             UserService.save(user);
 
             currency = new Currency("TST", 0.01);
@@ -298,10 +299,10 @@ class WalletDaoTester {
 
             List<Wallet> wallets = WalletDao.findAll()
                     .stream()
-                    .filter( w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
+                    .filter(w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
                     .collect(Collectors.toList());
 
-            assertTrue( wallets.size() == 2 );
+            assertEquals(wallets.size(), 2);
 
             UserService.delete(user);
         } catch (Exception e) {

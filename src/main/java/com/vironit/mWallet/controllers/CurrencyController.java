@@ -1,6 +1,6 @@
 package com.vironit.mWallet.controllers;
 
-import com.vironit.mWallet.dao.CurrencyDao;
+//import com.vironit.mWallet.dao.CurrencyDao;
 import com.vironit.mWallet.models.Currency;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,7 @@ import com.vironit.mWallet.services.CurrencyService;
 //@Controller
 public class CurrencyController {
 
-    CurrencyService currencyService = new CurrencyService();
+    private CurrencyService currencyService = new CurrencyService();
 
     @RequestMapping(value = "/currencies", method = RequestMethod.GET)
     public ModelAndView allCurrencies() {

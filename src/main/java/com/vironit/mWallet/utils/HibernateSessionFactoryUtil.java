@@ -11,7 +11,6 @@ import com.vironit.mWallet.models.Currency;
 public class HibernateSessionFactoryUtil {
 
     private static SessionFactory sessionFactory;
-
     private HibernateSessionFactoryUtil() {}
 
     public static SessionFactory getSessionFactory() {

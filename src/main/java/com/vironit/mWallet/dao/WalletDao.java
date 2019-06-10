@@ -41,6 +41,7 @@ public class WalletDao {
         session.close();
     }
 
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public static List<Wallet> findAllByUser(User user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<Wallet> wallets = (List<Wallet>) session
@@ -51,6 +52,7 @@ public class WalletDao {
         return wallets;
     }
 
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public static List<Wallet> findAllByCurrency(Currency currency) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<Wallet> wallets = (List<Wallet>) session
@@ -61,6 +63,7 @@ public class WalletDao {
         return wallets;
     }
 
+    @SuppressWarnings("unchecked")
     public static List<Wallet> findAll() {
 
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();

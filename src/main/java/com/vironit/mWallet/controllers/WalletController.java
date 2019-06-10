@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 //@Controller
 public class WalletController {
 
-    CurrencyService currencyService = new CurrencyService();
+    private CurrencyService currencyService = new CurrencyService();
 
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets", method = RequestMethod.GET)
     @ResponseBody
@@ -27,8 +27,8 @@ public class WalletController {
         modelAndView.setViewName("walletPages/com.vironit.mWallet.wallets");
         modelAndView.addObject("id", id );
 
-        String username = "";
-        String role = "";
+        String username;
+        String role;
             username = authentication.getName();
             role = authentication
                     .getAuthorities()
@@ -49,7 +49,7 @@ public class WalletController {
     public ModelAndView walletsPage(Authentication authentication) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("walletPages/com.vironit.mWallet.wallets");
-        String username = "";
+        String username;
         username = authentication.getName();
         modelAndView.addObject("id", UserService.findByLogin(username).getId() );
         modelAndView.addObject("wallets", WalletService.
@@ -92,6 +92,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/editWallet/{id2}", method = RequestMethod.POST)
     public ModelAndView editWallet(@PathVariable("id") int id,
                                    @PathVariable("id2") int id2,
@@ -113,6 +114,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/deleteWallet/{id2}", method = RequestMethod.GET)
     public ModelAndView deleteWallet(@PathVariable("id") int id,
                                          @PathVariable("id2") int id2) {
@@ -133,6 +135,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/addBalance/{id2}", method = RequestMethod.POST)
     public ModelAndView addBalance(@PathVariable("id") int id,
                                    @PathVariable("id2") int id2,
@@ -155,6 +158,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/reduceBalance/{id2}", method = RequestMethod.POST)
     public ModelAndView reduceBalance(@PathVariable("id") int id,
                                       @PathVariable("id2") int id2,
@@ -177,6 +181,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/transferMoney/{id2}", method = RequestMethod.POST)
     public ModelAndView transferMoney(@PathVariable("id") int id,
                                       @PathVariable("id2") int id2,

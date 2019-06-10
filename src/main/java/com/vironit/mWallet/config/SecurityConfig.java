@@ -1,6 +1,6 @@
 package com.vironit.mWallet.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -8,9 +8,10 @@ import com.vironit.mWallet.services.UserService;
 
 //@Configuration
 //@EnableWebSecurity
+@SuppressWarnings("unused")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
+    //@Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(new UserService());
     }

@@ -27,23 +27,23 @@ class UserDaoTester {
     @Test
     void findAllTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
-            User user2 = new User("Test2","Test2","Test2");
+            User user2 = new User("Test2", "Test2", "Test2");
             Optional<User> userOpt2 = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test2") )
+                    .filter(u -> u.getLogin().equals("Test2"))
                     .findAny();
-            userOpt2.ifPresent( u -> UserService.delete(u));
+            userOpt2.ifPresent(UserService::delete);
             user2.setRole("ROLE_USER");
-            User user3 = new User("Test3","Test3","Test3");
+            User user3 = new User("Test3", "Test3", "Test3");
             Optional<User> userOpt3 = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test3") )
+                    .filter(u -> u.getLogin().equals("Test3"))
                     .findAny();
-            userOpt3.ifPresent( u -> UserService.delete(u));
+            userOpt3.ifPresent(UserService::delete);
             user3.setRole("ROLE_USER");
 
             List<User> usersToCheck = new ArrayList<>();
@@ -72,19 +72,19 @@ class UserDaoTester {
     @Test
     void saveTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserDao.save(user);
 
             List<User> users = UserDao.findAll().stream()
-                    .filter( u -> u.getName().equals("Test"))
+                    .filter(u -> u.getName().equals("Test"))
                     .collect(Collectors.toList());
 
-            assertTrue( users.contains(user) );
+            assertTrue(users.contains(user));
 
             UserDao.delete(user);
         } catch (Exception e) {
@@ -96,15 +96,15 @@ class UserDaoTester {
     @Test
     void findByIdTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserDao.save(user);
 
-            assertEquals( UserDao.findById(user.getId()), user );
+            assertEquals(UserDao.findById(user.getId()), user);
 
             UserDao.delete(user);
         } catch (Exception e) {
@@ -116,20 +116,20 @@ class UserDaoTester {
     @Test
     void updateTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserDao.save(user);
 
-            assertEquals( UserDao.findById(user.getId()).getName(),"Test" );
+            assertEquals(UserDao.findById(user.getId()).getName(), "Test");
 
             user.setName("Test2");
             UserDao.update(user);
 
-            assertEquals( UserDao.findById(user.getId()).getName(),"Test2" );
+            assertEquals(UserDao.findById(user.getId()).getName(), "Test2");
 
             UserDao.delete(user);
         } catch (Exception e) {
@@ -141,19 +141,19 @@ class UserDaoTester {
     @Test
     void deleteTest() {
         try {
-            user = new User("Test","Test","Test");
+            user = new User("Test", "Test", "Test");
             Optional<User> userOpt = UserService.findAll().stream()
-                    .filter( u -> u.getLogin().equals("Test") )
+                    .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent( u -> UserService.delete(u));
+            userOpt.ifPresent(UserService::delete);
             user.setRole("ROLE_USER");
             UserDao.save(user);
 
-            assertNotNull( UserDao.findById(user.getId()) );
+            assertNotNull(UserDao.findById(user.getId()));
 
             UserDao.delete(user);
 
-            assertNull( UserDao.findById(user.getId()) );
+            assertNull(UserDao.findById(user.getId()));
         } catch (Exception e) {
             fail(e.getMessage());
             UserDao.delete(user);

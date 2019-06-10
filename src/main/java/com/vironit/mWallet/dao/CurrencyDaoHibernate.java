@@ -49,9 +49,11 @@ public class CurrencyDaoHibernate implements CurrencyDao {
         session.close();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Currency> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<Currency> users = (List<Currency>) session
+
+        List<Currency> users = session
                                     .createQuery("From Currency order by id")
                                     .list();
         session.close();

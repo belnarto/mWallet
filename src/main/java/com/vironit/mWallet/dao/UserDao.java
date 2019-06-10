@@ -49,6 +49,7 @@ public class UserDao {
         session.close();
     }
 
+    @SuppressWarnings("unchecked")
     public static List<User> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<User> users = (List<User>) session
