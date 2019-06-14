@@ -1,7 +1,11 @@
 package com.vironit.mWallet;
 
+import com.vironit.mWallet.models.Role;
+import com.vironit.mWallet.models.RoleEnum;
+import com.vironit.mWallet.services.RoleService;
+
 import java.io.*;
-import java.util.Properties;
+import java.util.*;
 
 public class Main {
 
@@ -9,14 +13,12 @@ public class Main {
     private static String pathToPropertyFile = "src/main/resources/db.properties";
     private static File file = new File(pathToPropertyFile);
 
-    public static void main(String[] args) {
 
-        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file))) {
-            props.load(bufferedInputStream);
-            System.out.println(props);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
 
     }
 }
+
+
+
+

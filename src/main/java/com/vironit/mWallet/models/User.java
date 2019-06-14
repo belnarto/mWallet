@@ -9,10 +9,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "login")
     private String login;
+
+    @Column(name = "password")
     private String password;
-    private String role;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
     public User() {}
 
@@ -56,13 +65,16 @@ public class User {
         }
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    @SuppressWarnings("unused")
-    public void setRole(String role) {
-        this.role = "ROLE_USER";
+    public void setRole(Role newRole) {
+        if(newRole!=null) {
+            role = newRole;
+        } else {
+            throw new IllegalArgumentException("Role is null");
+        }
     }
 
     public int getId() {

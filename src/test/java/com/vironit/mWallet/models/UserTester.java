@@ -1,6 +1,9 @@
-package com.vironit.mWallet.users;
+package com.vironit.mWallet.models;
 
+import com.vironit.mWallet.models.Role;
+import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
+import com.vironit.mWallet.services.RoleService;
 import org.junit.jupiter.api.Test;
 import com.vironit.mWallet.services.UserService;
 
@@ -13,6 +16,7 @@ class UserTester {
     private User user;
     private User user2;
     private int id;
+    private Role role;
 
     @Test
     void constructorTest() {
@@ -37,7 +41,13 @@ class UserTester {
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
             userOpt.ifPresent(UserService::delete);
-            user.setRole("ROLE_USER");
+            role = new Role(RoleEnum.TST);
+            Optional<Role> roleOpt = RoleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            roleOpt.ifPresent(RoleService::delete);
+            RoleService.save(role);
+            user.setRole(role);
             UserService.save(user);
             id = user.getId();
             assertTrue(id > 0);
@@ -56,7 +66,13 @@ class UserTester {
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
             userOpt.ifPresent(UserService::delete);
-            user.setRole("ROLE_USER");
+            role = new Role(RoleEnum.TST);
+            Optional<Role> roleOpt = RoleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            roleOpt.ifPresent(RoleService::delete);
+            RoleService.save(role);
+            user.setRole(role);
             UserService.save(user);
             id = user.getId();
             user.setName("Test2");
@@ -84,13 +100,23 @@ class UserTester {
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
             userOpt.ifPresent(UserService::delete);
-            user.setRole("ROLE_USER");
+            role = new Role(RoleEnum.TST);
+            Optional<Role> roleOpt = RoleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            roleOpt.ifPresent(RoleService::delete);
+            RoleService.save(role);
             user = new User("Test2", "Test2", "Test2");
             userOpt = UserService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test2"))
                     .findAny();
             userOpt.ifPresent(UserService::delete);
-            user.setRole("ROLE_USER");
+            role = new Role(RoleEnum.TST);
+            roleOpt = RoleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            roleOpt.ifPresent(RoleService::delete);
+            RoleService.save(role);
             assertNotEquals(user,user2);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -103,7 +129,12 @@ class UserTester {
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
             userOpt.ifPresent(UserService::delete);
-            user.setRole("ROLE_USER");
+            role = new Role(RoleEnum.TST);
+            Optional<Role> roleOpt = RoleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            roleOpt.ifPresent(RoleService::delete);
+            RoleService.save(role);
             user2 = user;
             assertEquals(user,user2);
         } catch (Exception e) {

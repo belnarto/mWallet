@@ -1,4 +1,4 @@
-package com.vironit.mWallet.currency;
+package com.vironit.mWallet.models;
 
 import com.vironit.mWallet.models.Currency;
 import org.junit.jupiter.api.Test;

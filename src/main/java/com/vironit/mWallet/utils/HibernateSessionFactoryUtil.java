@@ -1,12 +1,9 @@
 package com.vironit.mWallet.utils;
 
+import com.vironit.mWallet.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
-import com.vironit.mWallet.models.User;
-import com.vironit.mWallet.models.Wallet;
-import com.vironit.mWallet.models.Currency;
 
 public class HibernateSessionFactoryUtil {
 
@@ -20,6 +17,7 @@ public class HibernateSessionFactoryUtil {
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Wallet.class);
                 configuration.addAnnotatedClass(Currency.class);
+                configuration.addAnnotatedClass(Role.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 

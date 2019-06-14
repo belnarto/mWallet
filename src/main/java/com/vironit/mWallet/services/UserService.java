@@ -28,9 +28,6 @@ public class UserService implements UserDetailsService {
     }
 
     public static void save(User user) {
-        if (user.getRole() == null) {
-            user.setRole("ROLE_USER");
-        }
         UserDao.save(user);
     }
 
@@ -50,7 +47,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(user.getRole()));
+ //TODO       roles.add(new SimpleGrantedAuthority(user.getRole()));
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
                                                                     user.getPassword(),
                                                                     roles);
