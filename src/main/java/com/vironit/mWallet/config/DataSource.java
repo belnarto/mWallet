@@ -1,8 +1,6 @@
 package com.vironit.mWallet.config;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.Properties;
 
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
@@ -40,11 +38,9 @@ public final class DataSource {
         instance = new DataSource();
         source = new Jdbc3PoolingDataSource();
         Properties properties = new Properties();
-        File file = new File("src/main/resources/db.properties");
-
-        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(
-                new FileInputStream(file))) {
-            properties.load(bufferedInputStream);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        try (InputStream input = classLoader.getResourceAsStream("db.properties")) {
+            properties.load(input);
 
             String url = properties.getProperty("URL");
             String username = properties.getProperty("USERNAME");

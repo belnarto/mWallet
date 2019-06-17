@@ -1,9 +1,13 @@
 package com.vironit.mWallet.config;
 
-@SuppressWarnings("unused")
-public class AppInitializer {
-    //extends AbstractAnnotationConfigDispatcherServletInitializer {
- /*   @Override
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
+
+public class AppInitializer
+        extends AbstractAnnotationConfigDispatcherServletInitializer {
+    @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[0];
     }
@@ -23,9 +27,7 @@ public class AppInitializer {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
-        return new Filter[] {characterEncodingFilter};
+        return new Filter[]{characterEncodingFilter};
     }
 
-
-  */
 }

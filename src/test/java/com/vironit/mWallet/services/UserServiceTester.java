@@ -1,24 +1,40 @@
 package com.vironit.mWallet.services;
 
+import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
-import org.junit.jupiter.api.Test;
 import com.vironit.mWallet.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-class UserServiceTester {
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class})
+@WebAppConfiguration
+public class UserServiceTester {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     private User user;
     private int id;
     private Role role;
 
     @Test
-    void constructorTest() {
+    public void constructorTest() {
         try {
             new UserService();
         } catch (Exception e) {
@@ -27,173 +43,234 @@ class UserServiceTester {
     }
 
     @Test
-    void saveTest() {
+    public void saveTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
-            UserService.delete(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void findByIdTest() {
+    public void findByIdTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
             id = user.getId();
-            assertEquals(UserService.findById(id),user);
-            UserService.delete(user);
+            assertEquals(userService.findById(id), user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void updateTest() {
+    public void updateTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
             id = user.getId();
             user.setName("Test3");
-            UserService.update(user);
-            assertEquals(UserService.findById(id).getName(),"Test3");
-            UserService.delete(user);
+            userService.update(user);
+            assertEquals(userService.findById(id).getName(), "Test3");
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void deleteTest() {
+    public void deleteTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
             id = user.getId();
-            UserService.delete(user);
-            assertNull(UserService.findById(id));
+            userService.delete(user);
+            assertNull(userService.findById(id));
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void findAllTest() {
+    public void findAllTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            User user2 = new User("Test2","Test2","Test2");
-            user2.setRole(role);
-            User user3 = new User("Test3","Test3","Test3");
-            user3.setRole(role);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+
+            userOpt = userService.findAll().stream()
+                    .filter(u -> u.getLogin().equals("Test2"))
+                    .findAny();
+            userOpt.ifPresent(userService::delete);
+            User user2 = new User.UserBuilder()
+                    .setName("Test2")
+                    .setLogin("Test2")
+                    .setPassword("Test2")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+
+            userOpt = userService.findAll().stream()
+                    .filter(u -> u.getLogin().equals("Test3"))
+                    .findAny();
+            userOpt.ifPresent(userService::delete);
+            User user3 = new User.UserBuilder()
+                    .setName("Test3")
+                    .setLogin("Test3")
+                    .setPassword("Test3")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
             List<User> usersToCheck = new ArrayList<>();
             usersToCheck.add(user);
             usersToCheck.add(user2);
             usersToCheck.add(user3);
-            UserService.save(user);
-            UserService.save(user2);
-            UserService.save(user3);
-            List<User> users = UserService.findAll();
+            userService.save(user);
+            userService.save(user2);
+            userService.save(user3);
+            List<User> users = userService.findAll();
             assertTrue(users.containsAll(usersToCheck));
-            UserService.delete(user);
-            UserService.delete(user2);
-            UserService.delete(user3);
+            userService.delete(user);
+            userService.delete(user2);
+            userService.delete(user3);
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            User user2 = new User("Test2","Test2","Test2");
-            user2.setRole(role);
-            User user3 = new User("Test3","Test3","Test3");
-            user3.setRole(role);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+
+            User user2 = new User.UserBuilder()
+                    .setName("Test2")
+                    .setLogin("Test2")
+                    .setPassword("Test2")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            User user3 = new User.UserBuilder()
+                    .setName("Test3")
+                    .setLogin("Test3")
+                    .setPassword("Test3")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
             List<User> usersToCheck = new ArrayList<>();
             usersToCheck.add(user);
             usersToCheck.add(user2);
             usersToCheck.add(user3);
-            UserService.save(user);
-            UserService.save(user2);
-            //UserService.save(user3);
-            List<User> users = UserService.findAll();
+            userService.save(user);
+            userService.save(user2);
+            //userService.save(user3);
+            List<User> users = userService.findAll();
             assertFalse(users.containsAll(usersToCheck));
-            UserService.delete(user);
-            UserService.delete(user2);
-            UserService.delete(user3);
+            userService.delete(user);
+            userService.delete(user2);
+            userService.delete(user3);
         } catch (Exception e) {
             fail(e.getMessage());
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 

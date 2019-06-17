@@ -1,22 +1,20 @@
 package com.vironit.mWallet.controllers;
 
-import com.vironit.mWallet.models.User;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import com.vironit.mWallet.services.UserService;
 
-//@Controller
+@Controller
 public class MainController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/*", method = RequestMethod.GET)
     public ModelAndView mainPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("main");
         return modelAndView;
     }
-
+/*
     @RequestMapping(value = "/registry", method = RequestMethod.GET)
     public ModelAndView registryPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -31,5 +29,6 @@ public class MainController {
         UserService.save(user);
         return modelAndView;
     }
+ */
 
 }

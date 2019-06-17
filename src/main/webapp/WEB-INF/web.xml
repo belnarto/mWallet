@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <!-- currencies servlets, reconfigured with annotations
+    <!-- part of currencies servlets, reconfigured with annotations
 
     <servlet>
         <servlet-name>currencies</servlet-name>
@@ -26,6 +26,8 @@
         <url-pattern>/currencies/addCurrency</url-pattern>
     </servlet-mapping>
 
+-->
+
     <servlet>
         <servlet-name>deleteCurrency</servlet-name>
         <servlet-class>com.vironit.mWallet.servlets.DeleteCurrencyServlet</servlet-class>
@@ -46,6 +48,5 @@
         <url-pattern>/currencies/editCurrency</url-pattern>
     </servlet-mapping>
 
--->
 
 </web-app>

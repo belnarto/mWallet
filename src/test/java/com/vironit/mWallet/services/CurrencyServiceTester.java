@@ -1,20 +1,32 @@
 package com.vironit.mWallet.services;
 
+import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.Currency;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-class CurrencyServiceTester {
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class})
+@WebAppConfiguration
+public class CurrencyServiceTester {
+
+    @Autowired
+    private CurrencyService currencyService;
 
     private Currency currency;
-    private CurrencyService currencyService = new CurrencyService();
 
     @Test
-    void constructorTest() {
+    public void constructorTest() {
         try {
             new CurrencyService();
         } catch (Exception e) {
@@ -23,35 +35,35 @@ class CurrencyServiceTester {
     }
 
     @Test
-    void findAllTest() {
+    public void findAllTest() {
         try {
             List<Currency> currencies;
             currencies = currencyService.findAll();
-            assertTrue( currencies != null && currencies.size() > 0 );
+            assertTrue(currencies != null && currencies.size() > 0);
         } catch (Exception e) {
             fail(e.getMessage());
         }
     }
 
     @Test
-    void saveTest() {
+    public void saveTest() {
         try {
             currency = new Currency("TST", 0.01);
 
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyService.save(currency);
 
             currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
+            assertTrue(currencyOpt.isPresent() &&
                     currencyOpt.get().getName().equals("TST") &&
-                    Math.abs(currencyOpt.get().getRate() - 0.01) < 0.00001 );
+                    Math.abs(currencyOpt.get().getRate() - 0.01) < 0.00001);
 
             currencyService.delete(currency);
         } catch (Exception e) {
@@ -61,12 +73,12 @@ class CurrencyServiceTester {
     }
 
     @Test
-    void updateTest() {
+    public void updateTest() {
         try {
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            if ( !currencyOpt.isPresent() ) {
+            if (!currencyOpt.isPresent()) {
                 currency = new Currency("TST", 0.01);
                 currencyService.save(currency);
             } else {
@@ -78,12 +90,12 @@ class CurrencyServiceTester {
             currencyService.update(currency);
 
             currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
+            assertTrue(currencyOpt.isPresent() &&
                     currencyOpt.get().getName().equals("TST") &&
-                    Math.abs(currencyOpt.get().getRate() - 0.02) < 0.00001 );
+                    Math.abs(currencyOpt.get().getRate() - 0.02) < 0.00001);
 
             currencyService.delete(currency);
         } catch (Exception e) {
@@ -93,28 +105,28 @@ class CurrencyServiceTester {
     }
 
     @Test
-    void deleteTest() {
+    public void deleteTest() {
         try {
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            if ( !currencyOpt.isPresent() ) {
+            if (!currencyOpt.isPresent()) {
                 currency = new Currency("TST", 0.01);
                 currencyService.save(currency);
             }
 
             currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
             currencyService.delete(currencyOpt.orElse(null));
 
             currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertFalse( currencyOpt.isPresent() );
+            assertFalse(currencyOpt.isPresent());
 
         } catch (Exception e) {
             fail(e.getMessage());
@@ -123,26 +135,26 @@ class CurrencyServiceTester {
     }
 
     @Test
-    void findByIdTest() {
+    public void findByIdTest() {
         int id;
         try {
             currency = new Currency("TST", 0.01);
 
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyService.save(currency);
             id = currency.getId();
 
             currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    currencyOpt.get().getId() == id );
+            assertTrue(currencyOpt.isPresent() &&
+                    currencyOpt.get().getId() == id);
 
             currencyService.delete(currency);
         } catch (Exception e) {

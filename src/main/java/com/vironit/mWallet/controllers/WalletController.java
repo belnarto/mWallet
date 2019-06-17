@@ -3,7 +3,10 @@ package com.vironit.mWallet.controllers;
 import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.models.Wallet;
-import org.springframework.security.core.Authentication;
+import com.vironit.mWallet.models.WalletStatusEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import com.vironit.mWallet.services.CurrencyService;
@@ -12,94 +15,130 @@ import com.vironit.mWallet.services.WalletService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Controller
+@Controller
 public class WalletController {
 
-    private CurrencyService currencyService = new CurrencyService();
+    private UserService userService;
+    private WalletService walletService;
+    private CurrencyService currencyService;
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets", method = RequestMethod.GET)
-    @ResponseBody
-    public ModelAndView userWalletsPage(@PathVariable("id") int id, Authentication authentication) {
+    @Autowired
+    public WalletController(UserService userService, WalletService walletService, CurrencyService currencyService) {
+        this.userService = userService;
+        this.walletService = walletService;
+        this.currencyService = currencyService;
+    }
+
+    @RequestMapping(value = "/users/{id}/wallets", method = RequestMethod.GET)
+    public ModelAndView userWalletsPage(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/com.vironit.mWallet.wallets");
-        modelAndView.addObject("id", id );
+        modelAndView.setViewName("walletPages/wallets");
+        modelAndView.addObject("id", id);
 
-        String username;
-        String role;
-            username = authentication.getName();
-            role = authentication
-                    .getAuthorities()
-                    .stream()
-                    .anyMatch( r-> r.getAuthority().equals("ROLE_ADMIN") )
-                    ? "ROLE_ADMIN"
-                    : "ROLE_USER";
+        List<Wallet> wallets = walletService.findAllByUser(userService.findById(id));
 
-        List<Wallet> wallets =  role.equals("ROLE_ADMIN")
-                ? WalletService.findAllByUser(UserService.findById(id))
-                : WalletService.findAllByUser(UserService.findByLogin(username));
-
-        modelAndView.addObject("wallets", wallets );
+        modelAndView.addObject("wallets", wallets);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/myWallets", method = RequestMethod.GET)
-    public ModelAndView walletsPage(Authentication authentication) {
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/addBalance", method = RequestMethod.GET)
+    public ModelAndView addBalancePage(@PathVariable("id") int id,
+                                       @PathVariable("id2") int id2) {
+        Wallet wallet = walletService.findById(id2);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/com.vironit.mWallet.wallets");
-        String username;
-        username = authentication.getName();
-        modelAndView.addObject("id", UserService.findByLogin(username).getId() );
-        modelAndView.addObject("wallets", WalletService.
-                findAllByUser(UserService.findByLogin(username)) );
+        modelAndView.setViewName("walletPages/addBalance");
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("wallet", wallet);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/addWallet", method = RequestMethod.GET)
-    public ModelAndView addWalletPage(@PathVariable("id") int id) {
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/addBalance", method = RequestMethod.POST)
+    public ModelAndView addBalance(@SuppressWarnings("unused") @PathVariable("id") int id,
+                                   @PathVariable("id2") int id2,
+                                   @ModelAttribute("amountToAdd") double amountToAdd) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/addWallet");
-        modelAndView.addObject("id", id );
-        modelAndView.addObject("currencies", currencyService.findAll());
+        Wallet wallet = walletService.findById(id2);
+        walletService.addBalance(wallet, amountToAdd);
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/addWallet", method = RequestMethod.POST)
-    public ModelAndView addWallet(@PathVariable("id") int id,
-                                  @ModelAttribute("wallet") Currency currency) {
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/reduceBalance", method = RequestMethod.GET)
+    public ModelAndView reduceBalancePage(@PathVariable("id") int id,
+                                          @PathVariable("id2") int id2) {
+        Wallet wallet = walletService.findById(id2);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
-        currency = currencyService.findByName(currency.getName());
-        User user = UserService.findById(id);
-        WalletService.save(new Wallet(user,currency));
+        modelAndView.setViewName("walletPages/reduceBalance");
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("wallet", wallet);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/editWallet/{id2}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/reduceBalance", method = RequestMethod.POST)
+    public ModelAndView reduceBalance(@SuppressWarnings("unused") @PathVariable("id") int id,
+                                      @PathVariable("id2") int id2,
+                                      @ModelAttribute("amountToReduce") double amountToReduce) {
+        ModelAndView modelAndView = new ModelAndView();
+        Wallet wallet = walletService.findById(id2);
+        walletService.reduceBalance(wallet, amountToReduce);
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/transferMoney", method = RequestMethod.GET)
+    public ModelAndView transferMoneyPage(@PathVariable("id") int id,
+                                          @PathVariable("id2") int id2) {
+        Wallet wallet = walletService.findById(id2);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("walletPages/transferMoney");
+        modelAndView.addObject("id", id);
+        modelAndView.addObject("wallet", wallet);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/transferMoney", method = RequestMethod.POST)
+    public ModelAndView transferMoney(@SuppressWarnings("unused") @PathVariable("id") int id,
+                                      @PathVariable("id2") int id2,
+                                      @ModelAttribute("amountToTransfer") double amountToTransfer,
+                                      @ModelAttribute("targetWallet") int targetWallet) {
+        ModelAndView modelAndView = new ModelAndView();
+        Wallet wallet = walletService.findById(id2);
+        Wallet target_Wallet = walletService.findById(targetWallet);
+        walletService.transferMoney(wallet, target_Wallet, amountToTransfer);
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/editWallet", method = RequestMethod.GET)
     public ModelAndView editWalletPage(@PathVariable("id") int id,
                                        @PathVariable("id2") int id2) {
-        Wallet wallet = WalletService.findById(id2);
+        Wallet wallet = walletService.findById(id2);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("walletPages/editWallet");
         modelAndView.addObject("id", id);
         modelAndView.addObject("wallet", wallet);
         modelAndView.addObject("currencies", currencyService.findAll()
                 .stream()
-                .filter( c -> !c.equals(wallet.getCurrency()))
+                .filter(c -> !c.equals(wallet.getCurrency()))
+                .collect(Collectors.toList()));
+        modelAndView.addObject("statuses", Arrays.stream(WalletStatusEnum.values())
+                .filter(s -> !s.equals(wallet.getStatus()))
                 .collect(Collectors.toList()));
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/editWallet/{id2}", method = RequestMethod.POST)
-    public ModelAndView editWallet(@PathVariable("id") int id,
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/editWallet", method = RequestMethod.POST)
+    public ModelAndView editWallet(@SuppressWarnings("unused") @PathVariable("id") int id,
                                    @PathVariable("id2") int id2,
-                                   @ModelAttribute("wallet") Currency currencyNew) {
+                                   @ModelAttribute("wallet") Currency currencyNew,
+                                   @ModelAttribute("status") WalletStatusEnum walletStatusEnumNew) {
         ModelAndView modelAndView = new ModelAndView();
         currencyNew = currencyService.findByName(currencyNew.getName());
-        Wallet wallet = WalletService.findById(id2);
+        Wallet wallet = walletService.findById(id2);
         double balance = wallet.getBalance();
         Currency currencyOld = wallet.getCurrency();
         double targetValue = currencyOld.getRate() * balance; // to BYN
@@ -109,90 +148,40 @@ public class WalletController {
                 .doubleValue();
         wallet.setBalance(targetValue);
         wallet.setCurrency(currencyNew);
-        WalletService.update(wallet);
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
+        wallet.setStatus(walletStatusEnumNew);
+        walletService.update(wallet);
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/deleteWallet/{id2}", method = RequestMethod.GET)
-    public ModelAndView deleteWallet(@PathVariable("id") int id,
-                                         @PathVariable("id2") int id2) {
-        WalletService.delete(WalletService.findById(id2));
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/deleteWallet", method = RequestMethod.GET)
+    public ModelAndView deleteWallet(@SuppressWarnings("unused") @PathVariable("id") int id,
+                                     @PathVariable("id2") int id2) {
+        walletService.delete(walletService.findById(id2));
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/addBalance/{id2}", method = RequestMethod.GET)
-    public ModelAndView addBalancePage(@PathVariable("id") int id,
-                                       @PathVariable("id2") int id2) {
-        Wallet wallet = WalletService.findById(id2);
+    @RequestMapping(value = "/users/{id}/wallets/addWallet", method = RequestMethod.GET)
+    public ModelAndView addWalletPage(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/addBalance");
+        modelAndView.setViewName("walletPages/addWallet");
         modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("currencies", currencyService.findAll());
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/addBalance/{id2}", method = RequestMethod.POST)
-    public ModelAndView addBalance(@PathVariable("id") int id,
-                                   @PathVariable("id2") int id2,
-                                   @ModelAttribute("amountToAdd") double amountToAdd) {
+    @RequestMapping(value = "/users/{id}/wallets/addWallet", method = RequestMethod.POST)
+    public ModelAndView addWallet(@PathVariable("id") int id,
+                                  @ModelAttribute("wallet") Currency currency) {
         ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = WalletService.findById(id2);
-        WalletService.addBalance(wallet,amountToAdd);
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
+        modelAndView.setViewName("redirect:/users/{id}/wallets");
+        currency = currencyService.findByName(currency.getName());
+        User user = userService.findById(id);
+        walletService.save(new Wallet(user, currency));
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/reduceBalance/{id2}", method = RequestMethod.GET)
-    public ModelAndView reduceBalancePage(@PathVariable("id") int id,
-                                          @PathVariable("id2") int id2) {
-        Wallet wallet = WalletService.findById(id2);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/reduceBalance");
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
-        return modelAndView;
-    }
-
-    @SuppressWarnings("unused")
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/reduceBalance/{id2}", method = RequestMethod.POST)
-    public ModelAndView reduceBalance(@PathVariable("id") int id,
-                                      @PathVariable("id2") int id2,
-                                      @ModelAttribute("amountToReduce") double amountToReduce) {
-        ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = WalletService.findById(id2);
-        WalletService.reduceBalance(wallet,amountToReduce);
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/transferMoney/{id2}", method = RequestMethod.GET)
-    public ModelAndView transferMoneyPage(@PathVariable("id") int id,
-                                          @PathVariable("id2") int id2) {
-        Wallet wallet = WalletService.findById(id2);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("walletPages/transferMoney");
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
-        return modelAndView;
-    }
-
-    @SuppressWarnings("unused")
-    @RequestMapping(value = "/users/{id}/com.vironit.mWallet.wallets/transferMoney/{id2}", method = RequestMethod.POST)
-    public ModelAndView transferMoney(@PathVariable("id") int id,
-                                      @PathVariable("id2") int id2,
-                                      @ModelAttribute("amountToTransfer") double amountToTransfer,
-                                      @ModelAttribute("targetWallet") int targetWallet) {
-        ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = WalletService.findById(id2);
-        Wallet target_Wallet = WalletService.findById(targetWallet);
-        WalletService.transferMoney(wallet,target_Wallet,amountToTransfer);
-        modelAndView.setViewName("redirect:/com.vironit.mWallet.users/{id}/com.vironit.mWallet.wallets");
-        return modelAndView;
-    }
 
 }

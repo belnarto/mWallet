@@ -1,17 +1,29 @@
 package com.vironit.mWallet.servlets;
 
 import com.vironit.mWallet.services.CurrencyService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.servlet.annotation.WebServlet;
+//import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/currencies/deleteCurrency")
+@Component
+//@WebServlet("/currencies/deleteCurrency")
 public class DeleteCurrencyServlet extends HttpServlet {
 
-    private CurrencyService currencyService = new CurrencyService();
+    private static CurrencyService currencyService;
+
+    public DeleteCurrencyServlet() {
+    }
+
+    @Autowired
+    public DeleteCurrencyServlet(CurrencyService currencyService) {
+        DeleteCurrencyServlet.currencyService = currencyService;
+    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

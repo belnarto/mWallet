@@ -8,7 +8,7 @@ import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.config.DataSource;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 
-public class CurrencyDaoJDBC implements CurrencyDao {
+public class CurrencyDaoImpl implements CurrencyDao {
 
     private static final Jdbc3PoolingDataSource SOURCE = DataSource.getInstance().getDataSource();
     private static final String PREPARED_SQL_FIND_BY_ID = "SELECT * FROM currency WHERE id = ?;";

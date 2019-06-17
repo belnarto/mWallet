@@ -15,7 +15,8 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum;
 
-    public Role() {}
+    public Role() {
+    }
 
     public Role(RoleEnum roleEnum) {
         setRoleEnum(roleEnum);

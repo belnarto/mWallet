@@ -1,10 +1,12 @@
 package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.models.Currency;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface CurrencyDao {
+@Repository
+public interface CurrencyDao extends CrudDao<Currency> {
 
     Currency findById(int id);
 

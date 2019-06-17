@@ -18,9 +18,16 @@ public class Wallet {
     @JoinColumn(name = "currency_id")
     private Currency currency;
 
+    @Column(name = "balance")
     private double balance;
 
-    public Wallet() {}
+    // TODO оживить статус с точки зрения бизнес-логики
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private WalletStatusEnum status = WalletStatusEnum.ACTIVE;
+
+    public Wallet() {
+    }
 
     public Wallet(User user, Currency currency) {
         setUser(user);
@@ -28,7 +35,7 @@ public class Wallet {
     }
 
     public void setId(int newId) {
-        if(newId>0) {
+        if (newId > 0) {
             id = newId;
         } else {
             throw new IllegalArgumentException("Value <= 0");
@@ -40,7 +47,7 @@ public class Wallet {
     }
 
     public void setUser(User newUser) {
-        if(newUser != null) {
+        if (newUser != null) {
             user = newUser;
         } else {
             throw new IllegalArgumentException("User is null");
@@ -52,7 +59,7 @@ public class Wallet {
     }
 
     public void setCurrency(Currency newCurrency) {
-        if(newCurrency != null) {
+        if (newCurrency != null) {
             currency = newCurrency;
         } else {
             throw new IllegalArgumentException("Currency is null");
@@ -64,7 +71,7 @@ public class Wallet {
     }
 
     public void setBalance(double newBalance) {
-        if(newBalance>=0) {
+        if (newBalance >= 0) {
             balance = newBalance;
         } else {
             throw new IllegalArgumentException("Value < 0");
@@ -75,18 +82,40 @@ public class Wallet {
         return balance;
     }
 
+    public void setStatus(WalletStatusEnum status) {
+        this.status = status; //TODO проверку на нуль
+    }
+
+    public WalletStatusEnum getStatus() {
+        return status;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void activateWallet() {
+        status = WalletStatusEnum.ACTIVE;
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void blockWallet() {
+        status = WalletStatusEnum.BLOCKED;
+    }
+
     @Override
     public String toString() {
-        return "\n\twallet id: "+id+"Currency: "+currency.getName()+" balance:"+balance;
+        return "\n\twallet id: " + id
+                + "Currency: " + currency.getName()
+                + " balance:" + balance
+                + " status:" + status;
     }
 
     @Override
     public boolean equals(Object other) {
-        if ( !(other instanceof Wallet) ) {
+        if (!(other instanceof Wallet)) {
             return false;
         }
         Wallet otherWallet = (Wallet) other;
         return this.id == otherWallet.getId() &&
+                this.status.equals(otherWallet.status) &&
                 this.getUser().equals(otherWallet.getUser());
     }
 

@@ -2,11 +2,12 @@ package com.vironit.mWallet.services;
 
 import com.vironit.mWallet.dao.UserDao;
 import com.vironit.mWallet.models.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,40 +17,48 @@ import java.util.Set;
 @Service
 public class UserService implements UserDetailsService {
 
+    private UserDao userDao;
+
     public UserService() {
     }
 
-    public static User findById(int id) {
-        return UserDao.findById(id);
+    @Autowired
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
     }
 
-    public static User findByLogin(String login) {
-        return UserDao.findByLogin(login);
+    public User findById(int id) {
+        return userDao.findById(id);
     }
 
-    public static void save(User user) {
-        UserDao.save(user);
+    @SuppressWarnings("WeakerAccess")
+    public User findByLogin(String login) {
+        return userDao.findByLogin(login);
     }
 
-    public static void delete(User user) {
-        UserDao.delete(user);
+    public void save(User user) {
+        userDao.save(user);
     }
 
-    public static void update(User user) {
-        UserDao.update(user);
+    public void delete(User user) {
+        userDao.delete(user);
     }
 
-    public static List<User> findAll() {
-        return UserDao.findAll();
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
- //TODO       roles.add(new SimpleGrantedAuthority(user.getRole()));
+        //TODO       roles.add(new SimpleGrantedAuthority(user.getRole()));
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
-                                                                    user.getPassword(),
-                                                                    roles);
+                user.getPassword(),
+                roles);
     }
 }

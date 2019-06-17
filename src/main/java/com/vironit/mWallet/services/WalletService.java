@@ -3,6 +3,7 @@ package com.vironit.mWallet.services;
 import com.vironit.mWallet.dao.WalletDao;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.models.Wallet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,52 +13,62 @@ import java.util.List;
 @Service
 public class WalletService {
 
-    public static Wallet findById(int id) {
-        return WalletDao.findById(id);
+    private WalletDao walletDao;
+
+    public WalletService() {
     }
 
-    public static List<Wallet> findAllByUser(User user) {
-        return WalletDao.findAllByUser(user);
+    @Autowired
+    public WalletService(WalletDao walletDao) {
+        this.walletDao = walletDao;
     }
 
-    public static List<Wallet> findAll() {
-        return WalletDao.findAll();
+    public Wallet findById(int id) {
+        return walletDao.findById(id);
     }
 
-    public static void save(Wallet wallet) {
-        WalletDao.save(wallet);
+    public List<Wallet> findAllByUser(User user) {
+        return walletDao.findAllByUser(user);
     }
 
-    public static void delete(Wallet wallet) {
-        WalletDao.delete(wallet);
+    public List<Wallet> findAll() {
+        return walletDao.findAll();
     }
 
-    public static void update(Wallet wallet) {
-        WalletDao.update(wallet);
+    public void save(Wallet wallet) {
+        walletDao.save(wallet);
     }
 
-    public static void addBalance(Wallet wallet, double value) {
-        if(value>0) {
+    public void delete(Wallet wallet) {
+        walletDao.delete(wallet);
+    }
+
+    public void update(Wallet wallet) {
+        walletDao.update(wallet);
+    }
+
+    public void addBalance(Wallet wallet, double value) {
+        if (value > 0) {
             wallet.setBalance(wallet.getBalance() + value);
-            WalletDao.update(wallet);
+            walletDao.update(wallet);
         } else {
             throw new IllegalArgumentException("Value <= 0");
         }
     }
 
-    public static void reduceBalance(Wallet wallet, double value) {
-        if(value>0 && wallet.getBalance()>=value) {
+    public void reduceBalance(Wallet wallet, double value) {
+        if (value > 0 && wallet.getBalance() >= value) {
             wallet.setBalance(wallet.getBalance() - value);
-            WalletDao.update(wallet);
+            walletDao.update(wallet);
         } else {
             throw new IllegalArgumentException("Value <= 0 or balance is not enough");
         }
     }
 
-    public static void transferMoney(Wallet fromWallet, Wallet toWallet, double value) {
-        if(value>0 && fromWallet.getBalance()>=value) {
+    public void transferMoney(Wallet fromWallet, Wallet toWallet, double value) {
+        if (value > 0 && fromWallet.getBalance() >= value) {
             fromWallet.setBalance(fromWallet.getBalance() - value);
-            WalletDao.update(fromWallet);
+            walletDao.update(fromWallet);
 
             double targetValue = fromWallet.getCurrency().getRate() * value; // to BYN
             targetValue = targetValue / toWallet.getCurrency().getRate(); // to target Currency
@@ -65,7 +76,7 @@ public class WalletService {
             targetValue = new BigDecimal(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
 
             toWallet.setBalance(toWallet.getBalance() + targetValue);
-            WalletDao.update(toWallet);
+            walletDao.update(toWallet);
         } else {
             throw new IllegalArgumentException("Value <= 0 or balance is not enough");
         }

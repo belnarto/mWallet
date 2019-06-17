@@ -1,24 +1,45 @@
 package com.vironit.mWallet.services;
 
+import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.*;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-class WalletServiceTester {
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class})
+@WebAppConfiguration
+public class WalletServiceTester {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
+    private WalletService walletService;
+
+    @Autowired
+    private RoleService roleService;
 
     private User user;
     private Wallet wallet;
     private Currency currency;
     private Role role;
-    private CurrencyService currencyService = new CurrencyService();
 
     @Test
-    void constructorTest() {
+    public void constructorTest() {
         try {
             new WalletService();
         } catch (Exception e) {
@@ -27,188 +48,214 @@ class WalletServiceTester {
     }
 
     @Test
-    void saveTest() {
+    public void saveTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
-            wallet = new Wallet(user,currency);
-            WalletService.save(wallet);
+            wallet = new Wallet(user, currency);
+            walletService.save(wallet);
 
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            //UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+//            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
-            wallet = new Wallet(user,currency);
-            WalletService.save(wallet);
+            wallet = new Wallet(user, currency);
+            walletService.save(wallet);
 
             fail();
         } catch (Exception e) {
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             //CurrencyService.save(com.vironit.mWallet.currency);
 
-            wallet = new Wallet(user,currency);
-            WalletService.save(wallet);
+            wallet = new Wallet(user, currency);
+            walletService.save(wallet);
 
             fail();
         } catch (Exception e) {
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
             wallet = new Wallet();
-            WalletService.save(wallet);
+            walletService.save(wallet);
             fail();
         } catch (Exception e) {
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
         }
     }
 
     @Test
-    void updateTest() {
+    public void updateTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency);
 
             Currency currency2 = new Currency("TST2", 0.02);
             Optional<Currency> currencyOpt2 = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST2") )
+                    .filter(c -> c.getName().equals("TST2"))
                     .findAny();
-            currencyOpt2.ifPresent( c -> currencyService.delete(c));
+            currencyOpt2.ifPresent(c -> currencyService.delete(c));
             currencyService.save(currency2);
 
-            wallet = new Wallet(user,currency);
-            WalletService.save(wallet);
+            wallet = new Wallet(user, currency);
+            walletService.save(wallet);
 
             wallet.setCurrency(currency2);
-            WalletService.update(wallet);
+            walletService.update(wallet);
 
-            assertTrue(WalletService.findAll()
+            assertTrue(walletService.findAll()
                     .stream()
-                    .filter( w -> w.equals(wallet))
+                    .filter(w -> w.equals(wallet))
                     .findAny()
-                    .map( w -> w.getCurrency().getName().equals("TST2"))
+                    .map(w -> w.getCurrency().getName().equals("TST2"))
                     .orElse(false));
 
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
             currencyService.delete(currency2);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void deleteTest() {
+    public void deleteTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -218,36 +265,41 @@ class WalletServiceTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletService.save(wallet);
+            walletService.save(wallet);
 
-            WalletService.delete(wallet);
+            walletService.delete(wallet);
 
-            assertFalse( WalletService.findAll()
+            assertFalse(walletService.findAll()
                     .stream()
-                    .anyMatch( w -> w.equals(wallet)) );
+                    .anyMatch(w -> w.equals(wallet)));
 
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -257,39 +309,44 @@ class WalletServiceTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletService.save(wallet);
+            walletService.save(wallet);
 
-            UserService.delete(user);
+            userService.delete(user);
 
-            assertFalse( WalletService.findAll()
+            assertFalse(walletService.findAll()
                     .stream()
-                    .anyMatch( w -> w.equals(wallet)) );
+                    .anyMatch(w -> w.equals(wallet)));
 
-            assertTrue( currencyService.findAll()
+            assertTrue(currencyService.findAll()
                     .stream()
-                    .anyMatch( c -> c.equals(currency)) );
+                    .anyMatch(c -> c.equals(currency)));
 
             currencyService.delete(currency);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -299,35 +356,40 @@ class WalletServiceTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletService.save(wallet);
+            walletService.save(wallet);
 
             currencyService.delete(currency);
             fail();
 
 
         } catch (Exception e) {
-            UserService.delete(user);
+            userService.delete(user);
             currencyService.delete(currency);
         }
     }
 
     @Test
-    void findByIdTest() {
+    public void findByIdTest() {
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -337,42 +399,47 @@ class WalletServiceTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletService.save(wallet);
+            walletService.save(wallet);
             Wallet wallet2 = new Wallet(user, currency);
-            WalletService.save(wallet2);
+            walletService.save(wallet2);
 
-            List<Wallet> wallets = WalletService.findAll()
+            List<Wallet> wallets = walletService.findAll()
                     .stream()
-                    .filter( w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
+                    .filter(w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
                     .collect(Collectors.toList());
 
-            assertEquals( wallets.size(), 2 );
+            assertEquals(wallets.size(), 2);
 
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void findAllByUserTest() {
+    public void findAllByUserTest() {
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -383,7 +450,7 @@ class WalletServiceTester {
 
             wallet = new Wallet(user, currency);
             wallet.setBalance(0.2);
-            WalletService.save(wallet);
+            walletService.save(wallet);
 
             Currency currency2 = new Currency("TST2", 0.02);
             currencyOpt = currencyService.findAll().stream()
@@ -394,41 +461,46 @@ class WalletServiceTester {
 
             Wallet wallet2 = new Wallet(user, currency2);
             wallet2.setBalance(0.1);
-            WalletService.save(wallet2);
+            walletService.save(wallet2);
 
-            List<Wallet> wallets = WalletService.findAllByUser(user);
+            List<Wallet> wallets = walletService.findAllByUser(user);
 
-            assertEquals( wallets.size(), 2 );
+            assertEquals(wallets.size(), 2);
 
-            WalletService.delete(wallet);
-            WalletService.delete(wallet2);
-            UserService.delete(user);
+            walletService.delete(wallet);
+            walletService.delete(wallet2);
+            userService.delete(user);
             currencyService.delete(currency);
             currencyService.delete(currency2);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void findAllTest() {
+    public void findAllTest() {
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -438,22 +510,22 @@ class WalletServiceTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletService.save(wallet);
+            walletService.save(wallet);
             Wallet wallet2 = new Wallet(user, currency);
-            WalletService.save(wallet2);
+            walletService.save(wallet2);
 
-            List<Wallet> wallets = WalletService.findAll()
+            List<Wallet> wallets = walletService.findAll()
                     .stream()
-                    .filter( w -> w.equals(wallet) || w.equals(wallet2))
+                    .filter(w -> w.equals(wallet) || w.equals(wallet2))
                     .collect(Collectors.toList());
 
-            assertEquals( wallets.size(), 2 );
+            assertEquals(wallets.size(), 2);
 
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 }

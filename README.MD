@@ -1,5 +1,25 @@
 http://87.252.246.155:8080/
 
+Статус:
+    Модели данных:
+        User - builder pattern
+        others - POJO
+    DAO:
+        CurrencyDaoImpl - JDBC
+        others - Hibernate
+    Servlets:
+        раздел currencies сделан на сервлетах.
+        часть сделана через web.xml, часть через аннотации.
+    Spring MVC:
+        разделы users и wallets
+
+Technologies used :
+    * JDK 1.8
+    * Maven
+    * IntelliJ IDEA
+    
+    
+
 Цель:
 	Создать мобильный кошелёк в учебных целях.
 	Освоить необходимые технологии и концепции.

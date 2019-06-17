@@ -1,20 +1,29 @@
 package com.vironit.mWallet.models;
 
-import com.vironit.mWallet.models.Currency;
-import org.junit.jupiter.api.Test;
+import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.services.CurrencyService;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-@SuppressWarnings("WeakerAccess")
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class})
+@WebAppConfiguration
 public class CurrencyTester {
 
-    private Currency currency;
-    private CurrencyService currencyService = new CurrencyService();
+    @Autowired
+    private CurrencyService currencyService;
 
-    @SuppressWarnings("WeakerAccess")
+    private Currency currency;
+
     @Test
     public void constructorTest() {
         try {
@@ -24,13 +33,12 @@ public class CurrencyTester {
         }
 
         try {
-            new Currency("TST",0.01);
+            new Currency("TST", 0.01);
         } catch (Exception e) {
             fail(e.getMessage());
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
     @Test
     public void getIdTest() {
         try {
@@ -38,19 +46,19 @@ public class CurrencyTester {
 
             Optional<Currency> currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyService.save(currency);
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    currencyOpt.get().getId() == currency.getId() );
+            assertTrue(currencyOpt.isPresent() &&
+                    currencyOpt.get().getId() == currency.getId());
 
             currencyService.delete(currency);
         } catch (Exception e) {
@@ -59,43 +67,42 @@ public class CurrencyTester {
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
     @Test
     public void setAndGetNameTest() {
         try {
             currency = new Currency("TST", 0.01);
 
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST2") )
+                    .filter(c -> c.getName().equals("TST2"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyService.save(currency);
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    currencyOpt.get().getName().equals("TST") );
+            assertTrue(currencyOpt.isPresent() &&
+                    currencyOpt.get().getName().equals("TST"));
 
             currency.setName("TST2");
             currencyService.update(currency);
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST2") )
+                    .filter(c -> c.getName().equals("TST2"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    currencyOpt.get().getName().equals("TST2") );
+            assertTrue(currencyOpt.isPresent() &&
+                    currencyOpt.get().getName().equals("TST2"));
 
             currencyService.delete(currency);
         } catch (Exception e) {
@@ -104,37 +111,36 @@ public class CurrencyTester {
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
     @Test
     public void setAndGetRateTest() {
         try {
             currency = new Currency("TST", 0.01);
 
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
-            currencyOpt.ifPresent( c -> currencyService.delete(c));
+            currencyOpt.ifPresent(c -> currencyService.delete(c));
 
             currencyService.save(currency);
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    Math.abs(currencyOpt.get().getRate() - 0.01) < 0.000001 );
+            assertTrue(currencyOpt.isPresent() &&
+                    Math.abs(currencyOpt.get().getRate() - 0.01) < 0.000001);
 
             currency.setRate(0.02);
             currencyService.update(currency);
 
             currencyOpt = currencyService.findAll()
                     .stream()
-                    .filter( c -> c.getName().equals("TST") )
+                    .filter(c -> c.getName().equals("TST"))
                     .findAny();
 
-            assertTrue( currencyOpt.isPresent() &&
-                    Math.abs(currencyOpt.get().getRate() - 0.02) < 0.000001 );
+            assertTrue(currencyOpt.isPresent() &&
+                    Math.abs(currencyOpt.get().getRate() - 0.02) < 0.000001);
 
             currencyService.delete(currency);
         } catch (Exception e) {

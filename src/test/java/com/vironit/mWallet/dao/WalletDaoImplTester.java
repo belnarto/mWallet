@@ -1,8 +1,8 @@
 package com.vironit.mWallet.dao;
 
+import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.*;
 import com.vironit.mWallet.services.RoleService;
-import org.junit.jupiter.api.Test;
 import com.vironit.mWallet.services.CurrencyService;
 import com.vironit.mWallet.services.UserService;
 
@@ -10,43 +10,69 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-class WalletDaoTester {
+import static org.junit.Assert.*;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {WebConfig.class})
+@WebAppConfiguration
+public class WalletDaoImplTester {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private WalletDao walletDao;
 
     private Wallet wallet;
     private User user;
     private Currency currency;
     private Currency currency2;
     private Role role;
-    private CurrencyService currencyService = new CurrencyService();
 
     @SuppressWarnings("WeakerAccess")
     @Test
     public void constructorTest() {
         try {
-            new WalletDao();
+            new WalletDaoImpl();
         } catch (Exception e) {
             fail(e.getMessage());
         }
     }
 
     @Test
-    void saveTest() {
+    public void saveTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -56,21 +82,38 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            //UserService.save(user);
+            Optional<User> userOpt = userService.findAll().stream()
+                    .filter(u -> u.getLogin().equals("Test"))
+                    .findAny();
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            //userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -80,19 +123,36 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
             fail();
         } catch (Exception e) {
             currencyService.delete(currency);
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            UserService.save(user);
+            Optional<User> userOpt = userService.findAll().stream()
+                    .filter(u -> u.getLogin().equals("Test"))
+                    .findAny();
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -102,40 +162,46 @@ class WalletDaoTester {
             //CurrencyService.save(com.vironit.mWallet.currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
             fail();
         } catch (Exception e) {
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
             wallet = new Wallet();
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
             fail();
         } catch (Exception e) {
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
         }
     }
 
     @Test
-    void updateTest() {
+    public void updateTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -152,47 +218,53 @@ class WalletDaoTester {
             currencyService.save(currency2);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
             wallet.setCurrency(currency2);
-            WalletDao.update(wallet);
+            walletDao.update(wallet);
 
-            assertTrue(WalletDao.findAll()
+            assertTrue(walletDao.findAll()
                     .stream()
                     .filter(w -> w.equals(wallet))
                     .findAny()
                     .map(w -> w.getCurrency().getName().equals("TST2"))
                     .orElse(false));
 
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
             currencyService.delete(currency2);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
             currencyService.delete(currency);
             currencyService.delete(currency2);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void deleteTest() {
+    public void deleteTest() {
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -202,36 +274,42 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
-            WalletDao.delete(wallet);
+            walletDao.delete(wallet);
 
-            assertFalse(WalletDao.findAll()
+            assertFalse(walletDao.findAll()
                     .stream()
                     .anyMatch(w -> w.equals(wallet)));
 
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -241,11 +319,11 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
-            UserService.delete(user);
+            userService.delete(user);
 
-            assertFalse(WalletDao.findAll()
+            assertFalse(walletDao.findAll()
                     .stream()
                     .anyMatch(w -> w.equals(wallet)));
 
@@ -257,23 +335,28 @@ class WalletDaoTester {
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -283,35 +366,40 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
 
             currencyService.delete(currency);
 
             fail();
 
         } catch (Exception e) {
-            UserService.delete(user);
+            userService.delete(user);
             currencyService.delete(currency);
         }
     }
 
     @Test
-    void findAllTest() {
+    public void findAllTest() {
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -321,42 +409,47 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
             Wallet wallet2 = new Wallet(user, currency);
-            WalletDao.save(wallet2);
+            walletDao.save(wallet2);
 
-            List<Wallet> wallets = WalletDao.findAll()
+            List<Wallet> wallets = walletDao.findAll()
                     .stream()
                     .filter(w -> w.equals(wallet) || w.equals(wallet2))
                     .collect(Collectors.toList());
 
             assertEquals(wallets.size(), 2);
 
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 
     @Test
-    void findByIdTest() {
+    public void findByIdTest() {
 
         try {
-            user = new User("Test", "Test", "Test");
-            Optional<User> userOpt = UserService.findAll().stream()
+            Optional<User> userOpt = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny();
-            userOpt.ifPresent(UserService::delete);
-            role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = RoleService.findAll().stream()
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
                     .filter(r -> r.getRoleEnum().toString().equals("TST"))
                     .findAny();
-            roleOpt.ifPresent(RoleService::delete);
-            RoleService.save(role);
-            user.setRole(role);
-            UserService.save(user);
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("Test")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
 
             currency = new Currency("TST", 0.01);
             Optional<Currency> currencyOpt = currencyService.findAll().stream()
@@ -366,22 +459,22 @@ class WalletDaoTester {
             currencyService.save(currency);
 
             wallet = new Wallet(user, currency);
-            WalletDao.save(wallet);
+            walletDao.save(wallet);
             Wallet wallet2 = new Wallet(user, currency);
-            WalletDao.save(wallet2);
+            walletDao.save(wallet2);
 
-            List<Wallet> wallets = WalletDao.findAll()
+            List<Wallet> wallets = walletDao.findAll()
                     .stream()
                     .filter(w -> w.getId() == wallet.getId() || w.getId() == wallet2.getId())
                     .collect(Collectors.toList());
 
             assertEquals(wallets.size(), 2);
 
-            UserService.delete(user);
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             currencyService.delete(currency);
-            UserService.delete(user);
+            userService.delete(user);
         }
     }
 

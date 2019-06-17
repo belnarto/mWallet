@@ -2,6 +2,7 @@ package com.vironit.mWallet.services;
 
 import com.vironit.mWallet.dao.RoleDao;
 import com.vironit.mWallet.models.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,27 +10,38 @@ import java.util.List;
 @Service
 public class RoleService {
 
+    private RoleDao roleDao;
+
     public RoleService() {
     }
 
-    public static Role findById(int id) {
-        return RoleDao.findById(id);
+    @Autowired
+    public RoleService(RoleDao roleDao) {
+        this.roleDao = roleDao;
     }
 
-    public static void save(Role driver) {
-        RoleDao.save(driver);
+    public Role findById(int id) {
+        return roleDao.findById(id);
     }
 
-    public static void delete(Role driver) {
-        RoleDao.delete(driver);
+    public Role findByName(String roleName) {
+        return roleDao.findByName(roleName);
     }
 
-    public static void update(Role driver) {
-        RoleDao.update(driver);
+    public void save(Role driver) {
+        roleDao.save(driver);
     }
 
-    public static List<Role> findAll() {
-        return RoleDao.findAll();
+    public void delete(Role driver) {
+        roleDao.delete(driver);
+    }
+
+    public void update(Role driver) {
+        roleDao.update(driver);
+    }
+
+    public List<Role> findAll() {
+        return roleDao.findAll();
     }
 
 }

@@ -1,13 +1,13 @@
 package com.vironit.mWallet.models;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class RoleTester {
+public class RoleTester {
 
     @Test
-    void constructorTest() {
+    public void constructorTest() {
         try {
             new Role();
         } catch (Exception e) {
@@ -22,17 +22,17 @@ class RoleTester {
     }
 
     @Test
-    void getIdTest() {
+    public void getIdTest() {
         //TODO
     }
 
     @Test
-    void setAndGetNameTest() {
+    public void setAndGetNameTest() {
         //TODO
     }
 
     @Test
-    void equalsTest() {
+    public void equalsTest() {
         //TODO
     }
 

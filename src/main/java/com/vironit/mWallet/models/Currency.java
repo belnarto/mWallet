@@ -3,16 +3,17 @@ package com.vironit.mWallet.models;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "currency")
+@Table(name = "currency")
 public class Currency {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private int id;
     private String name;
     private double rate;
 
-    public Currency() {}
+    public Currency() {
+    }
 
     public Currency(String name, double rate) {
         setName(name);
@@ -20,7 +21,7 @@ public class Currency {
     }
 
     public void setId(int newId) {
-        if(newId>=0) {
+        if (newId >= 0) {
             id = newId;
         } else {
             throw new IllegalArgumentException("Value < 0");
@@ -32,7 +33,7 @@ public class Currency {
     }
 
     public void setName(String newName) {
-        if(newName!=null && !newName.equals("")) {
+        if (newName != null && !newName.equals("")) {
             name = newName;
         } else {
             throw new IllegalArgumentException("String is null or empty");
@@ -44,7 +45,7 @@ public class Currency {
     }
 
     public void setRate(double newRate) {
-        if(newRate>0) {
+        if (newRate > 0) {
             rate = newRate;
         } else {
             throw new IllegalArgumentException("Value <= 0");
@@ -62,7 +63,7 @@ public class Currency {
 
     @Override
     public boolean equals(Object other) {
-        if ( !(other instanceof Currency) ) {
+        if (!(other instanceof Currency)) {
             return false;
         }
         Currency otherCurrency = (Currency) other;
