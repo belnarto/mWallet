@@ -5,7 +5,7 @@
 <html>
 <head>
     <style>
-        <%@ include file="../../resources/w3.css" %>
+        <%@ include file="../../resources/css/w3.css" %>
     </style>
 
     <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
@@ -18,9 +18,30 @@
     </style>
 </head>
 <body>
-<div class="w3-container w3-grey w3-opacity w3-left-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='../../..'"><b>Back to main</b></button>
+
+<div class="w3-container w3-grey w3-opacity w3-padding">
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
+    <div class="w3-right">
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                <h4>You are logged as : ${pageContext.request.userPrincipal.name}.</h4>
+                <c:choose>
+                    <c:when test="${pageContext.request.isUserInRole('ADMIN')}">
+                        <h4>You role is : ADMIN.</h4>
+                    </c:when>
+                    <c:otherwise>
+                        <h4>You role is : DEFAULT.</h4>
+                    </c:otherwise>
+                </c:choose>
+                <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+            </c:when>
+            <c:otherwise>
+                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
+
 <div style="width:665px" class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-container w3-padding">
         <div class="w3-card-4">

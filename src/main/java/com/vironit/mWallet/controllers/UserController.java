@@ -16,14 +16,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    @Autowired
     private UserService userService;
-    private RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
-        this.userService = userService;
-        this.roleService = roleService;
-    }
+    private RoleService roleService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ModelAndView allUsers() {

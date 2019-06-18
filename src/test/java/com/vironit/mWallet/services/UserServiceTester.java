@@ -12,6 +12,8 @@ import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -268,6 +270,40 @@ public class UserServiceTester {
             userService.delete(user);
             userService.delete(user2);
             userService.delete(user3);
+        } catch (Exception e) {
+            fail(e.getMessage());
+            userService.delete(user);
+        }
+    }
+
+    @Test
+    public void loadUserByUsernameTest() {
+        try {
+            Optional<User> userOpt = userService.findAll().stream()
+                    .filter(u -> u.getLogin().equals("Test"))
+                    .findAny();
+            userOpt.ifPresent(userService::delete);
+            Optional<Role> roleOpt = roleService.findAll().stream()
+                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                    .findAny();
+            role = new Role(RoleEnum.TST);
+            user = new User.UserBuilder()
+                    .setName("Test")
+                    .setLogin("Test")
+                    .setPassword("12345")
+                    .setRole(roleOpt.orElse(role))
+                    .build();
+            if (!roleOpt.isPresent()) {
+                roleService.save(role);
+            }
+            userService.save(user);
+
+            UserDetails userDetails = userService.loadUserByUsername("Test");
+            assertEquals(userDetails.getPassword(),user.getPassword());
+            assertTrue(userDetails.getAuthorities().contains(
+                    new SimpleGrantedAuthority(user.getRole().getRoleEnum().toString())
+            ));
+            userService.delete(user);
         } catch (Exception e) {
             fail(e.getMessage());
             userService.delete(user);

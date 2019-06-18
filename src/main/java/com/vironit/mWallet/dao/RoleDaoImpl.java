@@ -1,63 +1,63 @@
 package com.vironit.mWallet.dao;
 
+import com.vironit.mWallet.models.Role;
+import com.vironit.mWallet.models.RoleEnum;
+import com.vironit.mWallet.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import com.vironit.mWallet.models.Currency;
-import org.springframework.stereotype.Repository;
-import com.vironit.mWallet.utils.HibernateSessionFactoryUtil;
 
 import java.util.List;
 
-@Repository
-public class CurrencyDaoHibernate implements CurrencyDao {
+public class RoleDaoImpl implements RoleDao {
 
-    public Currency findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Currency.class, id);
+    public Role findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Role.class, id);
     }
 
-    public Currency findByName(String name) {
+    public Role findByName(String roleName) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Currency currency = (Currency) session
-                .createQuery("From Currency where name= :currencyName ")
-                .setParameter("currencyName", name)
+        Role role = (Role) session
+                .createQuery("From Role where roleEnum= :roleEnum ")
+                .setParameter("roleEnum", RoleEnum.valueOf(roleName))
                 .uniqueResult();
         session.close();
-        return currency;
+        return role;
     }
 
-    public void save(Currency currency) {
+    public void save(Role role) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.save(currency);
+        session.save(role);
         tx1.commit();
         session.close();
     }
 
-    public void update(Currency currency) {
+    public void update(Role role) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(currency);
+        session.update(role);
         tx1.commit();
         session.close();
     }
 
-    public void delete(Currency currency) {
+    public void delete(Role role) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.delete(currency);
+        session.delete(role);
         tx1.commit();
         session.close();
     }
 
     @SuppressWarnings("unchecked")
-    public List<Currency> findAll() {
+    public List<Role> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-
-        List<Currency> users = session
-                                    .createQuery("From Currency order by id")
-                                    .list();
+        List<Role> users = (List<Role>) session
+                .createQuery("From Role order by id")
+                .list();
         session.close();
 
         return users;
     }
+
 }
+

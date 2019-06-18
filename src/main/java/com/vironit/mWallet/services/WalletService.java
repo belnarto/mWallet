@@ -13,15 +13,8 @@ import java.util.List;
 @Service
 public class WalletService {
 
-    private WalletDao walletDao;
-
-    public WalletService() {
-    }
-
     @Autowired
-    public WalletService(WalletDao walletDao) {
-        this.walletDao = walletDao;
-    }
+    private WalletDao walletDao;
 
     public Wallet findById(int id) {
         return walletDao.findById(id);

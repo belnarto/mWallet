@@ -22,16 +22,21 @@ import java.util.stream.Collectors;
 @Controller
 public class WalletController {
 
+    @Autowired
     private UserService userService;
-    private WalletService walletService;
-    private CurrencyService currencyService;
 
     @Autowired
-    public WalletController(UserService userService, WalletService walletService, CurrencyService currencyService) {
-        this.userService = userService;
-        this.walletService = walletService;
-        this.currencyService = currencyService;
-    }
+    private WalletService walletService;
+
+    @Autowired
+    private CurrencyService currencyService;
+
+//    @Autowired
+//    public WalletController(UserService userService, WalletService walletService, CurrencyService currencyService) {
+//        this.userService = userService;
+//        this.walletService = walletService;
+//        this.currencyService = currencyService;
+//    }
 
     @RequestMapping(value = "/users/{id}/wallets", method = RequestMethod.GET)
     public ModelAndView userWalletsPage(@PathVariable("id") int id) {

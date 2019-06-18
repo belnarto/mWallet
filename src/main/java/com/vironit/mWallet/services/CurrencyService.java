@@ -12,17 +12,12 @@ import java.util.List;
 @Service
 public class CurrencyService {
 
+    @Autowired
     private CurrencyDao currencyDao;
-    private WalletDao walletDao;
-
-    public CurrencyService() {
-    }
 
     @Autowired
-    public CurrencyService(WalletDao walletDao, CurrencyDao currencyDao) {
-        this.walletDao = walletDao;
-        this.currencyDao = currencyDao;
-    }
+    private WalletDao walletDao;
+
 
     public Currency findById(int id) {
         return currencyDao.findById(id);

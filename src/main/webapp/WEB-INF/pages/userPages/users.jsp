@@ -4,7 +4,7 @@
 <html>
 <head>
     <style>
-        <%@ include file="../../resources/w3.css" %>
+        <%@ include file="../../resources/css/w3.css" %>
     </style>
 
     <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
@@ -17,9 +17,30 @@
     </style>
 </head>
 <body>
-<div class="w3-container w3-grey w3-opacity w3-left-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='../../..'"><b>Back to main</b></button>
+
+<div class="w3-container w3-grey w3-opacity w3-padding">
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
+    <div class="w3-right">
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                <h4>You are logged as : ${pageContext.request.userPrincipal.name}.</h4>
+                <c:choose>
+                    <c:when test="${pageContext.request.isUserInRole('ADMIN')}">
+                        <h4>You role is : ADMIN.</h4>
+                    </c:when>
+                    <c:otherwise>
+                        <h4>You role is : DEFAULT.</h4>
+                    </c:otherwise>
+                </c:choose>
+                <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+            </c:when>
+            <c:otherwise>
+                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
+
 <div style="width:1265px" class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-container w3-padding">
         <div class="w3-card-4">
@@ -35,8 +56,6 @@
                 <%--suppress HtmlDeprecatedAttribute --%>
                 <col width="150">
                 <%--suppress HtmlDeprecatedAttribute --%>
-                <col width="150">
-                <%--suppress HtmlDeprecatedAttribute --%>
                 <col width="100">
                 <%--suppress HtmlDeprecatedAttribute --%>
                 <col width="240">
@@ -45,7 +64,6 @@
                     <th class="w3-hover-sand">Id:</th>
                     <th class="w3-hover-sand">Name:</th>
                     <th class="w3-hover-sand">Login:</th>
-                    <th class="w3-hover-sand">Password:</th>
                     <th class="w3-hover-sand">Role:</th>
                     <th class="w3-hover-sand">Last update:</th>
                     <th class="w3-hover-sand">Operations:</th>
@@ -56,7 +74,6 @@
                         <td valign="center" class="w3-hover-sand w3-center"><br>${user.id}</td>
                         <td style="text-align:center" class="w3-hover-sand"><br>${user.name}</td>
                         <td style="text-align:center" class="w3-hover-sand"><br>${user.login}</td>
-                        <td style="text-align:center" class="w3-hover-sand"><br>${user.password}</td>
                         <td style="text-align:center" class="w3-hover-sand"><br>${user.role.roleEnum}</td>
                         <td style="text-align:center" class="w3-hover-sand">
                             <br>${user.updatedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}</td>
@@ -85,11 +102,6 @@
         </div>
     </div>
 </div>
-
-<c:if test="${pageContext.request.userPrincipal.name != null}">
-    <h3>You are logged as : ${pageContext.request.userPrincipal.name}
-        | <a href="<c:url value="/logout" />"> Logout</a></h3>
-</c:if>
 
 </body>
 </html>

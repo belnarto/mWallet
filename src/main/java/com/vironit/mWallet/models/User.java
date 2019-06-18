@@ -28,6 +28,10 @@ public class User {
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    @Transient
+    private String passwordConfirm;
+    // TODO fix
+
     public User() {
     }
 
@@ -38,6 +42,14 @@ public class User {
         this.password = builder.password;
         this.role = builder.role;
         this.updatedAt = builder.updatedAt;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public int getId() {

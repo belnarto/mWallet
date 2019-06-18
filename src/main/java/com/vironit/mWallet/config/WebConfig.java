@@ -1,28 +1,24 @@
 package com.vironit.mWallet.config;
 
 import com.vironit.mWallet.dao.*;
-import com.vironit.mWallet.services.CurrencyService;
-import com.vironit.mWallet.services.RoleService;
-import com.vironit.mWallet.services.UserService;
-import com.vironit.mWallet.services.WalletService;
+import com.vironit.mWallet.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-//@Import({ SecurityConfig.class })
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.vironit.mWallet.controllers")
-@ComponentScan(basePackages = "com.vironit.mWallet.services")
-@ComponentScan(basePackages = "com.vironit.mWallet.models")
-@ComponentScan(basePackages = "com.vironit.mWallet.dao")
-@ComponentScan(basePackages = "com.vironit.mWallet.servlets")
+@ComponentScan(basePackages = "com.vironit.mWallet")
 public class WebConfig implements WebMvcConfigurer {
+
 
     @Bean
     UserDao getUserDao() {
@@ -43,6 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
     RoleDao getRoleDao() {
         return new RoleDaoImpl();
     }
+
 
 
     @Bean

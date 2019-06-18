@@ -10,15 +10,8 @@ import java.util.List;
 @Service
 public class RoleService {
 
-    private RoleDao roleDao;
-
-    public RoleService() {
-    }
-
     @Autowired
-    public RoleService(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
+    private RoleDao roleDao;
 
     public Role findById(int id) {
         return roleDao.findById(id);

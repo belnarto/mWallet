@@ -7,12 +7,12 @@
     </style>
 
     <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
-    <title>Main</title>
+    <title>Access denied</title>
 </head>
-<body class="w3-light-grey">
+<body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <h4>Welcome to wallet app!</h4>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -34,13 +34,14 @@
     </div>
 </div>
 
-<div class="w3-container w3-center">
-    <div class="w3-bar w3-padding-large w3-padding-24">
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/myWallets'">My wallets
-        </button>
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/users'">All users</button>
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/currencies'">Currencies
-        </button>
+<div style="width:1265px" class="w3-container w3-center w3-margin-bottom w3-padding">
+    <div class="w3-container w3-padding">
+        <div class="w3-card-4">
+            <div class="w3-container w3-center w3-light-blue">
+                <h1>HTTP Status 403 - Access is denied</h1>
+                <h2>${msg}</h2>
+            </div>
+        </div>
     </div>
 </div>
 
