@@ -1,9 +1,10 @@
-package com.vironit.mWallet.dao;
+package com.vironit.mWallet.dao.impl;
 
+import com.vironit.mWallet.dao.UserDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.vironit.mWallet.models.User;
-import com.vironit.mWallet.utils.HibernateSessionFactoryUtil;
+import com.vironit.mWallet.config.HibernateSessionFactoryUtil;
 
 import java.util.List;
 

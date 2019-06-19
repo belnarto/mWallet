@@ -3,8 +3,11 @@ package com.vironit.mWallet.servlets;
 import com.vironit.mWallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 //import javax.servlet.annotation.WebServlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,14 +17,19 @@ import java.io.IOException;
 //@WebServlet("/currencies/deleteCurrency")
 public class DeleteCurrencyServlet extends HttpServlet {
 
-    private static CurrencyService currencyService;
-
-    public DeleteCurrencyServlet() {
-    }
-
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
-    public DeleteCurrencyServlet(CurrencyService currencyService) {
-        DeleteCurrencyServlet.currencyService = currencyService;
+    private CurrencyService currencyService;
+
+    @Override
+    public void init(ServletConfig config) {
+        try {
+            super.init(config);
+            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                    config.getServletContext());
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
 

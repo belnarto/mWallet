@@ -1,8 +1,9 @@
-package com.vironit.mWallet.dao;
+package com.vironit.mWallet.dao.impl;
 
+import com.vironit.mWallet.dao.RoleDao;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
-import com.vironit.mWallet.utils.HibernateSessionFactoryUtil;
+import com.vironit.mWallet.config.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

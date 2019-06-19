@@ -4,8 +4,10 @@ import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +19,19 @@ import java.io.IOException;
 //@WebServlet("/currencies/editCurrency")
 public class EditCurrencyServlet extends HttpServlet {
 
-    private static CurrencyService currencyService;
-
-    public EditCurrencyServlet() {
-    }
-
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
-    public EditCurrencyServlet(CurrencyService currencyService) {
-        EditCurrencyServlet.currencyService = currencyService;
+    private CurrencyService currencyService;
+
+    @Override
+    public void init(ServletConfig config) {
+        try {
+            super.init(config);
+            SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                    config.getServletContext());
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

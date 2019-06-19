@@ -16,9 +16,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private UserService userService;
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private RoleService roleService;
 

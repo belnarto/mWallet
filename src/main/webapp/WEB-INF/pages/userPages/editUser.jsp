@@ -63,7 +63,7 @@
                     <% out.println("<input type=\"text\" name=\"login\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"" + user.getLogin() + "\" style=\"width: 100%\"><br/>"); %>
                 </label>
                 <label>New password:
-                    <% out.println("<input type=\"text\" name=\"password\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"" + user.getPassword() + "\" style=\"width: 100%\"><br/>"); %>
+                    <% out.println("<input type=\"text\" name=\"password\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"keep_old_pass\" style=\"width: 100%\"><br/>"); %>
                 </label>
                 <label>Role:
                     <select name="newRoleName">

@@ -1,6 +1,7 @@
 package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.config.WebConfig;
+import com.vironit.mWallet.dao.impl.CurrencyDaoImpl;
 import com.vironit.mWallet.models.Currency;
 
 import java.util.List;

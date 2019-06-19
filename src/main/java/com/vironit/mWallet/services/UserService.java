@@ -45,6 +45,11 @@ public class UserService implements UserDetailsService {
     }
 
     public void update(User user) {
+        if (!user.getPassword().trim().equals("keep_old_pass")) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        } else {
+            user.setPassword(findById(user.getId()).getPassword());
+        }
         userDao.update(user);
     }
 

@@ -1,4 +1,4 @@
-package com.vironit.mWallet.utils;
+package com.vironit.mWallet.config;
 
 import com.vironit.mWallet.models.*;
 import org.hibernate.SessionFactory;

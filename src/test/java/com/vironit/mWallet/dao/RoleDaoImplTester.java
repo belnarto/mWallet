@@ -1,6 +1,7 @@
 package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.config.WebConfig;
+import com.vironit.mWallet.dao.impl.RoleDaoImpl;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.services.RoleService;
@@ -8,7 +9,6 @@ import com.vironit.mWallet.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;

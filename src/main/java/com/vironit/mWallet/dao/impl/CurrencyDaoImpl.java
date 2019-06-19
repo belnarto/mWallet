@@ -1,9 +1,10 @@
-package com.vironit.mWallet.dao;
+package com.vironit.mWallet.dao.impl;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vironit.mWallet.dao.CurrencyDao;
 import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.config.DataSource;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;

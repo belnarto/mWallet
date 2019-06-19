@@ -1,16 +1,17 @@
 package com.vironit.mWallet.config;
 
 import com.vironit.mWallet.dao.*;
+import com.vironit.mWallet.dao.impl.CurrencyDaoImpl;
+import com.vironit.mWallet.dao.impl.RoleDaoImpl;
+import com.vironit.mWallet.dao.impl.UserDaoImpl;
+import com.vironit.mWallet.dao.impl.WalletDaoImpl;
 import com.vironit.mWallet.services.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 

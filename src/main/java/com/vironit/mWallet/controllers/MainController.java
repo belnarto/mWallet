@@ -1,5 +1,7 @@
 package com.vironit.mWallet.controllers;
 
+import com.vironit.mWallet.models.Role;
+import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -50,8 +54,12 @@ public class MainController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registrationPage(@ModelAttribute("message") String message) {
+        List<Role> roles = roleService.findAll().stream()
+                .filter( r -> !r.getRoleEnum().equals(RoleEnum.TST))
+                .collect(Collectors.toList());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("userForm", new User());
+        modelAndView.addObject("roles", roles);
         if (message != null && !message.isEmpty()) {
             modelAndView.addObject("message", "Passwords are not same, try again.");
         }
@@ -62,7 +70,7 @@ public class MainController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView addUser(@ModelAttribute("userForm") User userForm,
                                 BindingResult bindingResult) {
-        userForm.setRole(roleService.findByName("DEFAULT"));
+        userForm.setRole(roleService.findByName(userForm.getRole().getRoleEnum().toString()));
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");

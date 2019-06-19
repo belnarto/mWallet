@@ -66,6 +66,17 @@
             </div>
         </spring:bind>
 
+        <spring:bind path="role">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label for="role.roleEnum">Role</label>
+                <form:select type="role" path="role.roleEnum" class="form-control">
+                    <c:forEach var="roleAvailable" items="${roles}">
+                        <option>${roleAvailable.roleEnum}</option>
+                    </c:forEach>
+                </form:select>
+            </div>
+        </spring:bind>
+
         <spring:bind path="password">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>

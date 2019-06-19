@@ -1,6 +1,7 @@
 package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.config.WebConfig;
+import com.vironit.mWallet.dao.impl.WalletDaoImpl;
 import com.vironit.mWallet.models.*;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.CurrencyService;
