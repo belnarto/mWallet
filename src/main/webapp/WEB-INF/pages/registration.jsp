@@ -36,10 +36,7 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <form action="/logout" method="post">
-                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                </form>
+                <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
             </c:when>
             <c:otherwise>
                 <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
@@ -96,7 +93,6 @@
         </spring:bind>
         <span>${message}</span>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     </form:form>
 
 </div>

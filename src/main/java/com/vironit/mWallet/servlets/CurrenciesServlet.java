@@ -40,6 +40,7 @@ public class CurrenciesServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/currencies.jsp");
         List<Currency> currencies = currencyService.findAll();
         req.setAttribute("currencies", currencies);
+        req.setAttribute("myTest", "myTest111");
         requestDispatcher.forward(req, resp);
     }
 

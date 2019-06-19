@@ -2,6 +2,7 @@
 <%@ page import="com.vironit.mWallet.models.Currency" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
     <style>
@@ -33,9 +34,9 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <form action="/logout" method="post">
+                <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
@@ -51,47 +52,45 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Currencies:</h2>
             </div>
-            <table style="width:600px" class="w3-table w3-centered">
-                <tr class="w3-tr">
-                    <th class="w3-hover-sand">Name:</th>
-                    <th class="w3-hover-sand">Rate:</th>
-                    <th class="w3-hover-sand">Operations:</th>
-                </tr>
-                <%
-                    //noinspection unchecked
-                    List<Currency> currencies = (List<Currency>) request.getAttribute("currencies");
-
-                    if (currencies != null && !currencies.isEmpty()) {
-
-                        for (Currency c : currencies) {
-                            out.println("<tr class=\"w3-hover-sand\">");
-                            out.println("<td valign=\"center\" class=\"w3-hover-sand w3-center\"><br>" + c.getName() + "</td>");
-                            out.println("<td style=\"text-align:center\" class=\"w3-hover-sand\"><br>" + c.getRate() + "</td>");
-                            out.println("<td class=\"w3-hover-sand w3-center\">");
-
-                            out.println("<form action=\"/currencies/editCurrency\" >");
-                            out.println("<input type=\"hidden\" name=\"currencyId\" value=\"" + c.getId() + "\" />");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Edit\"/>");
-                            out.println("</form>");
-
-                            out.println("<form action=\"/currencies/deleteCurrency\" method=\"post\">");
-                            out.println("<input type=\"hidden\" name=\"currencyId\" value=\"" + c.getId() + "\" />");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" name=\"Delete\" value=\"Delete\" />");
-                            out.println("<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\" />"); //TODO FIX
-                            out.println("</form>");
-
-                            out.println("</td>");
-                            out.println("</tr>");
-                        }
-
-                    } else out.println("<div class=\"w3-panel w3-red w3-display-container w3-card-4 w3-round\">\n"
-                            +
-                            "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                            "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey\">×</span>\n" +
-                            "   <h5>There are no currencies!</h5>\n" +
-                            "</div>");
-                %>
-            </table>
+            <jsp:useBean id="currencies" scope="request" type="java.util.List"/>
+            <c:choose>
+                <c:when test="${not empty currencies}">
+                    <table style="width:600px" class="w3-table w3-centered">
+                        <tr class="w3-tr">
+                            <th class="w3-hover-sand">Name:</th>
+                            <th class="w3-hover-sand">Rate:</th>
+                            <th class="w3-hover-sand">Operations:</th>
+                        </tr>
+                        <c:forEach var="currency" items="${currencies}">
+                        <tr class="w3-hover-sand">
+                                <%--suppress HtmlDeprecatedAttribute --%>
+                            <td valign="center" class="w3-hover-sand w3-center"><br>${currency}</td>
+                            <td style="text-align:center" class="w3-hover-sand"><br>${currency.getRate()}</td>
+                            <td class="w3-hover-sand w3-center">
+                                <form action="${pageContext.request.contextPath}/currencies/editCurrency">
+                                    <input type="hidden" name="currencyId" value="${currency.getId()}"/>
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Edit"/>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/currencies/deleteCurrency"
+                                      method="post">
+                                    <input type="hidden" name="currencyId" value="${currency.getId()}"/>
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" name="Delete"
+                                           value="Delete"/>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                </form>
+                            </td>
+                            </c:forEach>
+                        </tr>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+                <span onclick="this.parentElement.style.display='none'"
+                      class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">×</span>
+                        <h5>There are no currencies!</h5>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
                     onclick="location.href='/currencies/addCurrency'">Add new currency
             </button>

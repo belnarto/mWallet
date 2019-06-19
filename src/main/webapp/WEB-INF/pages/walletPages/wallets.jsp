@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
     <style>
@@ -36,9 +37,9 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <form action="/logout" method="post">
+                <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
@@ -54,60 +55,57 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Wallets:</h2>
             </div>
-            <table style="width:1200px" class="w3-table w3-centered">
-                <tr class="w3-tr">
-                    <th class="w3-hover-sand">Id:</th>
-                    <th class="w3-hover-sand">Balance:</th>
-                    <th class="w3-hover-sand">Currency:</th>
-                    <th class="w3-hover-sand">Status:</th>
-                    <th class="w3-hover-sand">Operations:</th>
-                </tr>
-                <%
-                    //noinspection unchecked
-                    List<Wallet> wallets = (List<Wallet>) request.getAttribute("wallets");
 
-                    if (wallets != null && !wallets.isEmpty()) {
+            <jsp:useBean id="wallets" scope="request" type="java.util.List"/>
+            <c:choose>
+                <c:when test="${not empty wallets}">
+                    <table style="width:1200px" class="w3-table w3-centered">
 
-                        for (Wallet wallet : wallets) {
-                            out.println("<tr class=\"w3-hover-sand\">");
-                            out.println("<td valign=\"center\" class=\"w3-hover-sand w3-center\"><br>" + wallet.getId() + "</td>");
-                            out.println("<td style=\"text-align:center\" class=\"w3-hover-sand\"><br>" + wallet.getBalance() + "</td>");
-                            out.println("<td style=\"text-align:center\" class=\"w3-hover-sand\"><br>" + wallet.getCurrency() + "</td>");
-                            out.println("<td style=\"text-align:center\" class=\"w3-hover-sand\"><br>" + wallet.getStatus() + "</td>");
-                            out.println("<td class=\"w3-hover-sand w3-center\">");
+                        <tr class="w3-tr">
+                            <th class="w3-hover-sand">Id:</th>
+                            <th class="w3-hover-sand">Balance:</th>
+                            <th class="w3-hover-sand">Currency:</th>
+                            <th class="w3-hover-sand">Status:</th>
+                            <th class="w3-hover-sand">Operations:</th>
+                        </tr>
+                        <c:forEach var="wallet" items="${wallets}">
+                        <tr class="w3-hover-sand">
+                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.id}</td>
+                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.balance}</td>
+                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.currency}</td>
+                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.status}</td>
+                            <td class="w3-hover-sand w3-center">
+                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/addBalance">
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Add money"/>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/reduceBalance">
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Spend money"/>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/transferMoney">
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Transfer money"/>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/editWallet">
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Edit"/>
+                                </form>
+                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/deleteWallet"
+                                      method="post">
+                                    <input class="w3-btn w3-hover w3-round-large" type="submit" value="Delete"/>
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                </form>
+                            </td>
+                            </c:forEach>
+                        </tr>
+                    </table>
+                </c:when>
+                <c:otherwise>
+                    <div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+                <span onclick="this.parentElement.style.display='none'"
+                      class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">×</span>
+                        <h5>There are no wallets!</h5>
+                    </div>
+                </c:otherwise>
+            </c:choose>
 
-                            out.println("<p><form action=\"/users/" + request.getAttribute("id") + "/wallets/" + wallet.getId() + "/addBalance\" >");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Add money\"/>");
-                            out.println("</form>");
-
-                            out.println("<form action=\"/users/" + request.getAttribute("id") + "/wallets/" + wallet.getId() + "/reduceBalance\" >");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Spend money\"/>");
-                            out.println("</form>");
-
-                            out.println("<form action=\"/users/" + request.getAttribute("id") + "/wallets/" + wallet.getId() + "/transferMoney\" >");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Transfer money\"/>");
-                            out.println("</form>");
-
-                            out.println("<form action=\"/users/" + request.getAttribute("id") + "/wallets/" + wallet.getId() + "/editWallet\" >");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Edit wallet\"/>");
-                            out.println("</form>");
-
-                            out.println("<form action=\"/users/" + request.getAttribute("id") + "/wallets/" + wallet.getId() + "/deleteWallet\" >");
-                            out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" value=\"Delete wallet\"/>");
-                            out.println("</form></p>");
-
-                            out.println("</td>");
-                            out.println("</tr>");
-                        }
-
-                    } else out.println("<div class=\"w3-panel w3-red w3-display-container w3-card-4 w3-round\">\n"
-                            +
-                            "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                            "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey\">×</span>\n" +
-                            "   <h5>There are no wallets!</h5>\n" +
-                            "</div>");
-                %>
-            </table>
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
                     onclick="location.href='/users/${id}/wallets/addWallet'">Add new wallet
             </button>

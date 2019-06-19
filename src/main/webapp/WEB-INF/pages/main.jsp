@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
     <style>
@@ -25,7 +26,7 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <form action="/logout" method="post">
+                <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form>

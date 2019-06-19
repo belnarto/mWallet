@@ -67,8 +67,9 @@ public class WalletService {
             targetValue = targetValue / toWallet.getCurrency().getRate(); // to target Currency
 
             targetValue = new BigDecimal(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
-
+            toWallet = walletDao.findById(toWallet.getId());
             toWallet.setBalance(toWallet.getBalance() + targetValue);
+
             walletDao.update(toWallet);
         } else {
             throw new IllegalArgumentException("Value <= 0 or balance is not enough");

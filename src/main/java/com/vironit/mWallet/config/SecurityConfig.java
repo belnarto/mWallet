@@ -47,6 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/users/addUser/**").permitAll()
                 .antMatchers("/currencies/**").access("hasRole('ADMIN')")
                 .antMatchers("/users/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
                 .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")

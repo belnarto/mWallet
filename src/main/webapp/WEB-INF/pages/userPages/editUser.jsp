@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
     <style>
@@ -28,9 +29,9 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <form action="/logout" method="post">
+                <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
@@ -42,31 +43,28 @@
 <div style="width:700px" class="w3-container w3-center w3-margin-bottom w3-padding">
 
     <div class="w3-container w3-padding">
-        <%
-            User user = (User) request.getAttribute("user");
-
-            if (request.getAttribute("updated") != null) {
-                out.println("<div class=\"w3-panel w3-green w3-display-container w3-card-4 w3-round\">\n" +
-                        "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
-                        "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
-                        "   <h5>User '" + ((User) request.getAttribute("user")).getLogin() + "' updated!</h5>\n" +
-                        "</div>");
-            }
-        %>
+        <%--@elvariable id="updated" type="java.lang.String"--%>
+        <c:if test="${not empty updated}">
+            <div class="w3-panel w3-green w3-display-container w3-card-4 w3-round">
+            <span onclick="this.parentElement.style.display='none'"
+                  class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey">×</span>
+                <h5>User '${user.login}' updated!</h5>
+            </div>
+        </c:if>
         <div class="w3-card-4">
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Edit user:</h2>
             </div>
             <form method="post" class="w3-selection w3-padding w3-center">
-                <% out.println("<input type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\"><br/>"); %>
+                <input type="hidden" name="id" value="${user.id}"><br/>
                 <label>New name:
-                    <% out.println("<input type=\"text\" name=\"name\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"" + user.getName() + "\" style=\"width: 100%\"><br/>"); %>
+                    <input type="text" name="name" class="w3-input w3-animate-input w3-border w3-round-large" value="${user.name}" style="width: 100%"><br/>
                 </label>
                 <label>New login:
-                    <% out.println("<input type=\"text\" name=\"login\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"" + user.getLogin() + "\" style=\"width: 100%\"><br/>"); %>
+                    <input type="text" name="login" class="w3-input w3-animate-input w3-border w3-round-large" value="${user.login}" style="width: 100%"><br/>
                 </label>
                 <label>New password:
-                    <% out.println("<input type=\"text\" name=\"password\" class=\"w3-input w3-animate-input w3-border w3-round-large\" value=\"keep_old_pass\" style=\"width: 100%\"><br/>"); %>
+                    <input type="text" name="password" class="w3-input w3-animate-input w3-border w3-round-large" value="keep_old_pass" style="width: 100%"><br/>
                 </label>
                 <label>Role:
                     <select name="newRoleName">
@@ -79,7 +77,7 @@
                     </select>
                 </label>
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </div>
     </div>

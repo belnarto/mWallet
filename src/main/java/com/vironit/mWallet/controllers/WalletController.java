@@ -156,7 +156,7 @@ public class WalletController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/deleteWallet", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}/wallets/{id2}/deleteWallet", method = RequestMethod.POST)
     public ModelAndView deleteWallet(@SuppressWarnings("unused") @PathVariable("id") int id,
                                      @PathVariable("id2") int id2) {
         walletService.delete(walletService.findById(id2));
