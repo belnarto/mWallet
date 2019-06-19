@@ -6,6 +6,7 @@ import com.vironit.mWallet.models.Wallet;
 import com.vironit.mWallet.models.WalletStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,37 +17,33 @@ import com.vironit.mWallet.services.WalletService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
 public class WalletController {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private UserService userService;
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private WalletService walletService;
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private CurrencyService currencyService;
-
-//    @Autowired
-//    public WalletController(UserService userService, WalletService walletService, CurrencyService currencyService) {
-//        this.userService = userService;
-//        this.walletService = walletService;
-//        this.currencyService = currencyService;
-//    }
 
     @RequestMapping(value = "/users/{id}/wallets", method = RequestMethod.GET)
     public ModelAndView userWalletsPage(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("walletPages/wallets");
         modelAndView.addObject("id", id);
-
         List<Wallet> wallets = walletService.findAllByUser(userService.findById(id));
-
         modelAndView.addObject("wallets", wallets);
+        modelAndView.addObject("currURL", "/users/{id}/wallets" );
         return modelAndView;
     }
 
@@ -188,5 +185,18 @@ public class WalletController {
         return modelAndView;
     }
 
+
+    @RequestMapping(value = "/myWallets", method = RequestMethod.GET)
+    public ModelAndView walletsPage(Authentication authentication) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("walletPages/wallets");
+        String username;
+        username = authentication.getName();
+        modelAndView.addObject("currURL", "myWallets" );
+        modelAndView.addObject("id", userService.findByLogin(username).getId() );
+        modelAndView.addObject("wallets", walletService.
+                findAllByUser(userService.findByLogin(username)) );
+        return modelAndView;
+    }
 
 }

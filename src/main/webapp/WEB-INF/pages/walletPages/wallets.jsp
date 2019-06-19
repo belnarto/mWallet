@@ -14,7 +14,16 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users'"><b>Back to users</b></button>
+
+    <c:choose>
+        <c:when test="${currURL.equals(\"myWallets\")}">
+            <button class="w3-btn w3-round-large w3-left" onclick="location.href='/'"><b>Back to main</b></button>
+        </c:when>
+        <c:otherwise>
+            <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users'"><b>Back to users</b></button>
+        </c:otherwise>
+    </c:choose>
+
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -27,7 +36,10 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                <form action="/logout" method="post">
+                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </form>
             </c:when>
             <c:otherwise>
                 <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>

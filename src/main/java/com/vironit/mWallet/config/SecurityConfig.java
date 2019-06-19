@@ -46,18 +46,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/currencies/**").access("hasRole('ADMIN')")
+                .antMatchers("/users/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
+                .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
                 .antMatchers("/**").permitAll()
                 //.antMatchers("/resources/**", "/registration").permitAll()
                 //.anyRequest().authenticated()
-                .and().csrf().disable()
+                .and()
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
-                .csrf().disable().logout()
+                .logout()
                 .logoutSuccessUrl("/login?logout=true")
                 .permitAll()
                 .and()

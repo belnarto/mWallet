@@ -33,7 +33,10 @@
                         <h4>You role is : DEFAULT.</h4>
                     </c:otherwise>
                 </c:choose>
-                <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                <form action="/logout" method="post">
+                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                </form>
             </c:when>
             <c:otherwise>
                 <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
@@ -74,6 +77,7 @@
                             out.println("<form action=\"/currencies/deleteCurrency\" method=\"post\">");
                             out.println("<input type=\"hidden\" name=\"currencyId\" value=\"" + c.getId() + "\" />");
                             out.println("<input class=\"w3-btn w3-hover w3-round-large\" type=\"submit\" name=\"Delete\" value=\"Delete\" />");
+                            out.println("<input type=\"hidden\" name=\"${_csrf.parameterName}\" value=\"${_csrf.token}\" />"); //TODO FIX
                             out.println("</form>");
 
                             out.println("</td>");
