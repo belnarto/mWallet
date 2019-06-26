@@ -15,10 +15,6 @@ public class UserDaoImpl implements UserDao {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
     }
 
-    public User findById2(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
-    }
-
     public User findByLogin(String login) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         User user = (User) session
