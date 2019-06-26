@@ -6,24 +6,12 @@ import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class RoleDaoImpl implements RoleDao {
-
-    public Role findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Role.class, id);
-    }
-
-    public Role findByName(String roleName) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Role role = (Role) session
-                .createQuery("From Role where roleEnum= :roleEnum ")
-                .setParameter("roleEnum", RoleEnum.valueOf(roleName))
-                .uniqueResult();
-        session.close();
-        return role;
-    }
 
     public void save(Role role) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -49,6 +37,10 @@ public class RoleDaoImpl implements RoleDao {
         session.close();
     }
 
+    public Role findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Role.class, id);
+    }
+
     @SuppressWarnings("unchecked")
     public List<Role> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -58,6 +50,16 @@ public class RoleDaoImpl implements RoleDao {
         session.close();
 
         return users;
+    }
+
+    public Role findByName(String roleName) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Role role = (Role) session
+                .createQuery("From Role where roleEnum= :roleEnum ")
+                .setParameter("roleEnum", RoleEnum.valueOf(roleName))
+                .uniqueResult();
+        session.close();
+        return role;
     }
 
 }

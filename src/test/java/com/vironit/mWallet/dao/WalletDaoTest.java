@@ -1,10 +1,10 @@
-package com.vironit.mWallet.models;
+package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.config.WebConfig;
+import com.vironit.mWallet.models.*;
 import com.vironit.mWallet.services.CurrencyService;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
-import com.vironit.mWallet.services.WalletService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 @WebAppConfiguration
-public class RoleTest {
+public class WalletDaoTest {
 
     @Autowired
     private RoleService roleService;
@@ -34,15 +34,16 @@ public class RoleTest {
     private CurrencyService currencyService;
 
     @Autowired
-    private WalletService walletService;
+    private WalletDao walletDao;
 
-    private Role role;
+    private User user;
+    private Currency currency;
+    private Wallet wallet;
 
     @Before
     public void setUp() throws InterruptedException {
-        Wallet wallet;
-        User user;
-        Currency currency;
+        Role role;
+
 
         Optional<User> userOpt = userService.findAll().stream()
                 .filter(u -> u.getLogin().equals("Test"))
@@ -76,7 +77,6 @@ public class RoleTest {
                 .user(user)
                 .currency(currency)
                 .build();
-        walletService.save(wallet);
 
         Thread.sleep(1);
     }
@@ -93,87 +93,63 @@ public class RoleTest {
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        currencyService.delete(currencyService.findByName("TST"));
-
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
         roleOpt.ifPresent(roleService::delete);
+
+        Optional<Currency> currencyOpt = currencyService.findAll().stream()
+                .filter(c -> c.getName().equals("TST"))
+                .findAny();
+        currencyOpt.ifPresent(c -> currencyService.delete(c));
     }
 
     @Test
-    public void getId() {
-        try {
-            assertTrue(role.getId() >= 0);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findById() {
+        walletDao.save(wallet);
+        assertEquals(walletDao.findById(wallet.getId()), wallet);
+        assertNull(walletDao.findById(0));
     }
 
     @Test
-    public void getRoleEnum() {
-        try {
-            assertEquals(role.getRoleEnum(), RoleEnum.TST);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void save() {
+        walletDao.save(wallet);
+        assertEquals(walletDao.findById(wallet.getId()), wallet);
     }
 
     @Test
-    public void setId() {
-        try {
-            role.setId(0);
-            assertEquals(role.getId(), 0);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-
-        try {
-            role.setId(-1);
-            roleService.update(role);
-            fail();
-        } catch (Exception e) {
-        }
+    public void update() {
+        walletDao.save(wallet);
+        assertEquals(walletDao.findById(wallet.getId()).getStatus(), WalletStatusEnum.ACTIVE);
+        wallet.setStatus(WalletStatusEnum.BLOCKED);
+        walletDao.update(wallet);
+        assertEquals(walletDao.findById(wallet.getId()).getStatus(), WalletStatusEnum.BLOCKED);
     }
 
     @Test
-    public void setRoleEnum() {
-        try {
-            role.setRoleEnum(null);
-            roleService.update(role);
-            fail();
-        } catch (Exception e) {
-        }
+    public void delete() {
+        walletDao.save(wallet);
+        walletDao.delete(wallet);
+        assertNull(walletDao.findById(wallet.getId()));
     }
 
     @Test
-    public void equals1() {
-        try {
-            assertEquals(role, role);
-            Role role2 = new Role(RoleEnum.DEFAULT);
-            assertNotEquals(role, role2);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findAllByUser() {
+        assertTrue(walletDao.findAllByUser(user).isEmpty());
+        walletDao.save(wallet);
+        assertTrue(walletDao.findAllByUser(user).stream().allMatch(w -> w.getUser().equals(user)));
     }
 
     @Test
-    public void hashCode1() {
-        try {
-            assertEquals(role.hashCode(), role.hashCode());
-            Role role2 = new Role(RoleEnum.DEFAULT);
-            assertNotEquals(role.hashCode(), role2.hashCode());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findAllByCurrency() {
+        assertTrue(walletDao.findAllByCurrency(currency).isEmpty());
+        walletDao.save(wallet);
+        assertTrue(walletDao.findAllByCurrency(currency).stream().allMatch(w -> w.getCurrency().equals(currency)));
     }
 
     @Test
-    public void toString1() {
-        try {
-            assertTrue(role.toString().matches("Role\\(id=\\d+, roleEnum=TST\\)"));
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findAll() {
+        walletDao.save(wallet);
+        assertTrue(walletDao.findAll().contains(wallet));
     }
 }

@@ -32,26 +32,11 @@ import javax.validation.ValidatorFactory;
 @ComponentScan(basePackages = "com.vironit.mWallet")
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    UserDao getUserDao() {
-        return new UserDaoImpl();
-    }
 
     @Bean
     WalletDao getWalletDao() {
         return new WalletDaoImpl();
     }
-
-//    @Bean
-//    CurrencyDao getCurrencyDao() {
-//        return new CurrencyDaoImpl();
-//    }
-
-    @Bean
-    RoleDao getRoleDao() {
-        return new RoleDaoImpl();
-    }
-
 
 
     @Bean

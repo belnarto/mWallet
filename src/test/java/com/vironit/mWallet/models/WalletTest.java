@@ -1,7 +1,6 @@
 package com.vironit.mWallet.models;
 
 import com.vironit.mWallet.config.WebConfig;
-import com.vironit.mWallet.dao.UserDao;
 import com.vironit.mWallet.services.CurrencyService;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
@@ -11,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -38,38 +36,31 @@ public class WalletTest {
     @Autowired
     private WalletService walletService;
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private Role role;
     private User user;
     private Currency currency;
     private Wallet wallet;
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
+        Role role;
 
         Optional<User> userOpt = userService.findAll().stream()
                 .filter(u -> u.getLogin().equals("Test"))
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        role = new Role(RoleEnum.TST);
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
-        if (!roleOpt.isPresent()) {
-            roleService.save(role);
-        }
+        roleOpt.ifPresent(roleService::delete);
 
+        role = new Role(RoleEnum.TST);
+        roleService.save(role);
         user = User.builder()
                 .login("Test")
                 .name("Test")
                 .password("Test")
-                .role(roleOpt.orElse(role))
+                .role(role)
                 .updatedAt(LocalDateTime.now())
                 .build();
         userService.save(user);
@@ -86,6 +77,8 @@ public class WalletTest {
                 .currency(currency)
                 .build();
         walletService.save(wallet);
+
+        Thread.sleep(1);
     }
 
     @After
@@ -100,7 +93,15 @@ public class WalletTest {
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        currencyService.delete(currencyService.findByName("TST"));
+        Optional<Currency> currencyOpt = currencyService.findAll().stream()
+                .filter(c -> c.getName().equals("TST"))
+                .findAny();
+        currencyOpt.ifPresent(c -> currencyService.delete(c));
+
+        Optional<Role> roleOpt = roleService.findAll().stream()
+                .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                .findAny();
+        roleOpt.ifPresent(roleService::delete);
     }
 
     @Test

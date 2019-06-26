@@ -40,7 +40,7 @@ public class CurrencyTest {
     private Currency currency;
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         Wallet wallet;
         Role role;
         User user;
@@ -50,19 +50,18 @@ public class CurrencyTest {
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        role = new Role(RoleEnum.TST);
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
-        if (!roleOpt.isPresent()) {
-            roleService.save(role);
-        }
+        roleOpt.ifPresent(roleService::delete);
 
+        role = new Role(RoleEnum.TST);
+        roleService.save(role);
         user = User.builder()
                 .login("Test")
                 .name("Test")
                 .password("Test")
-                .role(roleOpt.orElse(role))
+                .role(role)
                 .updatedAt(LocalDateTime.now())
                 .build();
         userService.save(user);
@@ -79,6 +78,8 @@ public class CurrencyTest {
                 .currency(currency)
                 .build();
         walletService.save(wallet);
+
+        Thread.sleep(1);
     }
 
     @After
@@ -97,6 +98,11 @@ public class CurrencyTest {
                 .filter(c -> c.getName().equals("TST"))
                 .findAny();
         currencyOpt.ifPresent(c -> currencyService.delete(c));
+
+        Optional<Role> roleOpt = roleService.findAll().stream()
+                .filter(r -> r.getRoleEnum().toString().equals("TST"))
+                .findAny();
+        roleOpt.ifPresent(roleService::delete);
     }
 
     @Test

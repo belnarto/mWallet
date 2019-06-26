@@ -5,26 +5,12 @@ import com.vironit.mWallet.dao.UserDao;
 import com.vironit.mWallet.models.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public class UserDaoImpl implements UserDao {
-
-    public User findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
-    }
-
-
-    public User findByLogin(String login) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        User user = (User) session
-                .createQuery("From User where login= :userLogin ")
-                .setParameter("userLogin", login)
-                .uniqueResult();
-        session.close();
-        return user;
-    }
 
     public void save(User user) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -50,6 +36,10 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
+    public User findById(int id) {
+        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
+    }
+
     @SuppressWarnings("unchecked")
     public List<User> findAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
@@ -57,7 +47,16 @@ public class UserDaoImpl implements UserDao {
                 .createQuery("From User order by id")
                 .list();
         session.close();
-
         return users;
+    }
+
+    public User findByLogin(String login) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        User user = (User) session
+                .createQuery("From User where login= :userLogin ")
+                .setParameter("userLogin", login)
+                .uniqueResult();
+        session.close();
+        return user;
     }
 }
