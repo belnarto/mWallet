@@ -1,74 +1,37 @@
 package com.vironit.mWallet.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "currency")
+@NoArgsConstructor
+@Data
 public class Currency {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @PositiveOrZero(message = "Can't be negative")
     private int id;
-    private String name;
-    private double rate;
 
-    public Currency() {
-    }
+    @Column(name = "name")
+    @NotNull(message = "Can't be null")
+    @Size(min = 3, max = 6, message = "Should be bigger than 2 and less than 7")
+    private String name;
+
+    @Column(name = "rate")
+    @Positive(message = "Can't be negative")
+    private double rate;
 
     public Currency(String name, double rate) {
         setName(name);
         setRate(rate);
-    }
-
-    public void setId(int newId) {
-        if (newId >= 0) {
-            id = newId;
-        } else {
-            throw new IllegalArgumentException("Value < 0");
-        }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setName(String newName) {
-        if (newName != null && !newName.equals("")) {
-            name = newName;
-        } else {
-            throw new IllegalArgumentException("String is null or empty");
-        }
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setRate(double newRate) {
-        if (newRate > 0) {
-            rate = newRate;
-        } else {
-            throw new IllegalArgumentException("Value <= 0");
-        }
-    }
-
-    public double getRate() {
-        return rate;
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof Currency)) {
-            return false;
-        }
-        Currency otherCurrency = (Currency) other;
-        return this.id == otherCurrency.getId() &&
-                this.name.equals(otherCurrency.getName());
     }
 
 }

@@ -4,15 +4,29 @@ import com.vironit.mWallet.config.DataSource;
 import com.vironit.mWallet.dao.CurrencyDao;
 import com.vironit.mWallet.models.Currency;
 import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Repository
 public class CurrencyDaoImpl implements CurrencyDao {
+
+    @Qualifier("getJavaValidator")
+    @Autowired
+    private Validator validator;
 
     private static final Jdbc3PoolingDataSource SOURCE = DataSource.getInstance().getDataSource();
     private static final String PREPARED_SQL_FIND_BY_ID = "SELECT * FROM currency WHERE id = ?;";
@@ -85,6 +99,13 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public void save(Currency currency) {
+
+        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(
+                    new HashSet<ConstraintViolation<?>>(violations));
+        }
+
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_SAVE)) {
             preparedStatement.setString(1, currency.getName());
@@ -100,6 +121,12 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public void update(Currency currency) {
+
+        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(
+                    new HashSet<ConstraintViolation<?>>(violations));
+        }
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_UPDATE)) {
             preparedStatement.setString(1, currency.getName());
@@ -116,6 +143,13 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public void delete(Currency currency) {
+
+        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
+        if (!violations.isEmpty()) {
+            throw new ConstraintViolationException(
+                    new HashSet<ConstraintViolation<?>>(violations));
+        }
+
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_DELETE)) {
             preparedStatement.setInt(1, currency.getId());

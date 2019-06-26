@@ -1,122 +1,44 @@
 package com.vironit.mWallet.models;
 
+import lombok.*;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "wallets")
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@Data
 public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Builder.Default
+    @PositiveOrZero(message = "Can't be negative")
+    private int id = 0;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull(message = "Can't be null")
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
+    @NotNull(message = "Can't be null")
     private Currency currency;
 
     @Column(name = "balance")
-    private double balance;
+    @Builder.Default
+    @PositiveOrZero(message = "Can't be negative")
+    private double balance = 0;
 
-    // TODO оживить статус с точки зрения бизнес-логики
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
+    @Builder.Default
+    @NotNull(message = "Can't be null")
     private WalletStatusEnum status = WalletStatusEnum.ACTIVE;
-
-    public Wallet() {
-    }
-
-    public Wallet(User user, Currency currency) {
-        setUser(user);
-        setCurrency(currency);
-    }
-
-    public void setId(int newId) {
-        if (newId > 0) {
-            id = newId;
-        } else {
-            throw new IllegalArgumentException("Value <= 0");
-        }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setUser(User newUser) {
-        if (newUser != null) {
-            user = newUser;
-        } else {
-            throw new IllegalArgumentException("User is null");
-        }
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setCurrency(Currency newCurrency) {
-        if (newCurrency != null) {
-            currency = newCurrency;
-        } else {
-            throw new IllegalArgumentException("Currency is null");
-        }
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setBalance(double newBalance) {
-        if (newBalance >= 0) {
-            balance = newBalance;
-        } else {
-            throw new IllegalArgumentException("Value < 0");
-        }
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setStatus(WalletStatusEnum status) {
-        this.status = status; //TODO проверку на нуль
-    }
-
-    public WalletStatusEnum getStatus() {
-        return status;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void activateWallet() {
-        status = WalletStatusEnum.ACTIVE;
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void blockWallet() {
-        status = WalletStatusEnum.BLOCKED;
-    }
-
-    @Override
-    public String toString() {
-        return "wallet id: " + id
-                + "Currency: " + currency.getName()
-                + " balance:" + balance
-                + " status:" + status;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof Wallet)) {
-            return false;
-        }
-        Wallet otherWallet = (Wallet) other;
-        return this.id == otherWallet.getId() &&
-                this.status.equals(otherWallet.status) &&
-                this.getUser().equals(otherWallet.getUser());
-    }
 
 }

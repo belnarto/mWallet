@@ -25,9 +25,9 @@ public class UserValidator implements org.springframework.validation.Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        Set<ConstraintViolation<Object>> validates = validator.validate(target);
+        Set<ConstraintViolation<Object>> violations = validator.validate(target);
 
-        for (ConstraintViolation<Object> constraintViolation : validates) {
+        for (ConstraintViolation<Object> constraintViolation : violations) {
             String propertyPath = constraintViolation.getPropertyPath().toString();
             String message = constraintViolation.getMessage();
             errors.rejectValue(propertyPath, "", message);

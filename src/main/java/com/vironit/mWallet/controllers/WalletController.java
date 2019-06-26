@@ -44,7 +44,7 @@ public class WalletController {
         modelAndView.addObject("id", id);
         List<Wallet> wallets = walletService.findAllByUser(userService.findById(id));
         modelAndView.addObject("wallets", wallets);
-        modelAndView.addObject("currURL", "/users/{id}/wallets" );
+        modelAndView.addObject("currURL", "/users/{id}/wallets");
         return modelAndView;
     }
 
@@ -182,7 +182,10 @@ public class WalletController {
         modelAndView.setViewName("redirect:/users/{id}/wallets");
         currency = currencyService.findByName(currency.getName());
         User user = userService.findById(id);
-        walletService.save(new Wallet(user, currency));
+        walletService.save(Wallet.builder()
+                .user(user)
+                .currency(currency)
+                .build());
         return modelAndView;
     }
 
@@ -193,10 +196,10 @@ public class WalletController {
         modelAndView.setViewName("walletPages/wallets");
         String username;
         username = authentication.getName();
-        modelAndView.addObject("currURL", "myWallets" );
-        modelAndView.addObject("id", userService.findByLogin(username).getId() );
+        modelAndView.addObject("currURL", "myWallets");
+        modelAndView.addObject("id", userService.findByLogin(username).getId());
         modelAndView.addObject("wallets", walletService.
-                findAllByUser(userService.findByLogin(username)) );
+                findAllByUser(userService.findByLogin(username)));
         return modelAndView;
     }
 

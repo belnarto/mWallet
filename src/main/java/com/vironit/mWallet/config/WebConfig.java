@@ -42,10 +42,10 @@ public class WebConfig implements WebMvcConfigurer {
         return new WalletDaoImpl();
     }
 
-    @Bean
-    CurrencyDao getCurrencyDao() {
-        return new CurrencyDaoImpl();
-    }
+//    @Bean
+//    CurrencyDao getCurrencyDao() {
+//        return new CurrencyDaoImpl();
+//    }
 
     @Bean
     RoleDao getRoleDao() {
@@ -73,7 +73,6 @@ public class WebConfig implements WebMvcConfigurer {
     RoleService getRoleService() {
         return new RoleService();
     }
-
 
     @Bean
     public Validator getJavaValidator() {

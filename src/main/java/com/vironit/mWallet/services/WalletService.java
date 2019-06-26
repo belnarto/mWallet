@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-
+//TODO добавить активацию и блокировку
 @Service
 public class WalletService {
 
     @Autowired
     private WalletDao walletDao;
+
+    @Autowired
+    private UserService userService;
 
     public Wallet findById(int id) {
         return walletDao.findById(id);
@@ -30,6 +33,13 @@ public class WalletService {
 
     public void save(Wallet wallet) {
         walletDao.save(wallet);
+//        User user = wallet.getUser();
+//        user = user
+//                .toBuilder()
+//                .wallet(wallet)
+//                .build();
+//        userService.update(user);
+        //TODO
     }
 
     public void delete(Wallet wallet) {

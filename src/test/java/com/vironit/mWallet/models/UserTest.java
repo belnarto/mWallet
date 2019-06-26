@@ -1,12 +1,11 @@
 package com.vironit.mWallet.models;
 
 import com.vironit.mWallet.config.WebConfig;
+import com.vironit.mWallet.dao.UserDao;
 import com.vironit.mWallet.services.CurrencyService;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
 import com.vironit.mWallet.services.WalletService;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.PositiveOrZero;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,16 +41,25 @@ public class UserTest {
     private WalletService walletService;
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    private Role role;
+    private User user;
+    private Currency currency;
 
     @Before
     public void setUp() {
+        Wallet wallet;
+
         Optional<User> userOpt = userService.findAll().stream()
                 .filter(u -> u.getLogin().equals("Test"))
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        Role role = new Role(RoleEnum.TST);
+        role = new Role(RoleEnum.TST);
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
@@ -62,7 +67,7 @@ public class UserTest {
             roleService.save(role);
         }
 
-        User user = User.builder()
+        user = User.builder()
                 .login("Test")
                 .name("Test")
                 .password("Test")
@@ -71,14 +76,17 @@ public class UserTest {
                 .build();
         userService.save(user);
 
-        Currency currency = new Currency("TST", 0.01);
+        currency = new Currency("TST", 0.01);
         Optional<Currency> currencyOpt = currencyService.findAll().stream()
                 .filter(c -> c.getName().equals("TST"))
                 .findAny();
         currencyOpt.ifPresent(c -> currencyService.delete(c));
         currencyService.save(currency);
 
-        Wallet wallet = new Wallet(user, currency);
+        wallet = Wallet.builder()
+                .user(user)
+                .currency(currency)
+                .build();
         walletService.save(wallet);
     }
 
@@ -93,14 +101,13 @@ public class UserTest {
                 .filter(u -> u.getLogin().equals("Test2"))
                 .findAny();
         userOpt.ifPresent(userService::delete);
+
+        currencyService.delete(currencyService.findByName("TST"));
     }
 
     @Test
     public void getId() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertTrue(user.getId() >= 0);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -110,9 +117,6 @@ public class UserTest {
     @Test
     public void getName() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertEquals(user.getName(), "Test");
         } catch (Exception e) {
             fail(e.getMessage());
@@ -122,9 +126,6 @@ public class UserTest {
     @Test
     public void getLogin() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertEquals(user.getLogin(), "Test");
         } catch (Exception e) {
             fail(e.getMessage());
@@ -134,9 +135,6 @@ public class UserTest {
     @Test
     public void getPassword() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertTrue(bCryptPasswordEncoder.matches("Test", user.getPassword()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -146,9 +144,6 @@ public class UserTest {
     @Test
     public void getRole() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertEquals(user.getRole(), roleService.findByName("TST"));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -157,14 +152,32 @@ public class UserTest {
 
     @Test
     public void getWallets() {
+        try {
+            assertEquals(user.getWallets().size(), 0);
+            Set<Wallet> wallets = new HashSet<>();
+            Wallet wallet1 = new Wallet.WalletBuilder()
+                    .user(user)
+                    .currency(currency)
+                    .build();
+            walletService.save(wallet1);
+            wallets.add(wallet1);
+            Wallet wallet2 = new Wallet.WalletBuilder()
+                    .user(user)
+                    .currency(currency)
+                    .build();
+            walletService.save(wallet2);
+            wallets.add(wallet2);
+            user.setWallets(wallets);
+            userService.update(user);
+            assertEquals(user.getWallets().size(), 2);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
     public void getUpdatedAt() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertTrue(user.getUpdatedAt().isBefore(LocalDateTime.now()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -174,83 +187,185 @@ public class UserTest {
     @Test
     public void setId() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             user.setId(0);
             assertEquals(user.getId(), 0);
         } catch (Exception e) {
             fail(e.getMessage());
         }
+
+        try {
+            user.setId(-1);
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
     }
 
     @Test
     public void setName() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             user.setName("Test2");
             assertEquals(user.getName(), "Test2");
         } catch (Exception e) {
             fail(e.getMessage());
+        }
+
+        try {
+            user.setName("");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setName("123");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setName("0123456789012345678901234567890123456789012345678901234567890");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setName(null);
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
         }
     }
 
     @Test
     public void setLogin() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             user.setLogin("Test2");
             assertEquals(user.getLogin(), "Test2");
         } catch (Exception e) {
             fail(e.getMessage());
+        }
+
+        try {
+            user.setLogin("");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setLogin("123");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setLogin("0123456789012345678901234567890123456789012345678901234567890");
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setLogin(null);
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
         }
     }
 
     @Test
     public void setPassword() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             user.setPassword("Test2");
             userService.update(user);
             assertTrue(bCryptPasswordEncoder.matches("Test2", user.getPassword()));
         } catch (Exception e) {
             fail(e.getMessage());
         }
+
+        try {
+            user.setPassword("");
+            userDao.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setPassword("123");
+            userDao.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setPassword("0123456789012345678901234567890123456789012345678901234567890");
+            userDao.update(user);
+            fail();
+        } catch (Exception e) {
+        }
+
+        try {
+            user.setPassword(null);
+            userDao.update(user);
+            fail();
+        } catch (Exception e) {
+        }
     }
 
     @Test
     public void setRole() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             user.setRole(roleService.findByName("DEFAULT"));
             assertEquals(user.getRole(), roleService.findByName("DEFAULT"));
         } catch (Exception e) {
             fail(e.getMessage());
         }
+
+        try {
+            user.setRole(null);
+            userService.update(user);
+            fail();
+        } catch (Exception e) {
+        }
     }
 
     @Test
     public void setWallets() {
+        try {
+            Set<Wallet> wallets = new HashSet<>();
+            Wallet wallet1 = new Wallet.WalletBuilder()
+                    .user(user)
+                    .currency(currency)
+                    .build();
+            walletService.save(wallet1);
+            wallets.add(wallet1);
+            Wallet wallet2 = new Wallet.WalletBuilder()
+                    .user(user)
+                    .currency(currency)
+                    .build();
+            walletService.save(wallet2);
+            wallets.add(wallet2);
+            user.setWallets(wallets);
+            userService.update(user);
+            assertEquals(user.getWallets().size(), 2);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 
     @Test
     public void equals1() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             User user2 = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny().orElseThrow(Exception::new);
-            assertEquals(user,user2);
+            assertEquals(user, user2);
 
             user2.setName("Test2");
             assertNotEquals(user, user2);
@@ -262,9 +377,6 @@ public class UserTest {
     @Test
     public void hashCode1() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             User user2 = userService.findAll().stream()
                     .filter(u -> u.getLogin().equals("Test"))
                     .findAny().orElseThrow(Exception::new);
@@ -281,11 +393,9 @@ public class UserTest {
     @Test
     public void toString1() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
             assertTrue(user.toString().matches("User\\(id=\\d+, name=Test, login=Test, password=.+, " +
-                    "role=Role\\{id=\\d+, roleEnum=TST}, updatedAt=\\d+-\\d+-\\d+T\\d+:\\d+:\\d+.\\d+, wallets=\\[.*]\\)"));
+                    "role=Role\\(id=\\d+, roleEnum=TST\\), " +
+                    "updatedAt=\\d+-\\d+-\\d+T\\d+:\\d+:\\d+.\\d+\\)"));
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -294,19 +404,11 @@ public class UserTest {
     @Test
     public void builder() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
-
-            Role role = new Role(RoleEnum.TST);
-            Optional<Role> roleOpt = roleService.findAll().stream()
-                    .filter(r -> r.getRoleEnum().toString().equals("TST"))
-                    .findAny();
             User user2 = User.builder()
                     .login("Test")
                     .name("Test")
                     .password("Test")
-                    .role(roleOpt.orElse(role))
+                    .role(role)
                     .build();
 
             assertEquals(user.getName(), user2.getName());
@@ -318,10 +420,6 @@ public class UserTest {
     @Test
     public void toBuilder() {
         try {
-            User user = userService.findAll().stream()
-                    .filter(u -> u.getLogin().equals("Test"))
-                    .findAny().orElseThrow(Exception::new);
-
             User user2 = user.toBuilder()
                     .build();
 
