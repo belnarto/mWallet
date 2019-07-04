@@ -1,6 +1,5 @@
 package com.vironit.mWallet.controllers;
 
-import com.vironit.mWallet.converters.StringToRoleConverter;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.services.RoleService;
@@ -9,17 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class UserController {
@@ -38,25 +35,23 @@ public class UserController {
     private Validator validator;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView allUsers() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView allUsers(ModelAndView modelAndView) {
         modelAndView.setViewName("userPages/users");
         modelAndView.addObject("users", userService.findAll());
         return modelAndView;
     }
 
     @RequestMapping(value = "/users/addUser", method = RequestMethod.GET)
-    public ModelAndView addUserPage() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView addUserGet(ModelAndView modelAndView) {
         modelAndView.setViewName("userPages/addUser");
         modelAndView.addObject("roles", roleService.findAll());
         return modelAndView;
     }
 
     @RequestMapping(value = "/users/addUser", method = RequestMethod.POST)
-    public ModelAndView addUser(@Valid @ModelAttribute("user") User user,
-                                BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView addUserPost(ModelAndView modelAndView,
+                                    @Valid @ModelAttribute("user") User user,
+                                    BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             userService.save(user);
             modelAndView.setViewName("main");
@@ -69,33 +64,41 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/editUser", method = RequestMethod.GET)
-    public ModelAndView editUserPage(@ModelAttribute("userId") int id) {
-        User user = userService.findById(id);
+    @RequestMapping(value = "/users/{userId}/updateUser", method = RequestMethod.GET)
+    public ModelAndView updateUserGet(ModelAndView modelAndView,
+                                      @PathVariable("userId") int userId) {
+        User user = userService.findById(userId);
         List<Role> roles = roleService.findAll();
         roles.remove(user.getRole());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("userPages/editUser");
+        modelAndView.setViewName("userPages/updateUser");
         modelAndView.addObject("user", user);
         modelAndView.addObject("roles", roles);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/editUser", method = RequestMethod.POST)
-    public ModelAndView editUser(@ModelAttribute("user") User user,
-                                 @ModelAttribute("newRoleName") String newRoleName) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("userPages/editUser");
-        user.setRole(roleService.findByName(newRoleName));
-        userService.update(user);
-        modelAndView.addObject("updated", true);
+
+    @SuppressWarnings("MVCPathVariableInspection")
+    @RequestMapping(value = "/users/{userId}/updateUser", method = RequestMethod.POST)
+    public ModelAndView updateUserPost(ModelAndView modelAndView,
+                                       @Valid @ModelAttribute("user") User user,
+                                       BindingResult bindingResult) {
+        List<Role> roles = roleService.findAll();
+        roles.remove(user.getRole());
+        modelAndView.setViewName("userPages/updateUser");
+        modelAndView.addObject("roles", roles);
+        if (!bindingResult.hasErrors()) {
+            userService.update(user);
+            modelAndView.addObject("updated", true);
+        } else {
+            modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
+        }
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/deleteUser", method = RequestMethod.GET)
-    public ModelAndView deleteUserPage(@ModelAttribute("userId") int id) {
-        userService.delete(userService.findById(id));
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/users/{userId}/deleteUser", method = RequestMethod.POST)
+    public ModelAndView deleteUserPage(ModelAndView modelAndView,
+                                       @PathVariable("userId") int userId) {
+        userService.delete(userService.findById(userId));
         modelAndView.setViewName("redirect:/users");
         return modelAndView;
     }

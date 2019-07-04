@@ -38,7 +38,12 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     public Role findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Role.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        Role role = session.get(Role.class, id);
+        tx1.commit();
+        session.close();
+        return role;
     }
 
     @SuppressWarnings("unchecked")

@@ -37,7 +37,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     public User findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(User.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        User user = session.get(User.class, id);
+        tx1.commit();
+        session.close();
+        return user;
     }
 
     @SuppressWarnings("unchecked")

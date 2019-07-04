@@ -1,9 +1,7 @@
 package com.vironit.mWallet.services;
 
 import com.vironit.mWallet.dao.CurrencyDao;
-import com.vironit.mWallet.dao.WalletDao;
 import com.vironit.mWallet.models.Currency;
-import com.vironit.mWallet.models.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +12,6 @@ public class CurrencyService {
 
     @Autowired
     private CurrencyDao currencyDao;
-
-    @Autowired
-    private WalletDao walletDao;
-
 
     public Currency findById(int id) {
         return currencyDao.findById(id);
@@ -36,18 +30,11 @@ public class CurrencyService {
     }
 
     public void delete(Currency currency) {
-        List<Wallet> wallets = walletDao.findAllByCurrency(currency);
-        if (wallets.size() == 0) {
-            currencyDao.delete(currency);
-        } else {
-            throw new IllegalArgumentException("There are " + wallets.size() +
-                    " com.vironit.mWallet.wallets associated with this com.vironit.mWallet.currency");
-        }
+        currencyDao.delete(currency);
     }
 
     public void update(Currency currency) {
         currencyDao.update(currency);
     }
-
 
 }

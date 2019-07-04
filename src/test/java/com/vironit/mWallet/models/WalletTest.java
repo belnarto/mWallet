@@ -321,7 +321,7 @@ public class WalletTest {
         System.out.println(wallet);
         try {
             assertTrue(wallet.toString().matches("Wallet\\(id=\\d+, user=User\\(id=\\d+, " +
-                    "name=Test, login=Test, password=.+, role=Role\\(id=\\d+, roleEnum=TST\\), " +
+                    "name=Test, login=Test, password=.+, role=TST, " +
                     "updatedAt=\\d+-\\d+-\\d+T\\d+:\\d+:\\d+.\\d+\\), currency=Currency\\(id=\\d+, " +
                     "name=TST, rate=0.01\\), balance=0.0, status=ACTIVE\\)"));
         } catch (Exception e) {

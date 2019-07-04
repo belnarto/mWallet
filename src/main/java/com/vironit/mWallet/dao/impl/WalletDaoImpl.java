@@ -13,7 +13,12 @@ import java.util.List;
 public class WalletDaoImpl implements WalletDao {
 
     public Wallet findById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Wallet.class, id);
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        Wallet wallet = session.get(Wallet.class, id);
+        tx1.commit();
+        session.close();
+        return wallet;
     }
 
     public void save(Wallet wallet) {

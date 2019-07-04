@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ValidatorFactory;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,12 +24,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 
-
     public User findById(int id) {
         return userDao.findById(id);
     }
 
-    @SuppressWarnings("WeakerAccess")
     public User findByLogin(String login) {
         return userDao.findByLogin(login);
     }
@@ -45,10 +42,12 @@ public class UserService implements UserDetailsService {
     }
 
     public void update(User user) {
-        if (!user.getPassword().trim().equals("keep_old_pass")) {
+        User currentUser = userDao.findById(user.getId());
+        String oldPass = currentUser.getPassword();
+        if (!user.getPassword().equals(oldPass) && !user.getPassword().isEmpty()) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         } else {
-            user.setPassword(findById(user.getId()).getPassword());
+            user.setPassword(oldPass);
         }
         userDao.update(user);
     }
@@ -61,7 +60,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(user.getRole().getRoleEnum().toString()));
+        roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
                 user.getPassword(),
                 roles);

@@ -1,23 +1,22 @@
 package com.vironit.mWallet.services;
 
 import com.vironit.mWallet.dao.WalletDao;
+import com.vironit.mWallet.exceptions.WalletStatusException;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.models.Wallet;
+import com.vironit.mWallet.models.WalletStatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-//TODO добавить активацию и блокировку
+
 @Service
 public class WalletService {
 
     @Autowired
     private WalletDao walletDao;
-
-    @Autowired
-    private UserService userService;
 
     public Wallet findById(int id) {
         return walletDao.findById(id);
@@ -33,13 +32,6 @@ public class WalletService {
 
     public void save(Wallet wallet) {
         walletDao.save(wallet);
-//        User user = wallet.getUser();
-//        user = user
-//                .toBuilder()
-//                .wallet(wallet)
-//                .build();
-//        userService.update(user);
-        //TODO
     }
 
     public void delete(Wallet wallet) {
@@ -51,6 +43,9 @@ public class WalletService {
     }
 
     public void addBalance(Wallet wallet, double value) {
+        if (wallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet is blocked");
+        }
         if (value > 0) {
             wallet.setBalance(wallet.getBalance() + value);
             walletDao.update(wallet);
@@ -60,16 +55,25 @@ public class WalletService {
     }
 
     public void reduceBalance(Wallet wallet, double value) {
-        if (value > 0 && wallet.getBalance() >= value) {
+        if (wallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet is blocked");
+        }
+        if (value > 0) {
             wallet.setBalance(wallet.getBalance() - value);
             walletDao.update(wallet);
         } else {
-            throw new IllegalArgumentException("Value <= 0 or balance is not enough");
+            throw new IllegalArgumentException("Value <= 0");
         }
     }
 
     public void transferMoney(Wallet fromWallet, Wallet toWallet, double value) {
-        if (value > 0 && fromWallet.getBalance() >= value) {
+        if (fromWallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet " + fromWallet + " is blocked");
+        }
+        if (toWallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet " + toWallet + " is blocked");
+        }
+        if (value > 0) {
             fromWallet.setBalance(fromWallet.getBalance() - value);
             walletDao.update(fromWallet);
 
@@ -77,12 +81,23 @@ public class WalletService {
             targetValue = targetValue / toWallet.getCurrency().getRate(); // to target Currency
 
             targetValue = new BigDecimal(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
-            toWallet = walletDao.findById(toWallet.getId());
             toWallet.setBalance(toWallet.getBalance() + targetValue);
 
             walletDao.update(toWallet);
         } else {
-            throw new IllegalArgumentException("Value <= 0 or balance is not enough");
+            throw new IllegalArgumentException("Value <= 0");
         }
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void blockWallet(Wallet wallet) {
+        wallet.setStatus(WalletStatusEnum.BLOCKED);
+        walletDao.update(wallet);
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void activateWallet(Wallet wallet) {
+        wallet.setStatus(WalletStatusEnum.ACTIVE);
+        walletDao.update(wallet);
     }
 }

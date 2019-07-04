@@ -23,6 +23,7 @@ import java.util.Set;
 @Repository
 public class CurrencyDaoImpl implements CurrencyDao {
 
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Qualifier("getJavaValidator")
     @Autowired
     private Validator validator;
@@ -52,8 +53,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
             // set assigned id to currency object from parameter
             currency.setId(findByName(currency.getName()).getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
     }
 
@@ -74,8 +74,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
             // set assigned id to currency object from parameter
             currency.setId(findByName(currency.getName()).getId());
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
     }
 
@@ -92,8 +91,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_DELETE)) {
             preparedStatement.setInt(1, currency.getId());
             preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
     }
 
@@ -111,15 +109,14 @@ public class CurrencyDaoImpl implements CurrencyDao {
                 currency.setRate(Double.valueOf(resultSet.getString("rate")));
                 result.add(currency);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
         return result;
     }
 
     @Override
     public Currency findById(int id) {
-        Currency currency = new Currency();
+        Currency currency = null;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_ID)) {
 
@@ -127,20 +124,20 @@ public class CurrencyDaoImpl implements CurrencyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                currency = new Currency();
                 currency.setId(id);
                 currency.setName(resultSet.getString("name"));
                 currency.setRate(Double.valueOf(resultSet.getString("rate")));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
         return currency;
     }
 
     @Override
     public Currency findByName(String name) {
-        Currency currency = new Currency();
+        Currency currency = null;
 
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_NAME)) {
@@ -148,12 +145,12 @@ public class CurrencyDaoImpl implements CurrencyDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                currency = new Currency();
                 currency.setName(name);
                 currency.setId(Integer.valueOf(resultSet.getString("id")));
                 currency.setRate(Double.valueOf(resultSet.getString("rate")));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ignored) {
         }
         return currency;
     }

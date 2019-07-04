@@ -9,6 +9,7 @@ import com.vironit.mWallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
@@ -32,6 +33,8 @@ public class Main {
 
     public static RoleDao roleDao = new RoleDaoImpl();
 
+
+
     private static Validator validator;
     static {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
@@ -39,31 +42,12 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        Main main = new Main();
+        UserService userService = new UserService();
 
-        User user =
-                User.builder()
-                        .id(1)
-                        .login("Test11")
-                        .name("Test11")
-                        .password("Test11")
-                        .role(main.roleDao.findById(37))
-                        .updatedAt(LocalDateTime.now())
-                        .build();
-        Set<ConstraintViolation<User>> validates = validator.validate(user);
-        System.out.println(validates.size());
-        validates.stream().map(v -> v.getMessage())
-                .forEach(System.out::println);
-        System.out.println(user);
-
-        User user2 = user.toBuilder().id(2).build();
-        System.out.println(user2);
-
+        UserDetails ud = userService.loadUserByUsername("belnarto4321");
+        System.out.println("ghj");
+        System.out.println(userService.findByLogin("belnarto4321").getRole());
     }
 
-
-
 }
-
-
 

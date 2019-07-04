@@ -21,16 +21,16 @@ public class RoleService {
         return roleDao.findByName(roleName);
     }
 
-    public void save(Role driver) {
-        roleDao.save(driver);
+    public void save(Role role) {
+        roleDao.save(role);
     }
 
-    public void delete(Role driver) {
-        roleDao.delete(driver);
+    public void delete(Role role) {
+        roleDao.delete(role);
     }
 
-    public void update(Role driver) {
-        roleDao.update(driver);
+    public void update(Role role) {
+        roleDao.update(role);
     }
 
     public List<Role> findAll() {

@@ -1,10 +1,9 @@
-package com.vironit.mWallet.models;
+package com.vironit.mWallet.dao;
 
 import com.vironit.mWallet.config.WebConfig;
-import com.vironit.mWallet.services.CurrencyService;
+import com.vironit.mWallet.models.*;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
-import com.vironit.mWallet.services.WalletService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebConfig.class})
 @WebAppConfiguration
-public class RoleTest {
+public class CurrencyDaoTest {
 
     @Autowired
     private RoleService roleService;
@@ -31,18 +30,14 @@ public class RoleTest {
     private UserService userService;
 
     @Autowired
-    private CurrencyService currencyService;
+    private CurrencyDao currencyDao;
 
-    @Autowired
-    private WalletService walletService;
-
-    private Role role;
+    private Currency currency;
 
     @Before
     public void setUp() throws InterruptedException {
-        Wallet wallet;
         User user;
-        Currency currency;
+        Role role;
 
         Optional<User> userOpt = userService.findAll().stream()
                 .filter(u -> u.getLogin().equals("Test"))
@@ -66,17 +61,11 @@ public class RoleTest {
         userService.save(user);
 
         currency = new Currency("TST", 0.01);
-        Optional<Currency> currencyOpt = currencyService.findAll().stream()
+        Optional<Currency> currencyOpt = currencyDao.findAll().stream()
                 .filter(c -> c.getName().equals("TST"))
                 .findAny();
-        currencyOpt.ifPresent(c -> currencyService.delete(c));
-        currencyService.save(currency);
+        currencyOpt.ifPresent(c -> currencyDao.delete(c));
 
-        wallet = Wallet.builder()
-                .user(user)
-                .currency(currency)
-                .build();
-        walletService.save(wallet);
 
         Thread.sleep(1);
     }
@@ -93,87 +82,83 @@ public class RoleTest {
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
-        currencyService.delete(currencyService.findByName("TST"));
-
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
         roleOpt.ifPresent(roleService::delete);
+
+        Optional<Currency> currencyOpt = currencyDao.findAll().stream()
+                .filter(c -> c.getName().equals("TST"))
+                .findAny();
+        currencyOpt.ifPresent(c -> currencyDao.delete(c));
+
+        currencyOpt = currencyDao.findAll().stream()
+                .filter(c -> c.getName().equals("TST2"))
+                .findAny();
+        currencyOpt.ifPresent(c -> currencyDao.delete(c));
     }
 
     @Test
-    public void getId() {
+    public void save() {
         try {
-            assertTrue(role.getId() >= 0);
+            currency.setName("1234567");
+            currencyDao.save(currency);
+            fail();
         } catch (Exception e) {
-            fail(e.getMessage());
         }
+
+        currency.setName("TST");
+        currencyDao.save(currency);
+        assertEquals(currencyDao.findById(currency.getId()), currency);
     }
 
     @Test
-    public void getRoleEnum() {
-        try {
-            assertEquals(role.getRoleEnum(), RoleEnum.TST);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void setId() {
-        try {
-            role.setId(0);
-            assertEquals(role.getId(), 0);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void update() {
+        currencyDao.save(currency);
+        assertEquals(currencyDao.findById(currency.getId()).getName(), "TST");
+        currency.setName("TST2");
+        currencyDao.update(currency);
+        assertEquals(currencyDao.findById(currency.getId()).getName(), "TST2");
 
         try {
-            role.setId(-1);
-            roleService.update(role);
+            currency.setName("12");
+            currencyDao.update(currency);
             fail();
         } catch (Exception e) {
         }
     }
 
     @Test
-    public void setRoleEnum() {
+    public void delete() {
+        currencyDao.save(currency);
         try {
-            role.setRoleEnum(null);
-            roleService.update(role);
+            currency.setName("12");
+            currencyDao.delete(currency);
             fail();
         } catch (Exception e) {
         }
+        currency.setName("TST");
+        currencyDao.delete(currency);
+        assertNull(currencyDao.findById(currency.getId()));
     }
 
     @Test
-    public void equals1() {
-        try {
-            assertEquals(role, role);
-            Role role2 = new Role(RoleEnum.DEFAULT);
-            assertNotEquals(role, role2);
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findAll() {
+        currencyDao.save(currency);
+        assertTrue(currencyDao.findAll().contains(currency));
     }
 
     @Test
-    public void hashCode1() {
-        try {
-            assertEquals(role.hashCode(), role.hashCode());
-            Role role2 = new Role(RoleEnum.DEFAULT);
-            assertNotEquals(role.hashCode(), role2.hashCode());
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findById() {
+        currencyDao.save(currency);
+        assertEquals(currencyDao.findById(currency.getId()), currency);
+        assertNull(currencyDao.findById(0));
     }
 
     @Test
-    public void toString1() {
-        try {
-            assertTrue(role.toString().matches("TST"));
-        } catch (Exception e) {
-            fail(e.getMessage());
-        }
+    public void findByName() {
+        assertNull(currencyDao.findByName("TST"));
+        currencyDao.save(currency);
+        assertEquals(currencyDao.findByName("TST"), currency);
     }
 }

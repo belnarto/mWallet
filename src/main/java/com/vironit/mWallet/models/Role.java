@@ -28,4 +28,8 @@ public class Role {
     @NotNull(message = "Can't be null")
     private RoleEnum roleEnum;
 
+    @Override
+    public String toString() {
+        return roleEnum.toString();
+    }
 }

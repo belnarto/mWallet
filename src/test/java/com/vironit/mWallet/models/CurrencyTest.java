@@ -99,6 +99,11 @@ public class CurrencyTest {
                 .findAny();
         currencyOpt.ifPresent(c -> currencyService.delete(c));
 
+        currencyOpt = currencyService.findAll().stream()
+                .filter(c -> c.getName().equals("TST2"))
+                .findAny();
+        currencyOpt.ifPresent(c -> currencyService.delete(c));
+
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();

@@ -1,6 +1,8 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
@@ -86,13 +88,12 @@
                             <form action="users/${user.id}/wallets">
                                 <input class="w3-btn w3-hover w3-round-large" type="submit" value="Wallets">
                             </form>
-                            <form action="users/editUser">
-                                <input type="hidden" name="userId" value="${user.id}">
-                                <input class="w3-btn w3-hover w3-round-large" type="submit" value="Edit">
-                            </form>
-                            <form action="users/deleteUser">
-                                <input type="hidden" name="userId" value="${user.id}">
+                            <button class="w3-btn w3-hover w3-round-large"
+                                    onclick="location.href='/users/${user.id}/updateUser'">Update
+                            </button>
+                            <form action="/users/${user.id}/deleteUser" method="post">
                                 <input class="w3-btn w3-hover w3-round-large" type="submit" value="Delete">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 
                         </td>

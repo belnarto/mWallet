@@ -400,8 +400,7 @@ public class UserTest {
     public void toString1() {
         try {
             assertTrue(user.toString().matches("User\\(id=\\d+, name=Test, login=Test, password=.+, " +
-                    "role=Role\\(id=\\d+, roleEnum=TST\\), " +
-                    "updatedAt=\\d+-\\d+-\\d+T\\d+:\\d+:\\d+.\\d+\\)"));
+                    "role=TST, updatedAt=\\d+-\\d+-\\d+T\\d+:\\d+:\\d+.\\d+\\)"));
         } catch (Exception e) {
             fail(e.getMessage());
         }
