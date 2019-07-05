@@ -1,3 +1,6 @@
 /.idea
 /out
 /target
+/mWallet.iml
+/logs
+/src/main/java/com/vironit/mWallet/Main

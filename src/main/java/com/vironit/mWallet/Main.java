@@ -6,6 +6,9 @@ import com.vironit.mWallet.models.*;
 import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
+import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -25,7 +28,9 @@ import java.util.*;
 
 @SuppressWarnings("all")
 //@Component
+@Log4j2
 public class Main {
+
 
     private static volatile Properties props = new Properties();
     private static String pathToPropertyFile = "src/main/resources/db.properties";
@@ -42,11 +47,9 @@ public class Main {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        UserService userService = new UserService();
-
-        UserDetails ud = userService.loadUserByUsername("belnarto4321");
-        System.out.println("ghj");
-        System.out.println(userService.findByLogin("belnarto4321").getRole());
+        log.error("test1");
+        log.debug("test2");
+        log.fatal("test3");
     }
 
 }
