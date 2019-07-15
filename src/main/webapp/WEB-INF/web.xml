@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>currencies</servlet-name>
-        <servlet-class>com.vironit.mWallet.servlets.CurrenciesServlet</servlet-class>
+        <servlet-class>com.vironit.mwallet.servlets.CurrenciesServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -18,7 +18,7 @@
 
     <servlet>
         <servlet-name>addCurrency</servlet-name>
-        <servlet-class>com.vironit.mWallet.servlets.AddCurrencyServlet</servlet-class>
+        <servlet-class>com.vironit.mwallet.servlets.AddCurrencyServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -30,7 +30,7 @@
 
     <servlet>
         <servlet-name>deleteCurrency</servlet-name>
-        <servlet-class>com.vironit.mWallet.servlets.DeleteCurrencyServlet</servlet-class>
+        <servlet-class>com.vironit.mwallet.servlets.DeleteCurrencyServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -40,7 +40,7 @@
 
     <servlet>
         <servlet-name>editCurrency</servlet-name>
-        <servlet-class>com.vironit.mWallet.servlets.EditCurrencyServlet</servlet-class>
+        <servlet-class>com.vironit.mwallet.servlets.EditCurrencyServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

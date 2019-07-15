@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.vironit.mWallet.models.Currency" %>
+<%@ page import="com.vironit.mwallet.models.Currency" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>

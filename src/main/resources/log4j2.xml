@@ -21,7 +21,7 @@
     </Appenders>
 
     <loggers>
-        <Logger level="debug" name="com.vironit.mWallet">
+        <Logger level="debug" name="com.vironit.mwallet">
         </Logger>
         <Logger level="error" name="org.hibernate">
         </Logger>

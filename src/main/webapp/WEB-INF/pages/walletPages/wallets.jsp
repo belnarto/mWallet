@@ -1,4 +1,4 @@
-<%@ page import="com.vironit.mWallet.models.Wallet" %>
+<%@ page import="com.vironit.mwallet.models.Wallet" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

@@ -1,0 +1,77 @@
+package com.vironit.mwallet.config;
+
+import com.vironit.mwallet.converters.StringToRoleConverter;
+import com.vironit.mwallet.dao.*;
+import com.vironit.mwallet.dao.impl.WalletDaoImpl;
+import com.vironit.mwallet.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+//import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+//import javax.validation.Validation;
+//import javax.validation.Validator;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+
+@Configuration
+@EnableWebMvc
+@ComponentScan(basePackages = "com.vironit.mwallet")
+public class WebConfig implements WebMvcConfigurer {
+
+
+    @Bean
+    WalletDao getWalletDao() {
+        return new WalletDaoImpl();
+    }
+
+    @Bean
+    UserService getUserService() {
+        return new UserService();
+    }
+
+    @Bean
+    WalletService getWalletService() {
+        return new WalletService();
+    }
+
+    @Bean
+    CurrencyService getCurrencyService() {
+        return new CurrencyService();
+    }
+
+    @Bean
+    RoleService getRoleService() {
+        return new RoleService();
+    }
+
+    @Bean
+    public Validator getJavaValidator() {
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        return validatorFactory.usingContext().getValidator();
+    }
+
+    @Bean
+    ViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/pages/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
+
+    @Autowired
+    RoleService roleService;
+
+    @Override
+    public void addFormatters (FormatterRegistry registry) {
+        registry.addConverter(new StringToRoleConverter(roleService));
+    }
+
+}

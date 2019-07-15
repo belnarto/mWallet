@@ -1,4 +1,4 @@
-<%@ page import="com.vironit.mWallet.models.Currency" %>
+<%@ page import="com.vironit.mwallet.models.Currency" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
@@ -40,7 +40,7 @@
 <div style="width:700px" class="w3-container w3-center w3-margin-bottom w3-padding">
 
     <div class="w3-container w3-padding">
-        <jsp:useBean id="currency" scope="request" type="com.vironit.mWallet.models.Currency"/>
+        <jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.models.Currency"/>
         <%--@elvariable id="updated" type="java.lang.String"--%>
         <c:if test = "${not empty updated}">
             <div class="w3-panel w3-green w3-display-container w3-card-4 w3-round">
