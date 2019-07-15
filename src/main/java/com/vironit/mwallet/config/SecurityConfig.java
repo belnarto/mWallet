@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import com.vironit.mwallet.services.UserService;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -51,20 +52,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
 
-
         //noinspection ELValidationInJSP,SpringElInspection
         http.addFilterBefore(filter, CsrfFilter.class)
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/main").permitAll()
-                    .antMatchers("/test").permitAll()
                     .antMatchers("/403").permitAll()
                     .antMatchers("/users/addUser").permitAll()
                     .antMatchers("/currencies").permitAll()
+                .and().authorizeRequests()
                     .antMatchers("/currencies/**").access("hasRole('ADMIN')")
+                .and().authorizeRequests()
                     .antMatchers("/users/{id}/updateUser").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
                     .antMatchers("/users/{id}/deleteUser").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
+                    .antMatchers("/users/{id}").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
                     .antMatchers("/users/**").access("hasRole('ADMIN')")
+                .and().authorizeRequests()
                     .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
                     .anyRequest().authenticated()
                 .and()
@@ -82,5 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .exceptionHandling()
                     .accessDeniedPage("/403");
     }
+
 
 }

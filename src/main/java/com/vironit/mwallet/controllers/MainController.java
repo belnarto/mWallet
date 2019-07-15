@@ -23,9 +23,14 @@ public class MainController {
     private RoleService roleService;
 
     @RequestMapping(value = "/*", method = RequestMethod.GET)
-    public ModelAndView mainGet(ModelAndView modelAndView) {
+    public ModelAndView mainGet(ModelAndView modelAndView,
+                                Principal user) {
         modelAndView.setViewName("main");
-        roleService.findAll(); //TODO delete
+
+        if (user != null) {
+            modelAndView.addObject("userId", userService.findByLogin(user.getName()).getId());
+        }
+
         return modelAndView;
     }
 

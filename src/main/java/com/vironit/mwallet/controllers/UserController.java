@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -42,6 +44,16 @@ public class UserController {
     public ModelAndView allUsers(ModelAndView modelAndView) {
         modelAndView.setViewName("userPages/users");
         modelAndView.addObject("users", userService.findAll());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
+    public ModelAndView myUser(ModelAndView modelAndView,
+                                 @PathVariable("userId") int userId) {
+        modelAndView.setViewName("userPages/users");
+        List<User> myUser = new ArrayList<>();
+        myUser.add(userService.findById(userId));
+        modelAndView.addObject("users", myUser);
         return modelAndView;
     }
 

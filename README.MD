@@ -28,7 +28,12 @@ URI	                    Method	    Action                              Access le
 /403                    GET         Display access denied page          all
 /users/addUser	        GET	        Display add user form               all
 /users/addUser	        POST	    Create user action                  all
+
 /users	                GET	        Listing, display all users          ADMIN
+
+/users/{id}	            GET	        Display user inf form for {id}   
+                                    any id allowed                      ADMIN
+                                    only id for current user            DEFAULT
 
 /users/{id}/updateUser	GET	        Display update user form for {id}   
                                     any id allowed                      ADMIN
