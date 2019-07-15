@@ -38,6 +38,7 @@ public class User {
     @Column(name = "password")
     @NotNull(message = "Can't be null")
     @Size(min = 4, max = 60, message = "Should be bigger than 3 and less than 61")
+    @ToString.Exclude
     private String password;
 
     @ManyToOne

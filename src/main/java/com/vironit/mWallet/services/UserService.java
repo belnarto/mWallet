@@ -2,6 +2,8 @@ package com.vironit.mWallet.services;
 
 import com.vironit.mWallet.dao.UserDao;
 import com.vironit.mWallet.models.User;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
+import com.vironit.mWallet.services.exception.UserServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,7 +34,10 @@ public class UserService implements UserDetailsService {
         return userDao.findByLogin(login);
     }
 
-    public void save(User user) {
+    public void save(User user) throws LoginAlreadyDefinedException {
+        if (findByLogin(user.getLogin()) != null) {
+            throw new LoginAlreadyDefinedException();
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }

@@ -5,6 +5,7 @@ import com.vironit.mWallet.models.Currency;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class CurrencyServiceTest {
     private Currency currency;
 
     @Before
-    public void setUp() throws InterruptedException {
+    public void setUp() throws InterruptedException, LoginAlreadyDefinedException {
         User user;
         Role role;
 

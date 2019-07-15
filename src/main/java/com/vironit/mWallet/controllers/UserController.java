@@ -4,10 +4,13 @@ import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
+@Log4j2
 public class UserController {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -53,14 +57,19 @@ public class UserController {
                                     @Valid @ModelAttribute("user") User user,
                                     BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            userService.save(user);
-            modelAndView.setViewName("main");
-            modelAndView.addObject("added", true);
-        } else {
-            modelAndView.setViewName("userPages/addUser");
-            modelAndView.addObject("roles", roleService.findAll());
-            modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
+            try {
+                userService.save(user);
+                modelAndView.setViewName("main");
+                modelAndView.addObject("added", true);
+                return modelAndView;
+            } catch (LoginAlreadyDefinedException e) {
+                log.debug("login already defined. " + user);
+                bindingResult.addError(new FieldError("user", "login", "login already defined."));
+            }
         }
+        modelAndView.setViewName("userPages/addUser");
+        modelAndView.addObject("roles", roleService.findAll());
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 

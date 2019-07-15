@@ -45,6 +45,9 @@ public class AddCurrencyServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String encoding = req.getCharacterEncoding();
+        //req.setCharacterEncoding("UTF-8");
+        //resp.setCharacterEncoding("UTF-8");
         String name = req.getParameter("name");
         String rate = req.getParameter("rate");
         Currency currency = new Currency(name, Double.valueOf(rate));

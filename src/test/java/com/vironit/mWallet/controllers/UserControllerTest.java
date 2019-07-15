@@ -8,6 +8,7 @@ import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.services.CurrencyService;
 import com.vironit.mWallet.services.RoleService;
 import com.vironit.mWallet.services.UserService;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class UserControllerTest {
     private User user;
 
     @Before
-    public void setUp() throws InterruptedException {
+    public void setUp() throws InterruptedException, LoginAlreadyDefinedException {
         Currency currency;
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.ctx)

@@ -24,6 +24,8 @@
     </build>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <jdk.version>1.8</jdk.version>
         <spring.version>5.1.1.RELEASE</spring.version>
         <spring.security.version>5.1.5.RELEASE</spring.security.version>
@@ -153,7 +155,7 @@
             <version>${jstl.version}</version>
         </dependency>
 
-        <!-- Log4j -->
+        <!-- Log4j2 -->
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

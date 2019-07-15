@@ -38,7 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
         return new WalletDaoImpl();
     }
 
-
     @Bean
     UserService getUserService() {
         return new UserService();

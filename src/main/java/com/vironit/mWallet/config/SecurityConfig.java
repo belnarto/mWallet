@@ -12,7 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import com.vironit.mWallet.services.UserService;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 
 @Configuration
@@ -46,10 +47,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+
+
         //noinspection ELValidationInJSP,SpringElInspection
-        http.authorizeRequests()
+        http.addFilterBefore(filter, CsrfFilter.class)
+                .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/main").permitAll()
+                    .antMatchers("/test").permitAll()
                     .antMatchers("/403").permitAll()
                     .antMatchers("/users/addUser").permitAll()
                     .antMatchers("/currencies").permitAll()

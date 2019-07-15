@@ -3,6 +3,7 @@ package com.vironit.mWallet.services;
 import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.exceptions.WalletStatusException;
 import com.vironit.mWallet.models.*;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class WalletServiceTest {
     private Wallet wallet;
 
     @Before
-    public void setUp() throws InterruptedException {
+    public void setUp() throws InterruptedException, LoginAlreadyDefinedException {
         Role role;
         Currency currency;
 

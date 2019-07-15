@@ -4,6 +4,7 @@ import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,28 +83,28 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findById() {
+    public void findById() throws LoginAlreadyDefinedException {
         userService.save(user);
         assertEquals(userService.findById(user.getId()), user);
         assertNull(userService.findById(0));
     }
 
     @Test
-    public void findByLogin() {
+    public void findByLogin() throws LoginAlreadyDefinedException {
         userService.save(user);
         assertEquals(userService.findByLogin(user.getLogin()), user);
         assertNull(userService.findByLogin(""));
     }
 
     @Test
-    public void save() {
+    public void save() throws LoginAlreadyDefinedException {
         userService.save(user);
         assertEquals(userService.findById(user.getId()), user);
 
     }
 
     @Test
-    public void delete() {
+    public void delete() throws LoginAlreadyDefinedException {
         userService.save(user);
         assertEquals(userService.findById(user.getId()), user);
         userService.delete(user);
@@ -111,7 +112,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void update() {
+    public void update() throws LoginAlreadyDefinedException {
         userService.save(user);
         user.setLogin("Test2");
         userService.update(user);
@@ -123,13 +124,13 @@ public class UserServiceTest {
     }
 
     @Test
-    public void findAll() {
+    public void findAll() throws LoginAlreadyDefinedException {
         userService.save(user);
         assertTrue(userService.findAll().contains(user));
     }
 
     @Test
-    public void loadUserByUsername() {
+    public void loadUserByUsername() throws LoginAlreadyDefinedException {
         userService.save(user);
         UserDetails userDetails = userService.loadUserByUsername(user.getLogin());
         assertEquals(userDetails.getUsername(), user.getLogin());

@@ -4,6 +4,7 @@ import com.vironit.mWallet.config.WebConfig;
 import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,14 +93,14 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void save() {
+    public void save() throws LoginAlreadyDefinedException {
         roleService.save(role);
         userService.save(user);
         assertEquals(userService.findById(user.getId()).getRole(), role);
     }
 
     @Test
-    public void delete() {
+    public void delete() throws LoginAlreadyDefinedException {
         roleService.save(role);
         userService.save(user);
         try {
@@ -112,7 +113,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void update() {
+    public void update() throws LoginAlreadyDefinedException {
         roleService.save(role);
         userService.save(user);
         assertEquals(userService.findById(user.getId()).getRole(), role);

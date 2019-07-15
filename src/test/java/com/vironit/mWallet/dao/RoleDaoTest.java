@@ -5,6 +5,7 @@ import com.vironit.mWallet.models.Role;
 import com.vironit.mWallet.models.RoleEnum;
 import com.vironit.mWallet.models.User;
 import com.vironit.mWallet.services.UserService;
+import com.vironit.mWallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,14 +80,14 @@ public class RoleDaoTest {
     }
 
     @Test
-    public void save() {
+    public void save() throws LoginAlreadyDefinedException {
         roleDao.save(role);
         userService.save(user);
         assertEquals(userService.findById(user.getId()).getRole(), role);
     }
 
     @Test
-    public void update() {
+    public void update() throws LoginAlreadyDefinedException {
         roleDao.save(role);
         userService.save(user);
         assertEquals(userService.findById(user.getId()).getRole(), role);
@@ -96,7 +97,7 @@ public class RoleDaoTest {
     }
 
     @Test
-    public void delete() {
+    public void delete() throws LoginAlreadyDefinedException {
         roleDao.save(role);
         userService.save(user);
         try {
