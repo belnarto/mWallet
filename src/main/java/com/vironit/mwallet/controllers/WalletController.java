@@ -85,7 +85,7 @@ public class WalletController {
                 .filter(c -> !c.equals(wallet.getCurrency()))
                 .collect(Collectors.toList()));
         modelAndView.addObject("statuses", Arrays.stream(WalletStatusEnum.values())
-                .filter(s -> !s.equals(wallet.getStatus()))
+                .filter(s -> !s.equals(wallet.getWalletStatus()))
                 .collect(Collectors.toList()));
         return modelAndView;
     }
@@ -94,34 +94,37 @@ public class WalletController {
     public ModelAndView editWallet(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
                                    @PathVariable("walletId") int walletId,
-                                   @ModelAttribute("wallet") Wallet wallet) {
+                                   @Valid @ModelAttribute("wallet") Wallet wallet,
+                                   BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            walletService.update(wallet);
+        }
+        modelAndView = userWalletsPage(modelAndView,userId);
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
+        return modelAndView;
+    }
 
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/deleteWallet", method = RequestMethod.POST)
+    public ModelAndView deleteWallet(ModelAndView modelAndView,
+                                     @PathVariable("userId") int userId,
+                                     @PathVariable("walletId") int walletId) {
+        walletService.delete(walletService.findById(walletId));
         modelAndView.setViewName("redirect:/users/{userId}/wallets");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/deleteWallet", method = RequestMethod.POST)
-    public ModelAndView deleteWallet(@SuppressWarnings("unused") @PathVariable("id") int id,
-                                     @PathVariable("id2") int id2) {
-        walletService.delete(walletService.findById(id2));
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/users/{id}/wallets");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/addBalance", method = RequestMethod.GET)
-    public ModelAndView addBalancePage(@PathVariable("id") int id,
-                                       @PathVariable("id2") int id2) {
-        Wallet wallet = walletService.findById(id2);
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/addBalance", method = RequestMethod.GET)
+    public ModelAndView addBalancePage(ModelAndView modelAndView,
+                                       @PathVariable("userId") int userId,
+                                       @PathVariable("walletId") int walletId) {
         modelAndView.setViewName("walletPages/addBalance");
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("userId", userId);
+        modelAndView.addObject("wallet", walletService.findById(walletId));
         return modelAndView;
     }
 
     @RequestMapping(value = "/users/{id}/wallets/{id2}/addBalance", method = RequestMethod.POST)
-    public ModelAndView addBalance(@SuppressWarnings("unused") @PathVariable("id") int id,
+    public ModelAndView addBalance(@PathVariable("id") int id,
                                    @PathVariable("id2") int id2,
                                    @ModelAttribute("amountToAdd") double amountToAdd) {
         ModelAndView modelAndView = new ModelAndView();

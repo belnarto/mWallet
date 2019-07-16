@@ -148,10 +148,10 @@ public class WalletServiceTest {
     @Test
     public void update() {
         walletService.save(wallet);
-        assertEquals(walletService.findById(wallet.getId()).getStatus(), WalletStatusEnum.ACTIVE);
-        wallet.setStatus(WalletStatusEnum.BLOCKED);
+        assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.ACTIVE);
+        wallet.setWalletStatus(WalletStatusEnum.BLOCKED);
         walletService.update(wallet);
-        assertEquals(walletService.findById(wallet.getId()).getStatus(), WalletStatusEnum.BLOCKED);
+        assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
     }
 
     @Test
@@ -284,15 +284,15 @@ public class WalletServiceTest {
     public void blockWallet() {
         walletService.save(wallet);
         walletService.blockWallet(wallet);
-        assertEquals(walletService.findById(wallet.getId()).getStatus(), WalletStatusEnum.BLOCKED);
+        assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
     }
 
     @Test
     public void activateWallet() {
         walletService.save(wallet);
         walletService.blockWallet(wallet);
-        assertEquals(walletService.findById(wallet.getId()).getStatus(), WalletStatusEnum.BLOCKED);
+        assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
         walletService.activateWallet(wallet);
-        assertEquals(walletService.findById(wallet.getId()).getStatus(), WalletStatusEnum.ACTIVE);
+        assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.ACTIVE);
     }
 }

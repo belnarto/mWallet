@@ -39,6 +39,6 @@ public class Wallet {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     @NotNull(message = "Can't be null")
-    private WalletStatusEnum status = WalletStatusEnum.ACTIVE;
+    private WalletStatusEnum walletStatus = WalletStatusEnum.ACTIVE;
 
 }

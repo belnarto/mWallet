@@ -74,7 +74,7 @@
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.id}</td>
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.balance}</td>
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.currency}</td>
-                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.status}</td>
+                            <td style="text-align:center" class="w3-hover-sand"><br>${wallet.walletStatus}</td>
                             <td class="w3-hover-sand w3-center">
                                 <form action="/users/${userId}/wallets/${wallet.id}/addBalance">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Add money"/>

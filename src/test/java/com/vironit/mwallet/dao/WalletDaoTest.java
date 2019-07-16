@@ -121,10 +121,10 @@ public class WalletDaoTest {
     @Test
     public void update() {
         walletDao.save(wallet);
-        assertEquals(walletDao.findById(wallet.getId()).getStatus(), WalletStatusEnum.ACTIVE);
-        wallet.setStatus(WalletStatusEnum.BLOCKED);
+        assertEquals(walletDao.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.ACTIVE);
+        wallet.setWalletStatus(WalletStatusEnum.BLOCKED);
         walletDao.update(wallet);
-        assertEquals(walletDao.findById(wallet.getId()).getStatus(), WalletStatusEnum.BLOCKED);
+        assertEquals(walletDao.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
     }
 
     @Test

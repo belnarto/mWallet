@@ -2,6 +2,7 @@ package com.vironit.mwallet.services;
 
 import com.vironit.mwallet.dao.WalletDao;
 import com.vironit.mwallet.exceptions.WalletStatusException;
+import com.vironit.mwallet.models.Currency;
 import com.vironit.mwallet.models.User;
 import com.vironit.mwallet.models.Wallet;
 import com.vironit.mwallet.models.WalletStatusEnum;
@@ -39,11 +40,15 @@ public class WalletService {
     }
 
     public void update(Wallet wallet) {
+        Currency currencyOld = walletDao.findById(wallet.getId()).getCurrency();
+        if (!currencyOld.equals(wallet.getCurrency())) {
+            recalculateBalanceAfterCurrencyChange(wallet, currencyOld);
+        }
         walletDao.update(wallet);
     }
 
     public void addBalance(Wallet wallet, double value) {
-        if (wallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
         if (value > 0) {
@@ -55,7 +60,7 @@ public class WalletService {
     }
 
     public void reduceBalance(Wallet wallet, double value) {
-        if (wallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
         if (value > 0) {
@@ -67,10 +72,10 @@ public class WalletService {
     }
 
     public void transferMoney(Wallet fromWallet, Wallet toWallet, double value) {
-        if (fromWallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (fromWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet " + fromWallet + " is blocked");
         }
-        if (toWallet.getStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (toWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet " + toWallet + " is blocked");
         }
         if (value > 0) {
@@ -91,13 +96,25 @@ public class WalletService {
 
     @SuppressWarnings("WeakerAccess")
     public void blockWallet(Wallet wallet) {
-        wallet.setStatus(WalletStatusEnum.BLOCKED);
+        wallet.setWalletStatus(WalletStatusEnum.BLOCKED);
         walletDao.update(wallet);
     }
 
     @SuppressWarnings("WeakerAccess")
     public void activateWallet(Wallet wallet) {
-        wallet.setStatus(WalletStatusEnum.ACTIVE);
+        wallet.setWalletStatus(WalletStatusEnum.ACTIVE);
         walletDao.update(wallet);
+    }
+
+    //TODO refactor
+    private void recalculateBalanceAfterCurrencyChange(
+            Wallet wallet, Currency currencyOld) {
+        double balance = wallet.getBalance();
+        double targetValue = currencyOld.getRate() * balance; // to BYN
+        targetValue = targetValue / wallet.getCurrency().getRate(); // to new Currency
+        targetValue = new BigDecimal(targetValue)
+                .setScale(3, RoundingMode.DOWN)
+                .doubleValue();
+        wallet.setBalance(targetValue);
     }
 }

@@ -168,9 +168,9 @@ public class WalletTest {
     }
 
     @Test
-    public void getStatus() {
+    public void getWalletStatus() {
         try {
-            assertEquals(wallet.getStatus(), WalletStatusEnum.ACTIVE);
+            assertEquals(wallet.getWalletStatus(), WalletStatusEnum.ACTIVE);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -257,17 +257,17 @@ public class WalletTest {
     }
 
     @Test
-    public void setStatus() {
+    public void setWalletStatus() {
 
         try {
-            wallet.setStatus(WalletStatusEnum.BLOCKED);
-            assertEquals(wallet.getStatus(), WalletStatusEnum.BLOCKED);
+            wallet.setWalletStatus(WalletStatusEnum.BLOCKED);
+            assertEquals(wallet.getWalletStatus(), WalletStatusEnum.BLOCKED);
         } catch (Exception e) {
             fail(e.getMessage());
         }
 
         try {
-            wallet.setStatus(null);
+            wallet.setWalletStatus(null);
             walletService.update(wallet);
             fail();
         } catch (Exception e) {
@@ -288,7 +288,7 @@ public class WalletTest {
         try {
             Wallet wallet2 = wallet.toBuilder().build();
             assertEquals(wallet, wallet2);
-            wallet2.setStatus(WalletStatusEnum.BLOCKED);
+            wallet2.setWalletStatus(WalletStatusEnum.BLOCKED);
             assertNotEquals(wallet, wallet2);
         } catch (Exception e) {
             fail(e.getMessage());
@@ -309,7 +309,7 @@ public class WalletTest {
         try {
             Wallet wallet2 = wallet.toBuilder().build();
             assertEquals(wallet.hashCode(), wallet2.hashCode());
-            wallet2.setStatus(WalletStatusEnum.BLOCKED);
+            wallet2.setWalletStatus(WalletStatusEnum.BLOCKED);
             assertNotEquals(wallet.hashCode(), wallet2.hashCode());
         } catch (Exception e) {
             fail(e.getMessage());

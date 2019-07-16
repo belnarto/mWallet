@@ -60,12 +60,12 @@
 
                 <label>Status:
 
-                    <select type="text" name="status">
+                    <select type="walletStatus" name="walletStatus">
                         <c:forEach var="status" items="${statuses}">
                             <option>${status}</option>
                         </c:forEach>
                         <option selected="selected">
-                            ${wallet.status}
+                            ${wallet.walletStatus}
                         </option>
                     </select>
 
@@ -73,7 +73,11 @@
 
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>
 
+                <input type="hidden" name="id" value="${wallet.id}"/>
+
                 <input type="hidden" name="user" value="${userId}"/>
+
+                <input type="hidden" name="balance" value="${wallet.balance}"/>
 
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

@@ -43,7 +43,7 @@ URI	                                                Method	Action               
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
                             
-/users/{userId}/deleteUser	                        DELETE	delete user with {userId}       
+/users/{userId}/deleteUser	                        POST	delete user with {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
                     
@@ -57,16 +57,28 @@ URI	                                                Method	Action               
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
                 
-/users/{userId}/wallets/addWallet                   POST    Create wallet form for user {userId}       
+/users/{userId}/wallets/addWallet                   POST    Create wallet for user {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
     
-/users/{userId}/wallets/{walletId}/editWallet       GET	    Edit wallet {walletId}
+/users/{userId}/wallets/{walletId}/editWallet       GET	    Edit wallet form {walletId}
                                                             form for user {userId}       
                                                             any {userId} and {walletId} allowed     ADMIN
                                                             only {userId} and {walletId} 
                                                             for current user                        DEFAULT
-                                                                                                                        
+
+/users/{userId}/wallets/{walletId}/editWallet       POST    Edit wallet {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT                                                            
+
+/users/{userId}/wallets/{walletId}/deleteWallet     POST    Delete wallet {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
 Цель:
 	Создать мобильный кошелёк в учебных целях.
 	Освоить необходимые технологии и концепции.
