@@ -1,7 +1,8 @@
 package com.vironit.mwallet.services;
 
 import com.vironit.mwallet.config.WebConfig;
-import com.vironit.mwallet.exceptions.WalletStatusException;
+import com.vironit.mwallet.services.exception.WalletServiceException;
+import com.vironit.mwallet.services.exception.WalletStatusException;
 import com.vironit.mwallet.models.*;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 import org.junit.After;
@@ -155,7 +156,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    public void addBalance() {
+    public void addBalance() throws WalletServiceException {
         walletService.save(wallet);
         assertEquals(walletService.findById(wallet.getId()).getBalance(), 0.0, 0.000001);
         walletService.addBalance(wallet, 1);
@@ -190,7 +191,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    public void reduceBalance() {
+    public void reduceBalance() throws WalletServiceException {
         walletService.save(wallet);
         assertEquals(walletService.findById(wallet.getId()).getBalance(), 0.0, 0.000001);
         walletService.addBalance(wallet, 1);
@@ -229,7 +230,7 @@ public class WalletServiceTest {
     }
 
     @Test
-    public void transferMoney() {
+    public void transferMoney() throws WalletServiceException {
         walletService.save(wallet);
 
         Currency currency2 = new Currency("TST2", 0.02);

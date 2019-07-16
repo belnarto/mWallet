@@ -7,10 +7,15 @@ import com.vironit.mwallet.models.WalletStatusEnum;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
+import com.vironit.mwallet.services.exception.WalletServiceException;
+import com.vironit.mwallet.services.exception.WalletStatusException;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@Log4j2
 public class WalletController {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -67,7 +73,7 @@ public class WalletController {
         if (!bindingResult.hasErrors()) {
             walletService.save(wallet);
         }
-        modelAndView = userWalletsPage(modelAndView,userId);
+        modelAndView = userWalletsPage(modelAndView, userId);
         modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
@@ -99,7 +105,7 @@ public class WalletController {
         if (!bindingResult.hasErrors()) {
             walletService.update(wallet);
         }
-        modelAndView = userWalletsPage(modelAndView,userId);
+        modelAndView = userWalletsPage(modelAndView, userId);
         modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
@@ -119,64 +125,84 @@ public class WalletController {
                                        @PathVariable("walletId") int walletId) {
         modelAndView.setViewName("walletPages/addBalance");
         modelAndView.addObject("userId", userId);
-        modelAndView.addObject("wallet", walletService.findById(walletId));
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/addBalance", method = RequestMethod.POST)
-    public ModelAndView addBalance(@PathVariable("id") int id,
-                                   @PathVariable("id2") int id2,
-                                   @ModelAttribute("amountToAdd") double amountToAdd) {
-        ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = walletService.findById(id2);
-        walletService.addBalance(wallet, amountToAdd);
-        modelAndView.setViewName("redirect:/users/{id}/wallets");
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/addBalance", method = RequestMethod.POST)
+    public ModelAndView addBalance(ModelAndView modelAndView,
+                                   @PathVariable("userId") int userId,
+                                   @PathVariable("walletId") int walletId,
+                                   @ModelAttribute("amountToAdd") double amountToAdd,
+                                   BindingResult bindingResult) {
+        Wallet wallet = walletService.findById(walletId);
+        try {
+            walletService.addBalance(wallet, amountToAdd);
+        } catch (WalletServiceException e) {
+            log.debug("can't add balance to wallet " + wallet
+            + " because " + e);
+            bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
+        }
+        modelAndView = userWalletsPage(modelAndView, userId);
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/reduceBalance", method = RequestMethod.GET)
-    public ModelAndView reduceBalancePage(@PathVariable("id") int id,
-                                          @PathVariable("id2") int id2) {
-        Wallet wallet = walletService.findById(id2);
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance", method = RequestMethod.GET)
+    public ModelAndView reduceBalancePage(ModelAndView modelAndView,
+                                          @PathVariable("userId") int userId,
+                                          @PathVariable("walletId") int walletId) {
         modelAndView.setViewName("walletPages/reduceBalance");
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("userId", userId);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/reduceBalance", method = RequestMethod.POST)
-    public ModelAndView reduceBalance(@SuppressWarnings("unused") @PathVariable("id") int id,
-                                      @PathVariable("id2") int id2,
-                                      @ModelAttribute("amountToReduce") double amountToReduce) {
-        ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = walletService.findById(id2);
-        walletService.reduceBalance(wallet, amountToReduce);
-        modelAndView.setViewName("redirect:/users/{id}/wallets");
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance", method = RequestMethod.POST)
+    public ModelAndView reduceBalance(ModelAndView modelAndView,
+                                      @PathVariable("userId") int userId,
+                                      @PathVariable("walletId") int walletId,
+                                      @ModelAttribute("amountToReduce") double amountToReduce,
+                                      BindingResult bindingResult) {
+        Wallet wallet = walletService.findById(walletId);
+        try {
+            walletService.reduceBalance(wallet, amountToReduce);
+        } catch (WalletServiceException e) {
+            log.debug("can't reduce balance of wallet " + wallet
+                    + " because " + e);
+            bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
+        }
+        modelAndView = userWalletsPage(modelAndView, userId);
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/transferMoney", method = RequestMethod.GET)
-    public ModelAndView transferMoneyPage(@PathVariable("id") int id,
-                                          @PathVariable("id2") int id2) {
-        Wallet wallet = walletService.findById(id2);
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney", method = RequestMethod.GET)
+    public ModelAndView transferMoneyPage(ModelAndView modelAndView,
+                                          @PathVariable("userId") int userId,
+                                          @PathVariable("walletId") int walletId) {
         modelAndView.setViewName("walletPages/transferMoney");
-        modelAndView.addObject("id", id);
-        modelAndView.addObject("wallet", wallet);
+        modelAndView.addObject("userId", userId);
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{id}/wallets/{id2}/transferMoney", method = RequestMethod.POST)
-    public ModelAndView transferMoney(@SuppressWarnings("unused") @PathVariable("id") int id,
-                                      @PathVariable("id2") int id2,
+    @RequestMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney", method = RequestMethod.POST)
+    public ModelAndView transferMoney(ModelAndView modelAndView,
+                                      @PathVariable("userId") int userId,
+                                      @PathVariable("walletId") int walletId,
                                       @ModelAttribute("amountToTransfer") double amountToTransfer,
-                                      @ModelAttribute("targetWallet") int targetWallet) {
-        ModelAndView modelAndView = new ModelAndView();
-        Wallet wallet = walletService.findById(id2);
-        Wallet target_Wallet = walletService.findById(targetWallet);
-        walletService.transferMoney(wallet, target_Wallet, amountToTransfer);
-        modelAndView.setViewName("redirect:/users/{id}/wallets");
+                                      @ModelAttribute("targetWalletId") int targetWalletId,
+                                      BindingResult bindingResult) {
+        try {
+            Wallet wallet = walletService.findById(walletId);
+            Wallet targetWallet = walletService.findById(targetWalletId);
+            walletService.transferMoney(wallet, targetWallet, amountToTransfer);
+        } catch (WalletServiceException e) {
+            log.debug("can't transfer money from wallet: " + walletId
+                    + " to wallet: " + targetWalletId
+                    + " because " + e);
+            bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
+        }
+        modelAndView = userWalletsPage(modelAndView, userId);
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 

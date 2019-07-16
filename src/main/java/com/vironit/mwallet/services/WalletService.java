@@ -1,7 +1,8 @@
 package com.vironit.mwallet.services;
 
 import com.vironit.mwallet.dao.WalletDao;
-import com.vironit.mwallet.exceptions.WalletStatusException;
+import com.vironit.mwallet.services.exception.WalletServiceException;
+import com.vironit.mwallet.services.exception.WalletStatusException;
 import com.vironit.mwallet.models.Currency;
 import com.vironit.mwallet.models.User;
 import com.vironit.mwallet.models.Wallet;
@@ -47,7 +48,8 @@ public class WalletService {
         walletDao.update(wallet);
     }
 
-    public void addBalance(Wallet wallet, double value) {
+    public void addBalance(Wallet wallet, double value)
+            throws WalletServiceException {
         if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
@@ -55,30 +57,39 @@ public class WalletService {
             wallet.setBalance(wallet.getBalance() + value);
             walletDao.update(wallet);
         } else {
-            throw new IllegalArgumentException("Value <= 0");
+            throw new WalletServiceException("Value <= 0");
         }
     }
 
-    public void reduceBalance(Wallet wallet, double value) {
+    public void reduceBalance(Wallet wallet, double value)
+            throws WalletServiceException {
         if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
-        if (value > 0) {
+        if (value <= 0) {
+            throw new WalletServiceException("Value <= 0");
+        }
+        if (value < wallet.getBalance()) {
             wallet.setBalance(wallet.getBalance() - value);
             walletDao.update(wallet);
         } else {
-            throw new IllegalArgumentException("Value <= 0");
+            throw new WalletServiceException("Wallet has not enough balance");
         }
     }
 
-    public void transferMoney(Wallet fromWallet, Wallet toWallet, double value) {
+    public void transferMoney(Wallet fromWallet, Wallet toWallet, double value)
+            throws WalletServiceException {
         if (fromWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
-            throw new WalletStatusException("Operation is not permitted because wallet " + fromWallet + " is blocked");
+            throw new WalletStatusException("Operation is not permitted because wallet " + fromWallet.getId() + " is blocked");
         }
         if (toWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
-            throw new WalletStatusException("Operation is not permitted because wallet " + toWallet + " is blocked");
+            throw new WalletStatusException("Operation is not permitted because wallet " + toWallet.getId()  + " is blocked");
         }
-        if (value > 0) {
+        if (value <= 0) {
+            throw new WalletServiceException("Value <= 0");
+        }
+        // TODO refactor
+        if (value < fromWallet.getBalance()) {
             fromWallet.setBalance(fromWallet.getBalance() - value);
             walletDao.update(fromWallet);
 
@@ -90,7 +101,7 @@ public class WalletService {
 
             walletDao.update(toWallet);
         } else {
-            throw new IllegalArgumentException("Value <= 0");
+            throw new WalletServiceException("Wallet has not enough balance");
         }
     }
 
