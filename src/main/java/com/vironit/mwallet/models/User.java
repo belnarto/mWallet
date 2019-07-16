@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
 @Entity
 @Table(name = "users")
 @Builder(toBuilder = true)

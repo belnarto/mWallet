@@ -29,12 +29,6 @@ import javax.validation.ValidatorFactory;
 @ComponentScan(basePackages = "com.vironit.mwallet")
 public class WebConfig implements WebMvcConfigurer {
 
-
-    @Bean
-    WalletDao getWalletDao() {
-        return new WalletDaoImpl();
-    }
-
     @Bean
     public Validator getJavaValidator() {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
