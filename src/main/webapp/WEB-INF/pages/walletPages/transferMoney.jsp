@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/users/${id}/wallets'"><b>Back to wallets</b></button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/users/${userId}/wallets'"><b>Back to wallets</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -42,14 +42,13 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Transfer money:</h2>
             </div>
-            <c:url value="/users/${id}/wallets/${wallet.id}/transferMoney" var="var"/>
-            <form action="${var}" method="POST" class="w3-selection w3-padding w3-center">
+            <form name="transferMoneyForm" method="post" class="w3-selection w3-padding w3-center">
                 <label for="amountToTransfer">Amount to transfer</label>
                 <input type="text" name="amountToTransfer" id="amountToTransfer"
                        class="w3-input w3-animate-input w3-border w3-round-large" style="width: 100%">
 
-                <label for="targetWallet">Target wallet id</label>
-                <input type="text" name="targetWallet" id="targetWallet"
+                <label for="targetWalletId">Target wallet id</label>
+                <input type="text" name="targetWalletId" id="targetWalletId"
                        class="w3-input w3-animate-input w3-border w3-round-large" style="width: 100%">
 
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>

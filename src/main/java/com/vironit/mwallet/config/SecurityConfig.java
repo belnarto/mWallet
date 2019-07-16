@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import com.vironit.mwallet.services.UserService;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -63,12 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                     .antMatchers("/currencies/**").access("hasRole('ADMIN')")
                 .and().authorizeRequests()
-                    .antMatchers("/users/{id}/wallets").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
-                    .antMatchers("/users/{id}/wallets/addWallet").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
-                    .antMatchers("/users/{id}/wallets/{walletId}/**").access("@securityGuard.checkWalletId(authentication,#walletId) or hasRole('ADMIN')")
-                    .antMatchers("/users/{id}/updateUser").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
-                    .antMatchers("/users/{id}/deleteUser").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
-                    .antMatchers("/users/{id}").access("@securityGuard.checkUserId(authentication,#id) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}/wallets").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}/wallets/addWallet").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}/wallets/{walletId}/**").access("(@securityGuard.checkWalletId(authentication,#walletId) and @securityGuard.checkUserId(authentication,#userId)) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}/updateUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}/deleteUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                    .antMatchers("/users/{userId}").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
                     .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .and().authorizeRequests()
                     .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")

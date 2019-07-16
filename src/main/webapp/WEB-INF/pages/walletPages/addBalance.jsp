@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/users/${id}/wallets'"><b>Back to wallets</b></button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/users/${userId}/wallets'"><b>Back to wallets</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -42,8 +42,8 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Add money:</h2>
             </div>
-            <c:url value="/users/${id}/wallets/${wallet.id}/addBalance" var="var"/>
-            <form action="${var}" method="POST" class="w3-selection w3-padding w3-center">
+
+            <form name="addBalanceForm" method="post" class="w3-selection w3-padding w3-center">
                 <label for="amountToAdd">Amount to add</label>
                 <input type="text" name="amountToAdd" id="amountToAdd"
                        class="w3-input w3-animate-input w3-border w3-round-large" style="width: 100%">

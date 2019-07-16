@@ -79,6 +79,30 @@ URI	                                                Method	Action               
                                                             only {userId} and {walletId} 
                                                             for current user                        DEFAULT
 
+/users/{userId}/wallets/{walletId}/addBalance       GET	    Add money form {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/addBalance       POST    Add money {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/reduceBalance    GET	    Reduce money form {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/reduceBalance    POST    Reduce money {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+                                                                                                                        
 Цель:
 	Создать мобильный кошелёк в учебных целях.
 	Освоить необходимые технологии и концепции.
