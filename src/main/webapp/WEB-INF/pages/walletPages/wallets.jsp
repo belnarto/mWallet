@@ -15,16 +15,7 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-
-    <c:choose>
-        <c:when test="${currURL.equals(\"myWallets\")}">
-            <button class="w3-btn w3-round-large w3-left" onclick="location.href='/'"><b>Back to main</b></button>
-        </c:when>
-        <c:otherwise>
-            <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users'"><b>Back to users</b></button>
-        </c:otherwise>
-    </c:choose>
-
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/'"><b>Back to main</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -51,6 +42,16 @@
 
 <div style="width:1265px" class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-container w3-padding">
+        <c:if test="${not empty fieldErrors}">
+            <div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
+            <span onclick="this.parentElement.style.display='none'"
+                  class="w3-button w3-margin-right w3-display-right w3-round-large w3-hover-red w3-border w3-border-red w3-hover-border-grey">×</span>
+                <c:forEach var="fieldError" items="${fieldErrors}">
+                    <span style="color:white">${fieldError.field}:</span>
+                    <span style="color:white">${fieldError.defaultMessage}</span>
+                </c:forEach>
+            </div>
+        </c:if>
         <div class="w3-card-4">
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Wallets:</h2>
@@ -75,19 +76,19 @@
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.currency}</td>
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.status}</td>
                             <td class="w3-hover-sand w3-center">
-                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/addBalance">
+                                <form action="/users/${userId}/wallets/${wallet.id}/addBalance">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Add money"/>
                                 </form>
-                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/reduceBalance">
+                                <form action="/users/${userId}/wallets/${wallet.id}/reduceBalance">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Spend money"/>
                                 </form>
-                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/transferMoney">
+                                <form action="/users/${userId}/wallets/${wallet.id}/transferMoney">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Transfer money"/>
                                 </form>
-                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/editWallet">
+                                <form action="/users/${userId}/wallets/${wallet.id}/editWallet">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Edit"/>
                                 </form>
-                                <form action="${pageContext.request.contextPath}/users/${id}/wallets/${wallet.id}/deleteWallet"
+                                <form action="/users/${userId}/wallets/${wallet.id}/deleteWallet"
                                       method="post">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Delete"/>
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -107,7 +108,7 @@
             </c:choose>
 
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
-                    onclick="location.href='/users/${id}/wallets/addWallet'">Add new wallet
+                    onclick="location.href='/users/${userId}/wallets/addWallet'">Add new wallet
             </button>
         </div>
     </div>

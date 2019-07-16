@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/users/${id}/wallets'"><b>Back to wallets</b></button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/users/${userId}/wallets'"><b>Back to wallets</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -42,33 +42,41 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Edit wallet:</h2>
             </div>
-            <c:url value="/users/${id}/wallets/${wallet.id}/editWallet" var="var"/>
-            <form action="${var}" method="POST" class="w3-selection w3-padding w3-center">
+
+            <form name="editWalletForm" method="post" class="w3-selection w3-padding w3-center">
 
                 <label>Currency:
-                    <select name="name">
-                        <c:forEach var="name" items="${currencies}">
-                            <option>${name}</option>
+
+                    <select type="currency" name="currency">
+                        <c:forEach var="currency" items="${currencies}">
+                            <option>${currency}</option>
                         </c:forEach>
                         <option selected="selected">
                             ${wallet.currency}
                         </option>
                     </select>
+
                 </label>
 
                 <label>Status:
-                    <select name="status">
+
+                    <select type="text" name="status">
                         <c:forEach var="status" items="${statuses}">
                             <option>${status}</option>
                         </c:forEach>
                         <option selected="selected">
                             ${wallet.status}
                         </option>
-                    </select
+                    </select>
+
                 </label>
 
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>
+
+                <input type="hidden" name="user" value="${userId}"/>
+
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
             </form>
         </div>
     </div>

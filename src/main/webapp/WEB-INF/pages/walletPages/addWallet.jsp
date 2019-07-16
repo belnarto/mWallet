@@ -27,7 +27,7 @@
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
@@ -42,19 +42,24 @@
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Add wallet:</h2>
             </div>
-            <c:url value="/users/${id}/wallets/addWallet" var="var"/>
-            <form action="${var}" method="POST" class="w3-selection w3-padding w3-center">
+            <form name="addWalletForm" method="post" class="w3-selection w3-padding w3-center">
 
                 <label>Currency:
-                    <select name="name">
-                        <c:forEach var="name" items="${currencies}">
-                            <option>${name}</option>
+
+                    <select type="currency" name="currency">
+                        <c:forEach var="currency" items="${currencies}">
+                            <option>${currency}</option>
                         </c:forEach>
                     </select>
+
                 </label>
 
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                <input type="hidden" name="user" value="${userId}"/>
+
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+
             </form>
         </div>
     </div>

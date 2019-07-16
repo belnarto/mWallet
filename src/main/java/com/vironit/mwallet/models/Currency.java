@@ -34,4 +34,8 @@ public class Currency {
         setRate(rate);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

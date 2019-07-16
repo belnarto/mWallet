@@ -20,34 +20,53 @@ Technologies used :
     
 The URI structure :
 
-URI	                    Method	    Action                              Access level
-/main                   GET         Display main page                   all
-/login                  GET         Display login form                  all
-/login                  POST        Perform login                       all
-/logout                 POST        Perform logout                      all
-/403                    GET         Display access denied page          all
-/users/addUser	        GET	        Display add user form               all
-/users/addUser	        POST	    Create user action                  all
-
-/users	                GET	        Listing, display all users          ADMIN
-
-/users/{id}	            GET	        Display user inf form for {id}   
-                                    any id allowed                      ADMIN
-                                    only id for current user            DEFAULT
-
-/users/{id}/updateUser	GET	        Display update user form for {id}   
-                                    any id allowed                      ADMIN
-                                    only id for current user            DEFAULT
-
-/users/{id}/updateUser	POST	    Update information for user {id}   
-                                    any id allowed                      ADMIN
-                                    only id for current user            DEFAULT
-
-/users/{id}/deleteUser	DELETE	    delete user with {id}   
-                                    any id allowed                      ADMIN
-                                    only id for current user            DEFAULT
+URI	                                                Method	Action                                  Access level
+/main                                               GET     Display main page                       all
+/login                                              GET     Display login form                      all
+/login                                              POST    Perform login                           all
+/logout                                             POST    Perform logout                          all
+/403                                                GET     Display access denied page              all
+/users/addUser	                                    GET	    Display add user form                   all
+/users/addUser	                                    POST	Create user action                      all
+                            
+/users	                                            GET	    Listing, display all users              ADMIN
+                
+/users/{userId}	                                    GET	    Display user inf form for {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/updateUser	                        GET	    Display update user form for {userId}   
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/updateUser	                        POST	Update information for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/deleteUser	                        DELETE	delete user with {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                    
+/wallets???	                                        GET	    Listing, display all wallets            ADMIN    
+                
+/users/{userId}/wallets                             GET	    Display wallets for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                
+/users/{userId}/wallets/addWallet                   GET	    Add wallet form for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                
+/users/{userId}/wallets/addWallet                   POST    Create wallet form for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
     
-
+/users/{userId}/wallets/{walletId}/editWallet       GET	    Edit wallet {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+                                                                                                                        
 Цель:
 	Создать мобильный кошелёк в учебных целях.
 	Освоить необходимые технологии и концепции.

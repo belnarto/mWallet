@@ -85,7 +85,7 @@
                             <br>${user.updatedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}</td>
                         <td class="w3-hover-sand w3-center">
                             <p>
-                            <form action="users/${user.id}/wallets">
+                            <form action="/users/${user.id}/wallets">
                                 <input class="w3-btn w3-hover w3-round-large" type="submit" value="Wallets">
                             </form>
                             <button class="w3-btn w3-hover w3-round-large"

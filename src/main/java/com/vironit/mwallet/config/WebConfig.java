@@ -1,6 +1,9 @@
 package com.vironit.mwallet.config;
 
+import com.vironit.mwallet.converters.StringToCurrencyConverter;
 import com.vironit.mwallet.converters.StringToRoleConverter;
+import com.vironit.mwallet.converters.StringToUserConverter;
+import com.vironit.mwallet.converters.StringToWalletStatusConverter;
 import com.vironit.mwallet.dao.*;
 import com.vironit.mwallet.dao.impl.WalletDaoImpl;
 import com.vironit.mwallet.services.*;
@@ -66,12 +69,22 @@ public class WebConfig implements WebMvcConfigurer {
         return viewResolver;
     }
 
+    // TODO check another solution for injection
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    CurrencyService currencyService;
+
+    @Autowired
+    UserService userService;
 
     @Override
     public void addFormatters (FormatterRegistry registry) {
         registry.addConverter(new StringToRoleConverter(roleService));
+        registry.addConverter(new StringToCurrencyConverter(currencyService));
+        registry.addConverter(new StringToUserConverter(userService));
+        registry.addConverter(new StringToWalletStatusConverter());
     }
 
 }
