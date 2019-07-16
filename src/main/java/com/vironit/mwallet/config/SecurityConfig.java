@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import com.vironit.mwallet.services.UserService;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -24,6 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -42,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override

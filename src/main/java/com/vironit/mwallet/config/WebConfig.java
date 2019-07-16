@@ -36,26 +36,6 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    UserService getUserService() {
-        return new UserService();
-    }
-
-    @Bean
-    WalletService getWalletService() {
-        return new WalletService();
-    }
-
-    @Bean
-    CurrencyService getCurrencyService() {
-        return new CurrencyService();
-    }
-
-    @Bean
-    RoleService getRoleService() {
-        return new RoleService();
-    }
-
-    @Bean
     public Validator getJavaValidator() {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         return validatorFactory.usingContext().getValidator();

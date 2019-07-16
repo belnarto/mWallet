@@ -1,40 +1,21 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.dao.RoleDao;
 import com.vironit.mwallet.models.Role;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class RoleService {
+public interface RoleService {
 
-    @Autowired
-    private RoleDao roleDao;
+    Role findById(int id);
 
-    public Role findById(int id) {
-        return roleDao.findById(id);
-    }
+    Role findByName(String roleName);
 
-    public Role findByName(String roleName) {
-        return roleDao.findByName(roleName);
-    }
+    void save(Role role);
 
-    public void save(Role role) {
-        roleDao.save(role);
-    }
+    void delete(Role role);
 
-    public void delete(Role role) {
-        roleDao.delete(role);
-    }
+    void update(Role role);
 
-    public void update(Role role) {
-        roleDao.update(role);
-    }
-
-    public List<Role> findAll() {
-        return roleDao.findAll();
-    }
+    List<Role> findAll();
 
 }

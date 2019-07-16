@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,6 +32,9 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -132,7 +136,7 @@ public class UserServiceTest {
     @Test
     public void loadUserByUsername() throws LoginAlreadyDefinedException {
         userService.save(user);
-        UserDetails userDetails = userService.loadUserByUsername(user.getLogin());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getLogin());
         assertEquals(userDetails.getUsername(), user.getLogin());
         assertEquals(userDetails.getPassword(), user.getPassword());
         assertTrue(userDetails.isEnabled());

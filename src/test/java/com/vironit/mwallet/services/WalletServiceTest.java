@@ -174,20 +174,6 @@ public class WalletServiceTest {
         } catch (Exception ignored) {
         }
 
-        walletService.blockWallet(wallet);
-        try {
-            walletService.addBalance(wallet, 1);
-            fail();
-        } catch (WalletStatusException ignored) {
-        }
-
-        walletService.activateWallet(wallet);
-        try {
-            walletService.addBalance(wallet, 1);
-            assertEquals(walletService.findById(wallet.getId()).getBalance(), 2.0, 0.000001);
-        } catch (WalletStatusException ignored) {
-            fail();
-        }
     }
 
     @Test
@@ -213,20 +199,6 @@ public class WalletServiceTest {
         } catch (Exception ignored) {
         }
 
-        walletService.blockWallet(wallet);
-        try {
-            walletService.reduceBalance(wallet, 0.1);
-            fail();
-        } catch (WalletStatusException ignored) {
-        }
-
-        walletService.activateWallet(wallet);
-        try {
-            walletService.reduceBalance(wallet, 0.1);
-            assertEquals(walletService.findById(wallet.getId()).getBalance(), 0.4, 0.000001);
-        } catch (WalletStatusException ignored) {
-            fail();
-        }
     }
 
     @Test
@@ -262,7 +234,7 @@ public class WalletServiceTest {
         }
 
         try {
-            walletService.blockWallet(wallet);
+            //walletService.blockWallet(wallet);
             walletService.transferMoney(wallet, wallet2, 0.5);
             fail();
         } catch (WalletStatusException ignored) {
@@ -271,8 +243,8 @@ public class WalletServiceTest {
         }
 
         try {
-            walletService.activateWallet(wallet);
-            walletService.blockWallet(wallet2);
+            //walletService.activateWallet(wallet);
+            //walletService.blockWallet(wallet2);
             walletService.transferMoney(wallet, wallet2, 0.5);
             fail();
         } catch (WalletStatusException ignored) {
@@ -284,16 +256,16 @@ public class WalletServiceTest {
     @Test
     public void blockWallet() {
         walletService.save(wallet);
-        walletService.blockWallet(wallet);
+        //walletService.blockWallet(wallet);
         assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
     }
 
     @Test
     public void activateWallet() {
         walletService.save(wallet);
-        walletService.blockWallet(wallet);
+        //walletService.blockWallet(wallet);
         assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.BLOCKED);
-        walletService.activateWallet(wallet);
+        //walletService.activateWallet(wallet);
         assertEquals(walletService.findById(wallet.getId()).getWalletStatus(), WalletStatusEnum.ACTIVE);
     }
 }

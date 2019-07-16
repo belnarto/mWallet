@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -54,6 +55,9 @@ public class MainControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private CurrencyService currencyService;
@@ -152,7 +156,7 @@ public class MainControllerTest {
                 .andExpect(redirectedUrl("/"))
                 .andExpect(authenticated())
                 .andExpect(authenticated().withAuthorities(
-                        userService.loadUserByUsername("Test").getAuthorities()))
+                        userDetailsService.loadUserByUsername("Test").getAuthorities()))
                 .andExpect(authenticated().withUsername("Test"));
     }
 
