@@ -31,7 +31,9 @@ public class RoleDaoImpl implements RoleDao {
 
     public Role findById(int id) {
         Role role = sessionFactory.getCurrentSession().get(Role.class, id);
-        sessionFactory.getCurrentSession().evict(role); // detaching object from persistence session
+        if (role != null) {
+            sessionFactory.getCurrentSession().evict(role); // detaching object from persistence session
+        }
         return role;
     }
 
@@ -48,7 +50,9 @@ public class RoleDaoImpl implements RoleDao {
                 .createQuery("From Role where roleEnum= :roleEnum ")
                 .setParameter("roleEnum", RoleEnum.valueOf(roleName))
                 .uniqueResult();
-        sessionFactory.getCurrentSession().evict(role); // detaching object from persistence session
+        if (role != null) {
+            sessionFactory.getCurrentSession().evict(role); // detaching object from persistence session
+        }
         return role;
     }
 

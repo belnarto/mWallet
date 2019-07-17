@@ -22,8 +22,10 @@ public class WalletDaoImpl implements WalletDao {
 
     public Wallet findById(int id) {
         Wallet wallet = sessionFactory.getCurrentSession().get(Wallet.class, id);
-        sessionFactory.getCurrentSession().evict(wallet); // detaching object from persistence session
-        return wallet;
+        if (wallet != null) {
+            sessionFactory.getCurrentSession().evict(wallet); // detaching object from persistence session
+        }
+            return wallet;
     }
 
     public void save(Wallet wallet) {

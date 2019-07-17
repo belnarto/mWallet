@@ -1,5 +1,6 @@
 package com.vironit.mwallet.config;
 
+import com.vironit.mwallet.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import com.vironit.mwallet.services.UserService;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -25,11 +28,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserService userService;
 
     @Autowired
+    private WalletService walletService;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * To make sure that the Spring Security session registry
+     * is notified when the session is destroyed
+     * <p>
+     * https://www.baeldung.com/spring-security-session
+     */
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     /**
@@ -53,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        configureSessionManagement(httpSecurity);
         configureEncodingFilter(httpSecurity, "UTF-8");
         authorizeRequestsPermittedAll(httpSecurity);
         authorizeRequestsWithSecurityLimitation(httpSecurity);
@@ -60,6 +78,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configureLogin(httpSecurity);
         configureLogout(httpSecurity);
         httpSecurity.exceptionHandling().accessDeniedPage("/403");
+    }
+
+    /**
+     * This method configure session management.
+     * https://www.baeldung.com/spring-security-session
+     */
+    private void configureSessionManagement(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .invalidSessionUrl("/login")
+                .sessionFixation().migrateSession() // what happens to an existing session when the user tries to authenticate again
+                .maximumSessions(1)
+                .expiredUrl("/login");
     }
 
     /**
@@ -91,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * This method authorize requests to URLs
      * which has security limitations.
-     *
+     * <p>
      * To limit access for users with DEFAULT role
      * to URLs which are not belong to them
      * securityGuard class is used.
@@ -103,16 +134,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/users/{userId}/wallets",
                         "/users/{userId}/wallets/addWallet")
-                .access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .access("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
 
                 .antMatchers("/users/{userId}/wallets/{walletId}/**")
-                .access("(@securityGuard.checkUserId(authentication,#userId) and @securityGuard.checkWalletId(authentication,#walletId))" +
+                .access("(@securityService.checkUserId(authentication,#userId) and @securityService.checkWalletId(authentication,#walletId))" +
                         " or hasRole('ADMIN')")
 
                 .antMatchers("/users/{userId}/updateUser",
                         "/users/{userId}/deleteUser",
                         "/users/{userId}")
-                .access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .access("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
 
                 .antMatchers("/users/**",
                         "/currencies/**")
@@ -142,4 +173,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout=true")
                 .permitAll();
     }
+
 }
