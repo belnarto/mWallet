@@ -1,40 +1,21 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.dao.CurrencyDao;
 import com.vironit.mwallet.models.Currency;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class CurrencyService {
+public interface CurrencyService {
 
-    @Autowired
-    private CurrencyDao currencyDao;
+    Currency findById(int id);
 
-    public Currency findById(int id) {
-        return currencyDao.findById(id);
-    }
+    Currency findByName(String name);
 
-    public Currency findByName(String name) {
-        return currencyDao.findByName(name);
-    }
+    List<Currency> findAll();
 
-    public List<Currency> findAll() {
-        return currencyDao.findAll();
-    }
+    void save(Currency currency);
 
-    public void save(Currency currency) {
-        currencyDao.save(currency);
-    }
+    void delete(Currency currency);
 
-    public void delete(Currency currency) {
-        currencyDao.delete(currency);
-    }
-
-    public void update(Currency currency) {
-        currencyDao.update(currency);
-    }
+    void update(Currency currency);
 
 }
