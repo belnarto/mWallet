@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,11 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public AuthenticationManager customAuthenticationManager() throws Exception {
-//        return authenticationManager();
-//    }
-
     /**
      * By defining this bean we override role prefix for Spring Security.
      * By default prefix = "ROLE_"
@@ -58,48 +52,94 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        configureEncodingFilter(httpSecurity, "UTF-8");
+        authorizeRequestsPermittedAll(httpSecurity);
+        authorizeRequestsWithSecurityLimitation(httpSecurity);
+        httpSecurity.authorizeRequests().anyRequest().authenticated();
+        configureLogin(httpSecurity);
+        configureLogout(httpSecurity);
+        httpSecurity.exceptionHandling().accessDeniedPage("/403");
+    }
 
+    /**
+     * This method set encoding filter.
+     * Required to correct parse JSP.
+     */
+    @SuppressWarnings("SameParameterValue")
+    private void configureEncodingFilter(HttpSecurity httpSecurity, String encoding) {
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding(encoding);
+        filter.setForceEncoding(true);
+        httpSecurity.addFilterBefore(filter, CsrfFilter.class);
+    }
+
+    /**
+     * This method authorize requests to URLs
+     * which ae permitted to all
+     */
+    private void authorizeRequestsPermittedAll(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests()
+                .antMatchers("/",
+                        "/main",
+                        "/403",
+                        "/users/addUser",
+                        "/currencies"
+                ).permitAll();
+    }
+
+    /**
+     * This method authorize requests to URLs
+     * which has security limitations.
+     *
+     * To limit access for users with DEFAULT role
+     * to URLs which are not belong to them
+     * securityGuard class is used.
+     * This class has methods to check is "id" belong to logged user.
+     */
+    private void authorizeRequestsWithSecurityLimitation(HttpSecurity httpSecurity) throws Exception {
         //noinspection ELValidationInJSP,SpringElInspection
-        http.addFilterBefore(filter, CsrfFilter.class)
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/main").permitAll()
-                .antMatchers("/403").permitAll()
-                .antMatchers("/users/addUser").permitAll()
-                .antMatchers("/currencies").permitAll()
-                .and().authorizeRequests()
-                .antMatchers("/currencies/**").access("hasRole('ADMIN')");
-        http.authorizeRequests()
-                .antMatchers("/users/{userId}/wallets").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                .antMatchers("/users/{userId}/wallets/addWallet").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                .antMatchers("/users/{userId}/wallets/{walletId}/**").access("(@securityGuard.checkWalletId(authentication,#walletId) and @securityGuard.checkUserId(authentication,#userId)) or hasRole('ADMIN')")
-                .antMatchers("/users/{userId}/updateUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                .antMatchers("/users/{userId}/deleteUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                .antMatchers("/users/{userId}").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                .antMatchers("/users/**").access("hasRole('ADMIN')")
-                .and().authorizeRequests()
-                .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
-                .anyRequest().authenticated()
-                .and()
+        httpSecurity.authorizeRequests()
+
+                .antMatchers("/users/{userId}/wallets",
+                        "/users/{userId}/wallets/addWallet")
+                .access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+
+                .antMatchers("/users/{userId}/wallets/{walletId}/**")
+                .access("(@securityGuard.checkUserId(authentication,#userId) and @securityGuard.checkWalletId(authentication,#walletId))" +
+                        " or hasRole('ADMIN')")
+
+                .antMatchers("/users/{userId}/updateUser",
+                        "/users/{userId}/deleteUser",
+                        "/users/{userId}")
+                .access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+
+                .antMatchers("/users/**",
+                        "/currencies/**")
+                .access("hasRole('ADMIN')");
+    }
+
+    /**
+     * This method configure login form.
+     */
+    private void configureLogin(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/")
-                .permitAll()
-                .and()
+                .permitAll();
+    }
+
+    /**
+     * This method configure logout form.
+     */
+    private void configureLogout(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .logout()
                 .deleteCookies("JSESSIONID")
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/login?logout=true")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/403");
+                .permitAll();
     }
-
-
 }
