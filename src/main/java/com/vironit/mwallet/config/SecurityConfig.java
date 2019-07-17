@@ -14,6 +14,7 @@ import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -32,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PersistentTokenRepository persistentTokenRepository;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -77,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.authorizeRequests().anyRequest().authenticated();
         configureLogin(httpSecurity);
         configureLogout(httpSecurity);
+        configureRememberMe(httpSecurity);
         httpSecurity.exceptionHandling().accessDeniedPage("/403");
     }
 
@@ -172,6 +177,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/login?logout=true")
                 .permitAll();
+    }
+
+    /**
+     * This method configure remember me functionality.
+     * <p>
+     * https://www.baeldung.com/spring-security-remember-me
+     */
+    private void configureRememberMe(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .rememberMe() // activate
+                .tokenRepository(persistentTokenRepository) // add repository for tokens
+                .rememberMeParameter("remember-me") // cookie name
+                .key("uniqueAndSecretKey") // private value secret for the entire app and it will be used when generating the contents of the token
+                .tokenValiditySeconds(2 * 7 * 24 * 60 * 60); // cookie will be valid for 2 weeks
     }
 
 }
