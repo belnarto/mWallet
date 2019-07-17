@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -31,18 +31,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    } //TODO length
-
-    @Bean
-    public AuthenticationManager customAuthenticationManager() throws Exception {
-        return authenticationManager();
     }
 
+//    @Bean
+//    public AuthenticationManager customAuthenticationManager() throws Exception {
+//        return authenticationManager();
+//    }
+
+    /**
+     * By defining this bean we override role prefix for Spring Security.
+     * By default prefix = "ROLE_"
+     * But for this app it's not required, so let's set prefix to ""
+     */
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
+        return new GrantedAuthorityDefaults("");
     }
 
+    /**
+     * In this method we configuring Authentication Manager
+     * with user details service and password encoder
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
@@ -57,38 +66,39 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //noinspection ELValidationInJSP,SpringElInspection
         http.addFilterBefore(filter, CsrfFilter.class)
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/main").permitAll()
-                    .antMatchers("/403").permitAll()
-                    .antMatchers("/users/addUser").permitAll()
-                    .antMatchers("/currencies").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/main").permitAll()
+                .antMatchers("/403").permitAll()
+                .antMatchers("/users/addUser").permitAll()
+                .antMatchers("/currencies").permitAll()
                 .and().authorizeRequests()
-                    .antMatchers("/currencies/**").access("hasRole('ADMIN')")
+                .antMatchers("/currencies/**").access("hasRole('ADMIN')");
+        http.authorizeRequests()
+                .antMatchers("/users/{userId}/wallets").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .antMatchers("/users/{userId}/wallets/addWallet").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .antMatchers("/users/{userId}/wallets/{walletId}/**").access("(@securityGuard.checkWalletId(authentication,#walletId) and @securityGuard.checkUserId(authentication,#userId)) or hasRole('ADMIN')")
+                .antMatchers("/users/{userId}/updateUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .antMatchers("/users/{userId}/deleteUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .antMatchers("/users/{userId}").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+                .antMatchers("/users/**").access("hasRole('ADMIN')")
                 .and().authorizeRequests()
-                    .antMatchers("/users/{userId}/wallets").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                    .antMatchers("/users/{userId}/wallets/addWallet").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                    .antMatchers("/users/{userId}/wallets/{walletId}/**").access("(@securityGuard.checkWalletId(authentication,#walletId) and @securityGuard.checkUserId(authentication,#userId)) or hasRole('ADMIN')")
-                    .antMatchers("/users/{userId}/updateUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                    .antMatchers("/users/{userId}/deleteUser").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                    .antMatchers("/users/{userId}").access("@securityGuard.checkUserId(authentication,#userId) or hasRole('ADMIN')")
-                    .antMatchers("/users/**").access("hasRole('ADMIN')")
-                .and().authorizeRequests()
-                    .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
-                    .anyRequest().authenticated()
+                .antMatchers("/myWallets/**").access("hasRole('ADMIN') or hasRole('DEFAULT')")
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/login?error=true")
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/")
+                .permitAll()
                 .and()
-                    .logout()
-                    .deleteCookies("JSESSIONID")
-                    .invalidateHttpSession(true)
-                    .logoutSuccessUrl("/login?logout=true")
-                    .permitAll()
+                .logout()
+                .deleteCookies("JSESSIONID")
+                .invalidateHttpSession(true)
+                .logoutSuccessUrl("/login?logout=true")
+                .permitAll()
                 .and()
-                    .exceptionHandling()
-                    .accessDeniedPage("/403");
+                .exceptionHandling()
+                .accessDeniedPage("/403");
     }
 
 
