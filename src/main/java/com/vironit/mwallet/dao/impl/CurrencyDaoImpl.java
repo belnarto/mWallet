@@ -24,7 +24,6 @@ import java.util.Set;
 public class CurrencyDaoImpl implements CurrencyDao {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Qualifier("getJavaValidator")
     @Autowired
     private Validator validator;
 

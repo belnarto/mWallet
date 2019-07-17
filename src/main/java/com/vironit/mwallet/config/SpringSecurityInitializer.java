@@ -5,5 +5,4 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 @SuppressWarnings("unused")
 public class SpringSecurityInitializer
         extends AbstractSecurityWebApplicationInitializer {
-    //do nothing
 }

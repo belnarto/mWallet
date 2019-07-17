@@ -13,13 +13,16 @@ import javax.servlet.ServletRegistration;
  * Filter for adding UTF-8 encoding defined in
  * SecurityConfig class in configure method.
  */
-public class AppInitializer
+public class ServletContainerConfig
         extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    // Load persistence and spring security configuration
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class[]{SecurityConfig.class, PersistenceConfig.class};
     }
 
+    // Load spring web configuration
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class[]{WebConfig.class};

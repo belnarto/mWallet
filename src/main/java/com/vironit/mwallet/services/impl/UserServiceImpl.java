@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     public void update(User user) {
         User currentUser = userDao.findById(user.getId());
+
         String oldPass = currentUser.getPassword();
         if (!user.getPassword().equals(oldPass) && !user.getPassword().isEmpty()) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

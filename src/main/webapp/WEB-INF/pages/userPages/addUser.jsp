@@ -63,7 +63,7 @@
                     <c:forEach var="fieldError" items="${fieldErrors}">
                         <c:if test="${fieldError.field.equalsIgnoreCase(\"name\")}">
                             <span style="color:red">${fieldError.defaultMessage}</span>
-                        </c:if>а
+                        </c:if>
                     </c:forEach>
 
                     <c:choose>

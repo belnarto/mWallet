@@ -34,7 +34,8 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @Qualifier("mvcValidator")
+
+    @Qualifier("springValidationService")
     @SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "unused"})
     @Autowired
     private Validator validator;

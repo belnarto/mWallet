@@ -1,9 +1,7 @@
-package com.vironit.mwallet.validators;
-
+package com.vironit.mwallet.services;
 
 import com.vironit.mwallet.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
@@ -12,9 +10,8 @@ import javax.validation.Validator;
 import java.util.Set;
 
 @Service
-public class UserValidator implements org.springframework.validation.Validator {
+public class SpringValidationService implements org.springframework.validation.Validator {
 
-    @Qualifier("getJavaValidator")
     @Autowired
     private Validator validator;
 
