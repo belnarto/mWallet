@@ -16,13 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.vironit.mwallet")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private UserService userService;
 

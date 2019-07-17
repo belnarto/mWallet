@@ -21,69 +21,46 @@ public class WalletDaoImpl implements WalletDao {
     private SessionFactory sessionFactory;
 
     public Wallet findById(int id) {
-
-
         Wallet wallet = sessionFactory.getCurrentSession().get(Wallet.class, id);
-
-
+        sessionFactory.getCurrentSession().evict(wallet); // detaching object from persistence session
         return wallet;
     }
 
     public void save(Wallet wallet) {
-
-
         sessionFactory.getCurrentSession().save(wallet);
-
-
     }
 
     public void update(Wallet wallet) {
-
-
         sessionFactory.getCurrentSession().update(wallet);
-
-
     }
 
     public void delete(Wallet wallet) {
-
-
         sessionFactory.getCurrentSession().delete(wallet);
-
-
     }
 
     @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<Wallet> findAllByUser(User user) {
-
         List<Wallet> wallets = (List<Wallet>) sessionFactory.getCurrentSession()
                 .createQuery("From Wallet where user_id= :id order by id")
                 .setParameter("id", user.getId())
                 .list();
-
         return wallets;
     }
 
     @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<Wallet> findAllByCurrency(Currency currency) {
-
         List<Wallet> wallets = (List<Wallet>) sessionFactory.getCurrentSession()
                 .createQuery("From Wallet where currency_id= :id order by id")
                 .setParameter("id", currency.getId())
                 .list();
-
         return wallets;
     }
 
     @SuppressWarnings("unchecked")
     public List<Wallet> findAll() {
-
-
         List<Wallet> wallets = (List<Wallet>) sessionFactory.getCurrentSession()
                 .createQuery("From Wallet order by id")
                 .list();
-
-
         return wallets;
     }
 }

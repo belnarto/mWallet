@@ -1,10 +1,9 @@
 package com.vironit.mwallet.config;
 
-import com.vironit.mwallet.converters.StringToCurrencyConverter;
-import com.vironit.mwallet.converters.StringToRoleConverter;
-import com.vironit.mwallet.converters.StringToUserConverter;
-import com.vironit.mwallet.converters.StringToWalletStatusConverter;
-import com.vironit.mwallet.services.*;
+import com.vironit.mwallet.services.converters.StringToCurrencyConverter;
+import com.vironit.mwallet.services.converters.StringToRoleConverter;
+import com.vironit.mwallet.services.converters.StringToUserConverter;
+import com.vironit.mwallet.services.converters.StringToWalletStatusConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,6 +18,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.vironit.mwallet")
@@ -41,19 +41,29 @@ public class WebConfig implements WebMvcConfigurer {
         return validatorFactory.usingContext().getValidator();
     }
 
-    // TODO check another solution for injection
-    @Autowired
-    RoleService roleService;
 
     @Autowired
-    CurrencyService currencyService;
+    StringToRoleConverter stringToRoleConverter;
 
+    @Autowired
+    StringToCurrencyConverter stringToCurrencyConverter;
+
+    @Autowired
+    StringToUserConverter stringToUserConverter;
+
+    @Autowired
+    StringToWalletStatusConverter stringToWalletStatusConverter;
+
+    /**
+     * By overriding this method we add converting strategies
+     * to convert String to target Class
+     */
     @Override
-    public void addFormatters (FormatterRegistry registry) {
-        registry.addConverter(new StringToRoleConverter(roleService));
-        registry.addConverter(new StringToCurrencyConverter(currencyService));
-        registry.addConverter(new StringToUserConverter());
-        registry.addConverter(new StringToWalletStatusConverter());
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(stringToRoleConverter);
+        registry.addConverter(stringToCurrencyConverter);
+        registry.addConverter(stringToUserConverter);
+        registry.addConverter(stringToWalletStatusConverter);
     }
 
 }

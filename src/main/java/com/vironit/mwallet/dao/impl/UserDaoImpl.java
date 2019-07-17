@@ -29,7 +29,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     public User findById(int id) {
-        return sessionFactory.getCurrentSession().get(User.class, id);
+        User user = sessionFactory.getCurrentSession().get(User.class, id);
+        sessionFactory.getCurrentSession().evict(user); // detaching object from persistence session
+        return user;
     }
 
     public List<User> findAll() {
@@ -44,6 +46,7 @@ public class UserDaoImpl implements UserDao {
                 .createQuery("From User where login = :userLogin ")
                 .setParameter("userLogin", login)
                 .uniqueResult();
+        sessionFactory.getCurrentSession().evict(user); // detaching object from persistence session
         return user;
     }
 }
