@@ -3,31 +3,29 @@ package com.vironit.mwallet.dao.impl;
 import com.vironit.mwallet.dao.CurrencyDao;
 import com.vironit.mwallet.models.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Repository
 public class CurrencyDaoImpl implements CurrencyDao {
 
     @Autowired
-    private Validator validator;
+    private DataSource dataSource;
 
     @Autowired
-    DataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
+
+    // Spring JDBC provides BeanPropertyRowMapper that implements RowMapper.
+    // We can directly use it in place of custom RowMapper.
+    // We use BeanPropertyRowMapper in the scenario when database table
+    // column names and our class fields name are of same.
+    private RowMapper<Currency> rowMapper = new BeanPropertyRowMapper<>(Currency.class);
 
     private static final String PREPARED_SQL_FIND_BY_ID = "SELECT * FROM currency WHERE id = ?;";
     private static final String PREPARED_SQL_FIND_BY_NAME = "SELECT * FROM currency WHERE name = ?;";
@@ -38,120 +36,33 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public void save(Currency currency) {
-
-        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(
-                    new HashSet<ConstraintViolation<?>>(violations));
-        }
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_SAVE)) {
-            preparedStatement.setString(1, currency.getName());
-            preparedStatement.setDouble(2, currency.getRate());
-            preparedStatement.execute();
-
-            // set assigned id to currency object from parameter
-            currency.setId(findByName(currency.getName()).getId());
-        } catch (SQLException ignored) {
-        }
+        jdbcTemplate.update(PREPARED_SQL_SAVE, currency.getName(), currency.getRate());
+        int id = findByName(currency.getName()).getId();
+        currency.setId(id);
     }
 
     @Override
     public void update(Currency currency) {
-
-        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(
-                    new HashSet<ConstraintViolation<?>>(violations));
-        }
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_UPDATE)) {
-            preparedStatement.setString(1, currency.getName());
-            preparedStatement.setDouble(2, currency.getRate());
-            preparedStatement.setInt(3, currency.getId());
-            preparedStatement.execute();
-
-            // set assigned id to currency object from parameter
-            currency.setId(findByName(currency.getName()).getId());
-        } catch (SQLException ignored) {
-        }
+        jdbcTemplate.update(PREPARED_SQL_UPDATE, currency.getName(), currency.getRate(), currency.getId());
     }
 
     @Override
     public void delete(Currency currency) {
-
-        Set<ConstraintViolation<Object>> violations = validator.validate(currency);
-        if (!violations.isEmpty()) {
-            throw new ConstraintViolationException(
-                    new HashSet<ConstraintViolation<?>>(violations));
-        }
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_DELETE)) {
-            preparedStatement.setInt(1, currency.getId());
-            preparedStatement.execute();
-        } catch (SQLException ignored) {
-        }
+        jdbcTemplate.update(PREPARED_SQL_DELETE, currency.getId());
     }
 
     @Override
     public List<Currency> findAll() {
-        List<Currency> result = new ArrayList<>();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_ALL)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Currency currency = new Currency();
-                currency.setId(Integer.valueOf(resultSet.getString("id")));
-                currency.setName(resultSet.getString("name"));
-                currency.setRate(Double.valueOf(resultSet.getString("rate")));
-                result.add(currency);
-            }
-        } catch (SQLException ignored) {
-        }
-        return result;
+        return this.jdbcTemplate.query(PREPARED_SQL_FIND_ALL, rowMapper);
     }
 
     @Override
     public Currency findById(int id) {
-        Currency currency = null;
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_ID)) {
-
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                currency = new Currency();
-                currency.setId(id);
-                currency.setName(resultSet.getString("name"));
-                currency.setRate(Double.valueOf(resultSet.getString("rate")));
-            }
-
-        } catch (SQLException ignored) {
-        }
-        return currency;
+        return jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_ID, rowMapper, id);
     }
 
     @Override
     public Currency findByName(String name) {
-        Currency currency = null;
-
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_NAME)) {
-            preparedStatement.setString(1, name);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                currency = new Currency();
-                currency.setName(name);
-                currency.setId(Integer.valueOf(resultSet.getString("id")));
-                currency.setRate(Double.valueOf(resultSet.getString("rate")));
-            }
-        } catch (SQLException ignored) {
-        }
-        return currency;
+        return jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_NAME, rowMapper, name);
     }
 }

@@ -10,10 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.core.env.Environment;
 
@@ -65,8 +68,8 @@ public class PersistenceConfig {
         return factoryBean;
     }
 
-    @Bean
-    public HibernateTransactionManager getTransactionManager() {
+    @Bean(name = "hibernateTransactionManager")
+    public HibernateTransactionManager getHibernateTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(getSessionFactory().getObject());
         return transactionManager;
@@ -76,9 +79,24 @@ public class PersistenceConfig {
      * Repository for enabling Spring Security Remember Me service.
      */
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
+    public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(getDataSource());
         return tokenRepository;
+    }
+
+    /**
+     * JdbcTemplate is the central class to handle JDBC operations.
+     * This class executes SQL queries or updates.
+     * JdbcTemplate simplifies use of JDBC and avoids common errors.
+     */
+    @Bean
+    public JdbcTemplate jdbcTemplate() {
+        return new JdbcTemplate(getDataSource());
+    }
+
+    @Bean(name = "jdbcTransactionManager")
+    public PlatformTransactionManager getJdbcTransactionManager() {
+        return new DataSourceTransactionManager(getDataSource());
     }
 }

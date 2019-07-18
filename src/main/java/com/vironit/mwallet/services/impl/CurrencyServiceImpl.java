@@ -5,10 +5,12 @@ import com.vironit.mwallet.models.Currency;
 import com.vironit.mwallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(value = "jdbcTransactionManager")
 public class CurrencyServiceImpl implements CurrencyService {
 
     @Autowired

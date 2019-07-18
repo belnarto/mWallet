@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
+@Transactional(value = "hibernateTransactionManager")
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Autowired

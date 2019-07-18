@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(value = "hibernateTransactionManager")
 public class RoleServiceImpl implements RoleService {
 
     @Autowired

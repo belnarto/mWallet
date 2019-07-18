@@ -17,7 +17,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(value = "hibernateTransactionManager")
 public class WalletServiceImpl implements WalletService {
 
     @Autowired
