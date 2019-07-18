@@ -1,6 +1,5 @@
 package com.vironit.mwallet.config;
 
-import com.vironit.mwallet.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import com.vironit.mwallet.services.UserService;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,12 +22,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.vironit.mwallet")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private WalletService walletService;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -92,7 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private void configureSessionManagement(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/login")
                 .sessionFixation().migrateSession() // what happens to an existing session when the user tries to authenticate again
                 .maximumSessions(1)
                 .expiredUrl("/login");
@@ -190,7 +181,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository) // add repository for tokens
                 .rememberMeParameter("remember-me") // cookie name
                 .key("uniqueAndSecretKey") // private value secret for the entire app and it will be used when generating the contents of the token
-                .tokenValiditySeconds(2 * 7 * 24 * 60 * 60); // cookie will be valid for 2 weeks
+                .tokenValiditySeconds(24 * 60 * 60); // cookie will be valid for 1 day
     }
 
 }

@@ -1,11 +1,13 @@
 package com.vironit.mwallet.config;
 
+import com.vironit.mwallet.config.exception.PersistenceConfigurationException;
 import com.vironit.mwallet.models.Currency;
 import com.vironit.mwallet.models.Role;
 import com.vironit.mwallet.models.User;
 import com.vironit.mwallet.models.Wallet;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,69 +22,75 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.core.env.Environment;
 
+import java.util.Objects;
 import java.util.Properties;
 import javax.sql.DataSource;
 
 import static org.hibernate.cfg.AvailableSettings.*;
 
-@SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "ConstantConditions"})
+@Log4j2
 @Configuration
-@PropertySource("classpath:db_hibernate.properties")
+@PropertySource("classpath:persistence.properties")
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.vironit.mwallet")
 public class PersistenceConfig {
 
-    @Autowired
     private Environment env;
 
-    @Bean
-    public DataSource getDataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName(env.getProperty("postgresql.driver"));
-        dataSource.setUrl(env.getProperty("postgresql.jdbcUrl"));
-        dataSource.setUsername(env.getProperty("postgresql.username"));
-        dataSource.setPassword(env.getProperty("postgresql.password"));
-        return dataSource;
+    public PersistenceConfig(Environment env) {
+        this.env = env;
     }
 
     @Bean
-    public LocalSessionFactoryBean getSessionFactory() {
-        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setDataSource(getDataSource());
+    public DataSource getDataSource() throws PersistenceConfigurationException {
+        HikariConfig config = new HikariConfig();
+        try {
+            config.setDriverClassName(env.getProperty("postgresql.driver"));
+            config.setJdbcUrl(env.getProperty("postgresql.jdbcUrl"));
+            config.setUsername(env.getProperty("postgresql.username"));
+            config.setPassword(env.getProperty("postgresql.password"));
+            config.setMaximumPoolSize(
+                    Integer.parseInt(Objects.requireNonNull(env.getProperty("postgresql.maximumPoolSize"))));
+            config.addDataSourceProperty("cachePrepStmts",
+                    env.getProperty("postgresql.cachePrepStmts"));
+            config.addDataSourceProperty("prepStmtCacheSize",
+                    env.getProperty("postgresql.prepStmtCacheSize"));
+            config.addDataSourceProperty("prepStmtCacheSqlLimit",
+                    env.getProperty("postgresql.prepStmtCacheSqlLimit"));
+        } catch (Exception e) {
+            log.error("DataSource configuration error.", e);
+            throw new PersistenceConfigurationException("DataSource configuration error.", e);
+        }
+        return new HikariDataSource(config);
+    }
 
-        Properties props = new Properties();
-        // Setting Hibernate properties
-        props.put(SHOW_SQL, env.getProperty("hibernate.show_sql"));
-        props.put(HBM2DDL_AUTO, env.getProperty("hibernate.hbm2ddl.auto"));
-
-        // Setting C3P0 properties
-        props.put(C3P0_MIN_SIZE, env.getProperty("hibernate.c3p0.min_size"));
-        props.put(C3P0_MAX_SIZE, env.getProperty("hibernate.c3p0.max_size"));
-        props.put(C3P0_ACQUIRE_INCREMENT, env.getProperty("hibernate.c3p0.acquire_increment"));
-        props.put(C3P0_TIMEOUT, env.getProperty("hibernate.c3p0.timeout"));
-        props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
-        props.put(C3P0_IDLE_TEST_PERIOD, env.getProperty("hibernate.c3p0.idle_test_period"));
-
-        factoryBean.setHibernateProperties(props);
-        factoryBean.setAnnotatedClasses(User.class, Wallet.class, Role.class, Currency.class);
-        return factoryBean;
+    @Bean
+    public LocalSessionFactoryBean getSessionFactory() throws PersistenceConfigurationException {
+        try {
+            LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
+            factoryBean.setDataSource(getDataSource());
+            Properties props = new Properties();
+            props.put(SHOW_SQL, Objects.requireNonNull(env.getProperty("hibernate.show_sql")));
+            props.put(HBM2DDL_AUTO, Objects.requireNonNull(env.getProperty("hibernate.hbm2ddl.auto")));
+            factoryBean.setHibernateProperties(props);
+            factoryBean.setAnnotatedClasses(User.class, Wallet.class, Role.class, Currency.class);
+            return factoryBean;
+        } catch (Exception e) {
+            log.error("Hibernate session factory error.", e);
+            throw new PersistenceConfigurationException("Hibernate session factory error.", e);
+        }
     }
 
     @Bean(name = "hibernateTransactionManager")
-    public HibernateTransactionManager getHibernateTransactionManager() {
+    public HibernateTransactionManager getHibernateTransactionManager() throws PersistenceConfigurationException {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(getSessionFactory().getObject());
+        try {
+            transactionManager.setSessionFactory(getSessionFactory().getObject());
+        } catch (Exception e) {
+            log.error("Hibernate Transaction Manager error.", e);
+            throw new PersistenceConfigurationException("Hibernate Transaction Manager error.", e);
+        }
         return transactionManager;
-    }
-
-    /**
-     * Repository for enabling Spring Security Remember Me service.
-     */
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-        tokenRepository.setDataSource(getDataSource());
-        return tokenRepository;
     }
 
     /**
@@ -91,12 +99,38 @@ public class PersistenceConfig {
      * JdbcTemplate simplifies use of JDBC and avoids common errors.
      */
     @Bean
-    public JdbcTemplate jdbcTemplate() {
-        return new JdbcTemplate(getDataSource());
+    public JdbcTemplate jdbcTemplate() throws PersistenceConfigurationException {
+        try {
+            return new JdbcTemplate(getDataSource());
+        } catch (Exception e) {
+            log.error("Jdbc template error.", e);
+            throw new PersistenceConfigurationException("Jdbc template error.", e);
+        }
     }
 
     @Bean(name = "jdbcTransactionManager")
-    public PlatformTransactionManager getJdbcTransactionManager() {
-        return new DataSourceTransactionManager(getDataSource());
+    public PlatformTransactionManager getJdbcTransactionManager() throws PersistenceConfigurationException {
+        try {
+            return new DataSourceTransactionManager(getDataSource());
+        } catch (Exception e) {
+            log.error("Jdbc Transaction Manager error.", e);
+            throw new PersistenceConfigurationException("Jdbc Transaction Manager error.", e);
+        }
     }
+
+    /**
+     * Repository for enabling Spring Security Remember Me service.
+     */
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() throws PersistenceConfigurationException {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        try {
+            tokenRepository.setDataSource(getDataSource());
+        } catch (Exception e) {
+            log.error("Persistent Token Repository error.", e);
+            throw new PersistenceConfigurationException("Persistent Token Repository error.", e);
+        }
+        return tokenRepository;
+    }
+
 }
