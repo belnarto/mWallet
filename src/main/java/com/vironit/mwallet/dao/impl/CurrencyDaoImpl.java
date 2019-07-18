@@ -1,13 +1,12 @@
 package com.vironit.mwallet.dao.impl;
 
-import com.vironit.mwallet.config.DataSource;
 import com.vironit.mwallet.dao.CurrencyDao;
 import com.vironit.mwallet.models.Currency;
-import org.postgresql.jdbc3.Jdbc3PoolingDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
@@ -20,14 +19,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Repository
 public class CurrencyDaoImpl implements CurrencyDao {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private Validator validator;
 
-    private static final Jdbc3PoolingDataSource SOURCE = DataSource.getInstance().getDataSource();
+    @Autowired
+    DataSource dataSource;
+
     private static final String PREPARED_SQL_FIND_BY_ID = "SELECT * FROM currency WHERE id = ?;";
     private static final String PREPARED_SQL_FIND_BY_NAME = "SELECT * FROM currency WHERE name = ?;";
     private static final String PREPARED_SQL_FIND_ALL = "SELECT * FROM currency;";
@@ -44,7 +45,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
                     new HashSet<ConstraintViolation<?>>(violations));
         }
 
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_SAVE)) {
             preparedStatement.setString(1, currency.getName());
             preparedStatement.setDouble(2, currency.getRate());
@@ -64,7 +65,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
             throw new ConstraintViolationException(
                     new HashSet<ConstraintViolation<?>>(violations));
         }
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_UPDATE)) {
             preparedStatement.setString(1, currency.getName());
             preparedStatement.setDouble(2, currency.getRate());
@@ -86,7 +87,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
                     new HashSet<ConstraintViolation<?>>(violations));
         }
 
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_DELETE)) {
             preparedStatement.setInt(1, currency.getId());
             preparedStatement.execute();
@@ -97,7 +98,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
     @Override
     public List<Currency> findAll() {
         List<Currency> result = new ArrayList<>();
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_ALL)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -116,7 +117,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
     @Override
     public Currency findById(int id) {
         Currency currency = null;
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_ID)) {
 
             preparedStatement.setInt(1, id);
@@ -138,7 +139,7 @@ public class CurrencyDaoImpl implements CurrencyDao {
     public Currency findByName(String name) {
         Currency currency = null;
 
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(PREPARED_SQL_FIND_BY_NAME)) {
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
