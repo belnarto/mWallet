@@ -1,4 +1,4 @@
-package com.vironit.mwallet.models;
+package com.vironit.mwallet.models.entity;
 
 import lombok.*;
 
@@ -12,15 +12,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Builder.Default
     @PositiveOrZero(message = "Can't be negative")
     private int id = 0;
 
@@ -46,7 +44,6 @@ public class User {
     private Role role;
 
     @Column(name = "updatedAt")
-    @Builder.Default
     @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
     @NotNull(message = "Can't be null")
@@ -54,7 +51,6 @@ public class User {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Singular
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Wallet> wallets;

@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services.converters;
 
-import com.vironit.mwallet.models.Role;
+import com.vironit.mwallet.models.entity.Role;
 import com.vironit.mwallet.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

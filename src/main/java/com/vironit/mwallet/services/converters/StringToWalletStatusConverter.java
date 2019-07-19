@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services.converters;
 
-import com.vironit.mwallet.models.WalletStatusEnum;
+import com.vironit.mwallet.models.attributes.WalletStatusEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

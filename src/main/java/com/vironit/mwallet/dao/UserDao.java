@@ -1,6 +1,6 @@
 package com.vironit.mwallet.dao;
 
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository

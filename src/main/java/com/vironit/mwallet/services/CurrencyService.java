@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.Currency;
+import com.vironit.mwallet.models.entity.Currency;
 
 import java.util.List;
 

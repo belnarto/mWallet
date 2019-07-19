@@ -1,7 +1,7 @@
 package com.vironit.mwallet.dao.impl;
 
 import com.vironit.mwallet.dao.CurrencyDao;
-import com.vironit.mwallet.models.Currency;
+import com.vironit.mwallet.models.entity.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

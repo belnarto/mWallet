@@ -1,7 +1,7 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.UserDao;
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.RoleDao;
-import com.vironit.mwallet.models.Role;
+import com.vironit.mwallet.models.entity.Role;
 import com.vironit.mwallet.services.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

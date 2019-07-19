@@ -1,5 +1,6 @@
-package com.vironit.mwallet.models;
+package com.vironit.mwallet.models.entity;
 
+import com.vironit.mwallet.models.attributes.WalletStatusEnum;
 import lombok.*;
 
 import javax.persistence.*;

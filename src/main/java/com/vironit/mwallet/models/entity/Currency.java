@@ -1,4 +1,4 @@
-package com.vironit.mwallet.models;
+package com.vironit.mwallet.models.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

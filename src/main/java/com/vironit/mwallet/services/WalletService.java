@@ -1,7 +1,7 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.User;
-import com.vironit.mwallet.models.Wallet;
+import com.vironit.mwallet.models.entity.User;
+import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.exception.WalletServiceException;
 
 import java.util.List;

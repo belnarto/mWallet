@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.Role;
+import com.vironit.mwallet.models.entity.Role;
 
 import java.util.List;
 

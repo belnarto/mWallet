@@ -1,7 +1,7 @@
 package com.vironit.mwallet.controllers;
 
-import com.vironit.mwallet.models.Role;
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.Role;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;

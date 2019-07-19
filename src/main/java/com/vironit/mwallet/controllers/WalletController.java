@@ -1,15 +1,11 @@
 package com.vironit.mwallet.controllers;
 
-import com.vironit.mwallet.models.Currency;
-import com.vironit.mwallet.models.User;
-import com.vironit.mwallet.models.Wallet;
-import com.vironit.mwallet.models.WalletStatusEnum;
+import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.models.attributes.WalletStatusEnum;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
 import com.vironit.mwallet.services.exception.WalletServiceException;
-import com.vironit.mwallet.services.exception.WalletStatusException;
-import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

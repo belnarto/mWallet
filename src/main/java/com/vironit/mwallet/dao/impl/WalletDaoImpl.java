@@ -2,14 +2,11 @@ package com.vironit.mwallet.dao.impl;
 
 
 import com.vironit.mwallet.dao.WalletDao;
-import com.vironit.mwallet.models.Currency;
-import com.vironit.mwallet.models.User;
-import com.vironit.mwallet.models.Wallet;
-import org.hibernate.Session;
+import com.vironit.mwallet.models.entity.Currency;
+import com.vironit.mwallet.models.entity.User;
+import com.vironit.mwallet.models.entity.Wallet;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

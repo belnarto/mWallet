@@ -1,6 +1,6 @@
 package com.vironit.mwallet.dao;
 
-import com.vironit.mwallet.models.Currency;
+import com.vironit.mwallet.models.entity.Currency;
 
 public interface CurrencyDao extends CrudDao<Currency> {
 

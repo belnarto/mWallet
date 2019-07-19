@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 
 import java.util.List;

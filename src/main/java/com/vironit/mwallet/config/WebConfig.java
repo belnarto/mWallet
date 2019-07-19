@@ -4,6 +4,8 @@ import com.vironit.mwallet.services.converters.StringToCurrencyConverter;
 import com.vironit.mwallet.services.converters.StringToRoleConverter;
 import com.vironit.mwallet.services.converters.StringToUserConverter;
 import com.vironit.mwallet.services.converters.StringToWalletStatusConverter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,6 +20,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
+
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Configuration
 @EnableWebMvc
@@ -30,6 +34,20 @@ public class WebConfig implements WebMvcConfigurer {
         viewResolver.setPrefix("/WEB-INF/pages/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+
+    /**
+     * https://habr.com/ru/post/438808/
+     */
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
+                .setFieldAccessLevel(PRIVATE);
+        return mapper;
     }
 
     // getting javax.validation validator

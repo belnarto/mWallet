@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services.converters;
 
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

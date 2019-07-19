@@ -1,6 +1,7 @@
-package com.vironit.mwallet.models;
+package com.vironit.mwallet.models.entity;
 
-
+import com.vironit.mwallet.models.attributes.RoleEnum;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,13 +11,14 @@ import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "roles")
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Role {
 
-    public Role(RoleEnum roleEnum) {
-        setRoleEnum(roleEnum);
-    }
+//    public Role(RoleEnum roleEnum) {
+//        setRoleEnum(roleEnum);
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

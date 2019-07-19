@@ -1,6 +1,6 @@
 package com.vironit.mwallet.servlets;
 
-import com.vironit.mwallet.models.Currency;
+import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

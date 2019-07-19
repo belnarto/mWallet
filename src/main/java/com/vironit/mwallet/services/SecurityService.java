@@ -1,6 +1,6 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.User;
+import com.vironit.mwallet.models.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
