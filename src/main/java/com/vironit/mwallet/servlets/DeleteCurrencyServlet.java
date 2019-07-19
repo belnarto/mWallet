@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-//import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.WebServlet;
 
 @Component
-//@WebServlet("/currencies/deleteCurrency")
+@WebServlet("/currencies/deleteCurrency")
 public class DeleteCurrencyServlet extends HttpServlet {
 
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
