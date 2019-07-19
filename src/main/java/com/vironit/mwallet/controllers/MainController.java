@@ -1,11 +1,7 @@
 package com.vironit.mwallet.controllers;
 
-import com.vironit.mwallet.models.Role;
-import com.vironit.mwallet.models.RoleEnum;
-import com.vironit.mwallet.models.User;
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,16 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Controller
 public class MainController {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+
     @Autowired
     private UserService userService;
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private RoleService roleService;
 

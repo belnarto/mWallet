@@ -22,21 +22,21 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Controller
 @Log4j2
 public class UserController {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
+
     @Autowired
     private UserService userService;
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private RoleService roleService;
 
 
     @Qualifier("springValidationService")
-    @SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "unused"})
+    @SuppressWarnings("unused")
     @Autowired
     private Validator validator;
 
@@ -51,7 +51,7 @@ public class UserController {
     public ModelAndView myUser(ModelAndView modelAndView,
                                @PathVariable("userId") int userId) {
         modelAndView.setViewName("userPages/users");
-        List<User> myUser = new ArrayList<>();
+        List<User> myUser = new ArrayList<>(); // because in JSP array is expected
         myUser.add(userService.findById(userId));
         modelAndView.addObject("users", myUser);
         return modelAndView;
