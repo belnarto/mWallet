@@ -20,7 +20,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PositiveOrZero(message = "Can't be negative")
-    private int id = 0;
+    private int id;
 
     @Column(name = "name")
     @NotNull(message = "Can't be null")

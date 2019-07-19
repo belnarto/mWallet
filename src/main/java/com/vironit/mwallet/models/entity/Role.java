@@ -16,10 +16,6 @@ import javax.validation.constraints.PositiveOrZero;
 @Data
 public class Role {
 
-//    public Role(RoleEnum roleEnum) {
-//        setRoleEnum(roleEnum);
-//    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @PositiveOrZero(message = "Can't be negative")

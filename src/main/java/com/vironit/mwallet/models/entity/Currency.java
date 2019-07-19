@@ -1,5 +1,6 @@
 package com.vironit.mwallet.models.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "currency")
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Currency {
@@ -28,11 +30,6 @@ public class Currency {
     @Column(name = "rate")
     @Positive(message = "Can't be negative")
     private double rate;
-
-    public Currency(String name, double rate) {
-        setName(name);
-        setRate(rate);
-    }
 
     @Override
     public String toString() {
