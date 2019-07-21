@@ -1,5 +1,6 @@
 package com.vironit.mwallet.servlets;
 
+import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,8 @@ public class EditCurrencyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String currencyId = req.getParameter("currencyId");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/editCurrency.jsp");
-        Currency currency = currencyService.findById(Integer.valueOf(currencyId));
-        req.setAttribute("currency", currency);
+        CurrencyDto currencyDto = currencyService.findById(Integer.valueOf(currencyId));
+        req.setAttribute("currency", currencyDto);
         requestDispatcher.forward(req, resp);
     }
 
@@ -49,10 +50,10 @@ public class EditCurrencyServlet extends HttpServlet {
         String currencyId = req.getParameter("currencyId");
         String newName = req.getParameter("name");
         String newRate = req.getParameter("rate");
-        Currency currency = currencyService.findById(Integer.valueOf(currencyId));
-        currency.setName(newName);
-        currency.setRate(Double.valueOf(newRate));
-        currencyService.update(currency);
+        CurrencyDto currencyDto = currencyService.findById(Integer.valueOf(currencyId));
+        currencyDto.setName(newName);
+        currencyDto.setRate(Double.valueOf(newRate));
+        currencyService.update(currencyDto);
         req.setAttribute("updated", "true");
         doGet(req, resp);
     }

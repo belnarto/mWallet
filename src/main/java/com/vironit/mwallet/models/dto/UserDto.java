@@ -1,10 +1,12 @@
 package com.vironit.mwallet.models.dto;
 
-import com.vironit.mwallet.models.entity.Role;
-import com.vironit.mwallet.models.entity.Wallet;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -17,9 +19,18 @@ public class UserDto {
     private int id;
     private String name;
     private String login;
+
+    @ToString.Exclude
     private String password;
-    private Role role;
+
+    private RoleDto role;
+
+    @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt;
-    private Set<Wallet> wallets;
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<WalletDto> wallets;
 
 }

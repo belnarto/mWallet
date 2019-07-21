@@ -1,32 +1,32 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.models.dto.UserDto;
+import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.services.exception.WalletServiceException;
 
 import java.util.List;
 
 public interface WalletService {
 
-    Wallet findById(int id);
+    WalletDto findById(int id);
 
-    List<Wallet> findAllByUser(User user);
+    List<WalletDto> findAllByUser(UserDto userDto);
 
-    List<Wallet> findAll();
+    List<WalletDto> findAll();
 
-    void save(Wallet wallet);
+    void save(WalletDto walletDto) throws WalletServiceException;
 
-    void delete(Wallet wallet);
+    void delete(WalletDto walletDto);
 
-    void update(Wallet wallet);
+    void update(WalletDto walletDto);
 
-    void addBalance(Wallet wallet, double value)
+    void addBalance(WalletDto walletDto, double value)
      throws WalletServiceException;
 
-    void reduceBalance(Wallet wallet, double value)
+    void reduceBalance(WalletDto walletDto, double value)
      throws WalletServiceException;
 
-    void transferMoney(Wallet fromWallet, Wallet toWallet, double value)
+    void transferMoney(WalletDto fromWalletDto, WalletDto toWalletDto, double value)
             throws WalletServiceException;
 
 }

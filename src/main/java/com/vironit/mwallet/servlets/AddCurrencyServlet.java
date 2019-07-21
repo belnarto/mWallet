@@ -1,6 +1,6 @@
 package com.vironit.mwallet.servlets;
 
-import com.vironit.mwallet.models.entity.Currency;
+import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class AddCurrencyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/addCurrency.jsp");
-        List<Currency> currencies = currencyService.findAll();
+        List<CurrencyDto> currencies = currencyService.findAll();
         req.setAttribute("currencies", currencies);
         requestDispatcher.forward(req, resp);
     }
@@ -47,9 +47,9 @@ public class AddCurrencyServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String rate = req.getParameter("rate");
-        Currency currency = new Currency(0, name, Double.valueOf(rate));
-        currencyService.save(currency);
-        req.setAttribute("currency", currency);
+        CurrencyDto currencyDto = new CurrencyDto(0, name, Double.valueOf(rate));
+        currencyService.save(currencyDto);
+        req.setAttribute("currency", currencyDto);
         doGet(req, resp);
     }
 

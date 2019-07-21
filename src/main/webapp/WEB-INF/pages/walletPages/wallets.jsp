@@ -1,5 +1,3 @@
-<%@ page import="com.vironit.mwallet.models.entity.Wallet" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
@@ -57,7 +55,6 @@
                 <h2>Wallets:</h2>
             </div>
 
-            <jsp:useBean id="wallets" scope="request" type="java.util.List"/>
             <c:choose>
                 <c:when test="${not empty wallets}">
                     <table style="width:1200px" class="w3-table w3-centered">

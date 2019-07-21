@@ -1,13 +1,18 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.WalletDao;
+import com.vironit.mwallet.models.dto.CurrencyDto;
+import com.vironit.mwallet.models.dto.UserDto;
+import com.vironit.mwallet.models.dto.WalletDto;
+import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.WalletService;
 import com.vironit.mwallet.services.exception.WalletServiceException;
 import com.vironit.mwallet.services.exception.WalletStatusException;
-import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.models.attributes.WalletStatusEnum;
+import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.services.mapper.WalletMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 @Transactional(value = "hibernateTransactionManager")
 public class WalletServiceImpl implements WalletService {
@@ -23,112 +30,119 @@ public class WalletServiceImpl implements WalletService {
     @Autowired
     private WalletDao walletDao;
 
-    public Wallet findById(int id) {
-        return walletDao.findById(id);
+    @Autowired
+    private WalletMapper walletMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private CurrencyService currencyService;
+
+    public WalletDto findById(int id) {
+        Wallet wallet = walletDao.findById(id);
+        WalletDto walletDto = walletMapper.toDto(wallet);
+        return walletDto;
     }
 
-    public List<Wallet> findAllByUser(User user) {
-        return walletDao.findAllByUser(user);
+    public List<WalletDto> findAllByUser(UserDto userDto) {
+        User user = userMapper.toEntity(userDto);
+        return walletDao.findAllByUser(user).stream()
+                .map(wallet -> walletMapper.toDto(wallet))
+                .collect(Collectors.toList());
     }
 
-    public List<Wallet> findAll() {
-        return walletDao.findAll();
+    public List<WalletDto> findAll() {
+        return walletDao.findAll().stream()
+                .map(wallet -> walletMapper.toDto(wallet))
+                .collect(Collectors.toList());
     }
 
-    public void save(Wallet wallet) {
-        walletDao.save(wallet);
-    }
-
-    public void delete(Wallet wallet) {
-        walletDao.delete(wallet);
-    }
-
-    public void update(Wallet wallet) {
-        Currency currencyOld = walletDao.findById(wallet.getId()).getCurrency();
-        if (!currencyOld.equals(wallet.getCurrency())) {
-            recalculateBalanceAfterCurrencyChange(wallet, currencyOld);
+    public void save(WalletDto wallet) throws WalletServiceException {
+        if (wallet.getBalance() != 0) {
+            throw new WalletServiceException("balance not 0.");
         }
-        walletDao.update(wallet);
+        walletDao.save(walletMapper.toEntity(wallet));
     }
 
-    public void addBalance(Wallet wallet, double value)
+    public void delete(WalletDto walletDto) {
+        walletDao.delete(walletMapper.toEntity(walletDto));
+    }
+
+    public void update(WalletDto walletDto) {
+        CurrencyDto currencyDtoOld = findById(walletDto.getId()).getCurrency();
+        if (!currencyDtoOld.equals(walletDto.getCurrency())) {
+            recalculateBalanceAfterCurrencyChange(walletDto, currencyDtoOld);
+        }
+        walletDao.update(walletMapper.toEntity(walletDto));
+    }
+
+    public void addBalance(WalletDto walletDto, double value)
             throws WalletServiceException {
-        if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (walletDto.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
         if (value > 0) {
-            wallet.setBalance(wallet.getBalance() + value);
-            walletDao.update(wallet);
+            walletDto.setBalance(walletDto.getBalance() + value);
+            walletDao.update(walletMapper.toEntity(walletDto));
         } else {
             throw new WalletServiceException("Value <= 0");
         }
     }
 
-    public void reduceBalance(Wallet wallet, double value)
+    public void reduceBalance(WalletDto walletDto, double value)
             throws WalletServiceException {
-        if (wallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
+        if (walletDto.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
             throw new WalletStatusException("Operation is not permitted because wallet is blocked");
         }
         if (value <= 0) {
             throw new WalletServiceException("Value <= 0");
         }
-        if (value < wallet.getBalance()) {
-            wallet.setBalance(wallet.getBalance() - value);
-            walletDao.update(wallet);
+        if (value < walletDto.getBalance()) {
+            walletDto.setBalance(walletDto.getBalance() - value);
+            walletDao.update(walletMapper.toEntity(walletDto));
         } else {
             throw new WalletServiceException("Wallet has not enough balance");
         }
     }
 
-    public void transferMoney(Wallet fromWallet, Wallet toWallet, double value)
+    public void transferMoney(WalletDto fromWalletDto, WalletDto toWalletDto, double value)
             throws WalletServiceException {
-        if (fromWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
-            throw new WalletStatusException("Operation is not permitted because wallet " + fromWallet.getId() + " is blocked");
+        if (fromWalletDto.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet " + fromWalletDto.getId() + " is blocked");
         }
-        if (toWallet.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
-            throw new WalletStatusException("Operation is not permitted because wallet " + toWallet.getId()  + " is blocked");
+        if (toWalletDto.getWalletStatus().equals(WalletStatusEnum.BLOCKED)) {
+            throw new WalletStatusException("Operation is not permitted because wallet " + toWalletDto.getId() + " is blocked");
         }
         if (value <= 0) {
             throw new WalletServiceException("Value <= 0");
         }
         // TODO refactor
-        if (value < fromWallet.getBalance()) {
-            fromWallet.setBalance(fromWallet.getBalance() - value);
-            walletDao.update(fromWallet);
+        if (value < fromWalletDto.getBalance()) {
+            fromWalletDto.setBalance(fromWalletDto.getBalance() - value);
+            walletDao.update(walletMapper.toEntity(fromWalletDto));
 
-            double targetValue = fromWallet.getCurrency().getRate() * value; // to BYN
-            targetValue = targetValue / toWallet.getCurrency().getRate(); // to target Currency
+            double targetValue = fromWalletDto.getCurrency().getRate() * value; // to BYN
+            targetValue = targetValue / toWalletDto.getCurrency().getRate(); // to target Currency
 
             targetValue = new BigDecimal(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
-            toWallet.setBalance(toWallet.getBalance() + targetValue);
+            toWalletDto.setBalance(toWalletDto.getBalance() + targetValue);
 
-            walletDao.update(toWallet);
+            walletDao.update(walletMapper.toEntity(toWalletDto));
         } else {
             throw new WalletServiceException("Wallet has not enough balance");
         }
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public void blockWallet(Wallet wallet) {
-        wallet.setWalletStatus(WalletStatusEnum.BLOCKED);
-        walletDao.update(wallet);
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public void activateWallet(Wallet wallet) {
-        wallet.setWalletStatus(WalletStatusEnum.ACTIVE);
-        walletDao.update(wallet);
-    }
-
     //TODO refactor
     private void recalculateBalanceAfterCurrencyChange(
-            Wallet wallet, Currency currencyOld) {
-        double balance = wallet.getBalance();
-        double targetValue = currencyOld.getRate() * balance; // to BYN
-        targetValue = targetValue / wallet.getCurrency().getRate(); // to new Currency
+            WalletDto walletDto, CurrencyDto currencyDtoOld) {
+        double balance = walletDto.getBalance();
+        double targetValue = currencyDtoOld.getRate() * balance; // to BYN
+        targetValue = targetValue / walletDto.getCurrency().getRate(); // to new Currency
         targetValue = new BigDecimal(targetValue)
                 .setScale(3, RoundingMode.DOWN)
                 .doubleValue();
-        wallet.setBalance(targetValue);
+        walletDto.setBalance(targetValue);
     }
 }

@@ -2,7 +2,7 @@ package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.services.converters.StringToCurrencyConverter;
 import com.vironit.mwallet.services.converters.StringToRoleConverter;
-import com.vironit.mwallet.services.converters.StringToUserConverter;
+import com.vironit.mwallet.services.converters.UserIdToUserConverter;
 import com.vironit.mwallet.services.converters.StringToWalletStatusConverter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -67,7 +67,7 @@ public class WebConfig implements WebMvcConfigurer {
     StringToCurrencyConverter stringToCurrencyConverter;
 
     @Autowired
-    StringToUserConverter stringToUserConverter;
+    UserIdToUserConverter userIdToUserConverter;
 
     @Autowired
     StringToWalletStatusConverter stringToWalletStatusConverter;
@@ -80,7 +80,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(stringToRoleConverter);
         registry.addConverter(stringToCurrencyConverter);
-        registry.addConverter(stringToUserConverter);
+        registry.addConverter(userIdToUserConverter);
         registry.addConverter(stringToWalletStatusConverter);
     }
 

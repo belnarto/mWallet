@@ -1,6 +1,6 @@
 package com.vironit.mwallet.servlets;
 
-import com.vironit.mwallet.models.entity.Currency;
+import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.services.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,7 +38,7 @@ public class CurrenciesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/currencies.jsp");
-        List<Currency> currencies = currencyService.findAll();
+        List<CurrencyDto> currencies = currencyService.findAll();
         req.setAttribute("currencies", currencies);
         req.setAttribute("myTest", "myTest111");
         requestDispatcher.forward(req, resp);

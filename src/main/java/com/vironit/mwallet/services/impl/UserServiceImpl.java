@@ -1,9 +1,11 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.UserDao;
+import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
+import com.vironit.mwallet.services.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 @Transactional(value = "hibernateTransactionManager")
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -28,49 +32,62 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Autowired
     private UserDao userDao;
 
-    public User findById(int id) {
-        return userDao.findById(id);
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public UserDto findById(int id) {
+        User user = userDao.findById(id);
+        return userMapper.toDto(user);
     }
 
-    public User findByLogin(String login) {
-        return userDao.findByLogin(login);
+    @Override
+    public UserDto findByLogin(String login) {
+        User user = userDao.findByLogin(login);
+        return userMapper.toDto(user);
     }
 
-    public void save(User user) throws LoginAlreadyDefinedException {
-        if (findByLogin(user.getLogin()) != null) {
+    @Override
+    public void save(UserDto userDto) throws LoginAlreadyDefinedException {
+        if (findByLogin(userDto.getLogin()) != null) {
             throw new LoginAlreadyDefinedException();
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userDao.save(user);
+        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        userDao.save(userMapper.toEntity(userDto));
     }
 
-    public void delete(User user) {
-        userDao.delete(user);
+    @Override
+    public void delete(UserDto userDto) {
+        userDao.delete(userMapper.toEntity(userDto));
     }
 
-    public void update(User user) {
-        User currentUser = userDao.findById(user.getId());
+    @Override
+    public void update(UserDto userDto) {
+        User currentUser = userDao.findById(userDto.getId());
 
         String oldPass = currentUser.getPassword();
-        if (!user.getPassword().equals(oldPass) && !user.getPassword().isEmpty()) {
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        if (!userDto.getPassword().equals(oldPass) && !userDto.getPassword().isEmpty()) {
+            userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
         } else {
-            user.setPassword(oldPass);
+            userDto.setPassword(oldPass);
         }
-        userDao.update(user);
+        userDao.update(userMapper.toEntity(userDto));
     }
 
-    public List<User> findAll() {
-        return userDao.findAll();
+    @Override
+    public List<UserDto> findAll() {
+        return userDao.findAll().stream()
+                .map(user -> userMapper.toDto(user))
+                .collect(Collectors.toList());
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByLogin(username);
+        UserDto userDto = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority(user.getRole().toString()));
-        return new org.springframework.security.core.userdetails.User(user.getLogin(),
-                user.getPassword(),
+        roles.add(new SimpleGrantedAuthority(userDto.getRole().toString()));
+        return new org.springframework.security.core.userdetails.User(userDto.getLogin(),
+                userDto.getPassword(),
                 roles);
     }
 }

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/users/${id}/wallets'"><b>Back to wallets</b></button>
+    <button class="w3-btn w3-round-large" onclick="location.href='/users/${userId}/wallets'"><b>Back to wallets</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">

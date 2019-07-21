@@ -13,4 +13,8 @@ public class RoleDto {
     private int id;
     private RoleEnum roleEnum;
 
+    @Override
+    public String toString() {
+        return roleEnum.toString();
+    }
 }

@@ -13,4 +13,9 @@ public class CurrencyDto {
     private String name;
     private double rate;
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
