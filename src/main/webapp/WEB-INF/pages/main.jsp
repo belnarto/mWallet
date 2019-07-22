@@ -48,8 +48,6 @@
     </c:if>
 
     <div class="w3-bar w3-padding-large w3-padding-24">
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/myWallets'">My wallets
-        </button>
 
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">

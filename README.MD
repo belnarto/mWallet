@@ -46,18 +46,16 @@ URI	                                                Method	Action               
 /users/{userId}/deleteUser	                        POST	delete user with {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
-                    
-/wallets???	                                        GET	    Listing, display all wallets            ADMIN    
                 
-+/users/{userId}/wallets                             GET	    Display wallets for user {userId}       
+/users/{userId}/wallets                             GET	    Display wallets for user {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
                 
-+/users/{userId}/wallets/addWallet                   GET	    Add wallet form for user {userId}       
+/users/{userId}/wallets/addWallet                   GET	    Add wallet form for user {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
                 
-+/users/{userId}/wallets/addWallet                   POST    Create wallet for user {userId}       
+/users/{userId}/wallets/addWallet                   POST    Create wallet for user {userId}       
                                                             any {userId} allowed                    ADMIN
                                                             only {userId} for current user          DEFAULT
     

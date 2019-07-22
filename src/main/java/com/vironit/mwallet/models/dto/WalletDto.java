@@ -19,8 +19,8 @@ public class WalletDto {
     // Поэтому для обратных зависимостей используем не UserDto userDto,
     // а int userId. Мы, таким образом, сохраняем связь с User,
     // но обрубаем циклическую зависимость.
-    private UserDto user;
-    // private int userId;
+    // private UserDto user;
+    private Integer userId;
 
     private CurrencyDto currency;
     //private int currencyId;
