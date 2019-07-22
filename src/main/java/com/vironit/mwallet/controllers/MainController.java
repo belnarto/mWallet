@@ -4,9 +4,8 @@ import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -15,15 +14,14 @@ import java.security.Principal;
 @Controller
 public class MainController {
 
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(value = "/*", method = RequestMethod.GET)
-    public ModelAndView mainGet(ModelAndView modelAndView,
+    @GetMapping(value = "/*")
+    public ModelAndView mainPage(ModelAndView modelAndView,
                                 Principal user) {
         modelAndView.setViewName("main");
 
@@ -34,8 +32,8 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView loginGet(ModelAndView modelAndView,
+    @GetMapping(value = "/login")
+    public ModelAndView loginPage(ModelAndView modelAndView,
                                   @ModelAttribute("error") String error,
                                   @ModelAttribute("logout") String logout) {
 
@@ -49,8 +47,8 @@ public class MainController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public ModelAndView accessDeniedGet(ModelAndView modelAndView,
+    @GetMapping(value = "/403")
+    public ModelAndView accessDeniedPage(ModelAndView modelAndView,
                                          Principal user) {
 
         modelAndView.addObject("errorTitle", "Access is denied.");
