@@ -20,7 +20,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     public void update(Role role) {
-        sessionFactory.getCurrentSession().update(role);
+        sessionFactory.getCurrentSession().merge(role);
     }
 
     public void delete(Role role) {
@@ -28,11 +28,7 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     public Role findById(int id) {
-        Role role = sessionFactory.getCurrentSession().get(Role.class, id);
-        if (role != null) {
-            sessionFactory.getCurrentSession().evict(role); // detaching object from persistence session
-        }
-        return role;
+        return sessionFactory.getCurrentSession().get(Role.class, id);
     }
 
     @SuppressWarnings("unchecked")

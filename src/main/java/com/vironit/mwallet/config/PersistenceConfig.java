@@ -71,6 +71,8 @@ public class PersistenceConfig {
             factoryBean.setDataSource(getDataSource());
             Properties props = new Properties();
             props.put(SHOW_SQL, Objects.requireNonNull(env.getProperty("hibernate.show_sql")));
+            props.put(FORMAT_SQL, Objects.requireNonNull(env.getProperty("hibernate.format_sql")));
+            props.put(USE_SQL_COMMENTS, Objects.requireNonNull(env.getProperty("hibernate.use_sql_comments")));
             props.put(HBM2DDL_AUTO, Objects.requireNonNull(env.getProperty("hibernate.hbm2ddl.auto")));
             factoryBean.setHibernateProperties(props);
             factoryBean.setAnnotatedClasses(User.class, Wallet.class, Role.class, Currency.class);

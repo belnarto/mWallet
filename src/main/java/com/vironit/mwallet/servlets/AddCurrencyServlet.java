@@ -2,6 +2,7 @@ package com.vironit.mwallet.servlets;
 
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.services.CurrencyService;
+import com.vironit.mwallet.services.mapper.CurrencyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -15,14 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 @WebServlet("/currencies/addCurrency")
 public class AddCurrencyServlet extends HttpServlet {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private CurrencyService currencyService;
+
+    @Autowired
+    private CurrencyMapper currencyMapper;
 
     @Override
     public void init(ServletConfig config) {
@@ -38,7 +43,9 @@ public class AddCurrencyServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/addCurrency.jsp");
-        List<CurrencyDto> currencies = currencyService.findAll();
+        List<CurrencyDto> currencies = currencyService.findAll().stream()
+                .map(currency -> currencyMapper.toDto(currency))
+                .collect(Collectors.toList());
         req.setAttribute("currencies", currencies);
         requestDispatcher.forward(req, resp);
     }
@@ -48,7 +55,7 @@ public class AddCurrencyServlet extends HttpServlet {
         String name = req.getParameter("name");
         String rate = req.getParameter("rate");
         CurrencyDto currencyDto = new CurrencyDto(0, name, Double.valueOf(rate));
-        currencyService.save(currencyDto);
+        currencyService.save(currencyMapper.toEntity(currencyDto));
         req.setAttribute("currency", currencyDto);
         doGet(req, resp);
     }

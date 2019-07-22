@@ -2,9 +2,11 @@ package com.vironit.mwallet.controllers;
 
 import com.vironit.mwallet.models.dto.RoleDto;
 import com.vironit.mwallet.models.dto.UserDto;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
+import com.vironit.mwallet.services.mapper.RoleMapper;
 import com.vironit.mwallet.services.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Controller
@@ -37,6 +40,9 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
 
     @Qualifier("springValidationService")
     @SuppressWarnings("unused")
@@ -46,7 +52,10 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ModelAndView allUsers(ModelAndView modelAndView) {
         modelAndView.setViewName("userPages/users");
-        modelAndView.addObject("users", userService.findAll());
+        List<UserDto> users = userService.findAll().stream()
+                .map(user -> userMapper.toDto(user))
+                .collect(Collectors.toList());
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 
@@ -55,7 +64,7 @@ public class UserController {
                                @PathVariable("userId") int userId) {
         modelAndView.setViewName("userPages/users");
         List<UserDto> myUser = new ArrayList<>(); // because in JSP array is expected
-        myUser.add(userService.findById(userId));
+        myUser.add(userMapper.toDto(userService.findById(userId)));
         modelAndView.addObject("users", myUser);
         return modelAndView;
     }
@@ -63,7 +72,10 @@ public class UserController {
     @RequestMapping(value = "/users/addUser", method = RequestMethod.GET)
     public ModelAndView addUserGet(ModelAndView modelAndView) {
         modelAndView.setViewName("userPages/addUser");
-        modelAndView.addObject("roles", roleService.findAll());
+        List<RoleDto> roles = roleService.findAll().stream()
+                .map(role -> roleMapper.toDto(role))
+                .collect(Collectors.toList());
+        modelAndView.addObject("roles", roles);
         return modelAndView;
     }
 
@@ -73,7 +85,7 @@ public class UserController {
                                     BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
-                userService.save(userDto);
+                userService.save(userMapper.toEntity(userDto));
                 modelAndView.setViewName("main");
                 modelAndView.addObject("added", true);
                 return modelAndView;
@@ -83,7 +95,10 @@ public class UserController {
             }
         }
         modelAndView.setViewName("userPages/addUser");
-        modelAndView.addObject("roles", roleService.findAll());
+        List<RoleDto> roles = roleService.findAll().stream()
+                .map(role -> roleMapper.toDto(role))
+                .collect(Collectors.toList());
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
@@ -91,8 +106,10 @@ public class UserController {
     @RequestMapping(value = "/users/{userId}/updateUser", method = RequestMethod.GET)
     public ModelAndView updateUserGet(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
-        UserDto userDto = userService.findById(userId);
-        List<RoleDto> roles = roleService.findAll();
+        UserDto userDto = userMapper.toDto(userService.findById(userId));
+        List<RoleDto> roles = roleService.findAll().stream()
+                .map(role -> roleMapper.toDto(role))
+                .collect(Collectors.toList());
         roles.remove(userDto.getRole());
         modelAndView.setViewName("userPages/updateUser");
         modelAndView.addObject("user", userDto);
@@ -106,12 +123,14 @@ public class UserController {
     public ModelAndView updateUserPost(ModelAndView modelAndView,
                                        @ModelAttribute("user") UserDto userDto,
                                        BindingResult bindingResult) {
-        List<RoleDto> roles = roleService.findAll();
+        List<RoleDto> roles = roleService.findAll().stream()
+                .map(role -> roleMapper.toDto(role))
+                .collect(Collectors.toList());
         roles.remove(userDto.getRole());
         modelAndView.setViewName("userPages/updateUser");
         modelAndView.addObject("roles", roles);
         if (!bindingResult.hasErrors()) {
-            userService.update(userDto);
+            userService.update(userMapper.toEntity(userDto));
             modelAndView.addObject("updated", true);
         } else {
             modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());

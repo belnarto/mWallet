@@ -19,7 +19,7 @@ public class Wallet {
     @PositiveOrZero(message = "Can't be negative")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @NotNull(message = "Can't be null")
     private User user;

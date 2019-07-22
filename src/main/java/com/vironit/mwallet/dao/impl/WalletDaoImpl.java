@@ -18,11 +18,7 @@ public class WalletDaoImpl implements WalletDao {
     private SessionFactory sessionFactory;
 
     public Wallet findById(int id) {
-        Wallet wallet = sessionFactory.getCurrentSession().get(Wallet.class, id);
-        if (wallet != null) {
-            sessionFactory.getCurrentSession().evict(wallet); // detaching object from persistence session
-        }
-            return wallet;
+        return sessionFactory.getCurrentSession().get(Wallet.class, id);
     }
 
     public void save(Wallet wallet) {
@@ -30,7 +26,7 @@ public class WalletDaoImpl implements WalletDao {
     }
 
     public void update(Wallet wallet) {
-        sessionFactory.getCurrentSession().update(wallet);
+        sessionFactory.getCurrentSession().merge(wallet);
     }
 
     public void delete(Wallet wallet) {

@@ -14,11 +14,11 @@ import java.io.IOException;
 
 import javax.servlet.annotation.WebServlet;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 @WebServlet("/currencies/deleteCurrency")
 public class DeleteCurrencyServlet extends HttpServlet {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private CurrencyService currencyService;
 

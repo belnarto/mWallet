@@ -1,13 +1,17 @@
 package com.vironit.mwallet.controllers;
 
 import com.vironit.mwallet.controllers.exception.WalletControllerException;
+import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.attributes.WalletStatusEnum;
+import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
 import com.vironit.mwallet.services.exception.WalletServiceException;
+import com.vironit.mwallet.services.mapper.CurrencyMapper;
 import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.services.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,12 +45,23 @@ public class WalletController {
     @Autowired
     private CurrencyService currencyService;
 
+    @Autowired
+    private WalletMapper walletMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private CurrencyMapper currencyMapper;
+
     @GetMapping(value = "/users/{userId}/wallets")
     public ModelAndView userWalletsPage(ModelAndView modelAndView,
                                         @PathVariable("userId") int userId) {
         modelAndView.setViewName("walletPages/wallets");
         modelAndView.addObject("userId", userId);
-        List<WalletDto> wallets = walletService.findAllByUser(userService.findById(userId));
+        List<WalletDto> wallets = walletService.findAllByUser(userService.findById(userId)).stream()
+                .map(wallet -> walletMapper.toDto(wallet))
+                .collect(Collectors.toList());
         modelAndView.addObject("wallets", wallets);
         return modelAndView;
     }
@@ -55,24 +70,27 @@ public class WalletController {
     public ModelAndView addWalletPage(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         modelAndView.setViewName("walletPages/addWallet");
+        List<CurrencyDto> currencies = currencyService.findAll().stream()
+                .map(currency -> currencyMapper.toDto(currency))
+                .collect(Collectors.toList());
         modelAndView.addObject("userId", userId);
-        modelAndView.addObject("currencies", currencyService.findAll());
+        modelAndView.addObject("currencies", currencies);
         return modelAndView;
     }
 
     @PostMapping(value = "/users/{userId}/wallets/addWallet")
     public ModelAndView addWallet(ModelAndView modelAndView,
                                   @PathVariable("userId") int userId,
-                                  @Valid @ModelAttribute("wallet") WalletDto wallet,
+                                  @Valid @ModelAttribute("wallet") WalletDto walletDto,
                                   BindingResult bindingResult) throws WalletControllerException {
-        if (wallet.getUser().getId() != userId) {
+        if (walletDto.getUser().getId() != userId) {
             log.debug("user id not matches");
             throw new WalletControllerException("user id not matches");
         }
 
         if (!bindingResult.hasErrors()) {
             try {
-                walletService.save(wallet);
+                walletService.save(walletMapper.toEntity(walletDto));
             } catch (WalletServiceException e) {
                 log.debug("wallet service exception", e);
                 throw new WalletControllerException("error occurred", e);
@@ -89,15 +107,16 @@ public class WalletController {
                                        @PathVariable("userId") int userId,
                                        @PathVariable("walletId") int walletId) {
         modelAndView.setViewName("walletPages/editWallet");
-        WalletDto wallet = walletService.findById(walletId);
+        WalletDto walletDto = walletMapper.toDto(walletService.findById(walletId));
         modelAndView.addObject("userId", userId);
-        modelAndView.addObject("wallet", wallet);
-        modelAndView.addObject("currencies", currencyService.findAll()
-                .stream()
-                .filter(c -> !c.equals(wallet.getCurrency()))
-                .collect(Collectors.toList()));
+        modelAndView.addObject("wallet", walletDto);
+        List<CurrencyDto> currencies = currencyService.findAll().stream()
+                .map(currency -> currencyMapper.toDto(currency))
+                .filter(c -> !c.equals(walletDto.getCurrency()))
+                .collect(Collectors.toList());
+        modelAndView.addObject("currencies", currencies);
         modelAndView.addObject("statuses", Arrays.stream(WalletStatusEnum.values())
-                .filter(s -> !s.equals(wallet.getWalletStatus()))
+                .filter(s -> !s.equals(walletDto.getWalletStatus()))
                 .collect(Collectors.toList()));
         return modelAndView;
     }
@@ -109,7 +128,7 @@ public class WalletController {
                                    @ModelAttribute("wallet") WalletDto walletDto,
                                    BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
-            walletService.update(walletDto);
+            walletService.update(walletMapper.toEntity(walletDto));
         }
         modelAndView = userWalletsPage(modelAndView, userId);
         modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
@@ -140,12 +159,12 @@ public class WalletController {
                                    @PathVariable("walletId") int walletId,
                                    @ModelAttribute("amountToAdd") double amountToAdd,
                                    BindingResult bindingResult) {
-        WalletDto walletDto = walletService.findById(walletId);
+        Wallet wallet = walletService.findById(walletId);
         try {
-            walletService.addBalance(walletDto, amountToAdd);
+            walletService.addBalance(wallet, amountToAdd);
         } catch (WalletServiceException e) {
-            log.debug("can't add balance to wallet " + walletDto
-            + " because " + e);
+            log.debug("can't add balance to wallet " + wallet
+                    + " because " + e);
             bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
         }
         modelAndView = userWalletsPage(modelAndView, userId);
@@ -168,11 +187,11 @@ public class WalletController {
                                       @PathVariable("walletId") int walletId,
                                       @ModelAttribute("amountToReduce") double amountToReduce,
                                       BindingResult bindingResult) {
-        WalletDto walletDto = walletService.findById(walletId);
+        Wallet wallet = walletService.findById(walletId);
         try {
-            walletService.reduceBalance(walletDto, amountToReduce);
+            walletService.reduceBalance(wallet, amountToReduce);
         } catch (WalletServiceException e) {
-            log.debug("can't reduce balance of wallet " + walletDto
+            log.debug("can't reduce balance of wallet " + wallet
                     + " because " + e);
             bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
         }
@@ -198,9 +217,9 @@ public class WalletController {
                                       @ModelAttribute("targetWalletId") int targetWalletId,
                                       BindingResult bindingResult) {
         try {
-            WalletDto walletDto = walletService.findById(walletId);
-            WalletDto targetWalletDto = walletService.findById(targetWalletId);
-            walletService.transferMoney(walletDto, targetWalletDto, amountToTransfer);
+            Wallet wallet = walletService.findById(walletId);
+            Wallet targetWallet = walletService.findById(targetWalletId);
+            walletService.transferMoney(wallet, targetWallet, amountToTransfer);
         } catch (WalletServiceException e) {
             log.debug("can't transfer money from wallet: " + walletId
                     + " to wallet: " + targetWalletId
@@ -221,7 +240,9 @@ public class WalletController {
         modelAndView.addObject("currURL", "myWallets");
         modelAndView.addObject("id", userService.findByLogin(username).getId());
         modelAndView.addObject("wallets", walletService.
-                findAllByUser(userService.findByLogin(username)));
+                findAllByUser(userService.findByLogin(username)).stream()
+                .map(wallet -> walletMapper.toDto(wallet))
+                .collect(Collectors.toList()));
         return modelAndView;
     }
 

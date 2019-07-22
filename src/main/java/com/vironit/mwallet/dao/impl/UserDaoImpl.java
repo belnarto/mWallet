@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public void update(User user) {
-        sessionFactory.getCurrentSession().update(user);
+        sessionFactory.getCurrentSession().merge(user);
     }
 
     public void delete(User user) {
@@ -29,11 +29,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public User findById(int id) {
-        User user = sessionFactory.getCurrentSession().get(User.class, id);
-        if (user != null) {
-            sessionFactory.getCurrentSession().evict(user); // detaching object from persistence session
-        }
-        return user;
+        return sessionFactory.getCurrentSession().get(User.class, id);
     }
 
     public List<User> findAll() {
@@ -48,9 +44,6 @@ public class UserDaoImpl implements UserDao {
                 .createQuery("From User where login = :userLogin ")
                 .setParameter("userLogin", login)
                 .uniqueResult();
-        if (user != null) {
-            sessionFactory.getCurrentSession().evict(user); // detaching object from persistence session
-        }
         return user;
     }
 }

@@ -3,6 +3,7 @@ package com.vironit.mwallet.servlets;
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.services.CurrencyService;
+import com.vironit.mwallet.services.mapper.CurrencyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -17,13 +18,16 @@ import java.io.IOException;
 
 import javax.servlet.annotation.WebServlet;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 @WebServlet("/currencies/editCurrency")
 public class EditCurrencyServlet extends HttpServlet {
 
-    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Autowired
     private CurrencyService currencyService;
+
+    @Autowired
+    private CurrencyMapper currencyMapper;
 
     @Override
     public void init(ServletConfig config) {
@@ -40,7 +44,8 @@ public class EditCurrencyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String currencyId = req.getParameter("currencyId");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/editCurrency.jsp");
-        CurrencyDto currencyDto = currencyService.findById(Integer.valueOf(currencyId));
+        CurrencyDto currencyDto = currencyMapper.toDto(
+                currencyService.findById(Integer.valueOf(currencyId)));
         req.setAttribute("currency", currencyDto);
         requestDispatcher.forward(req, resp);
     }
@@ -50,10 +55,10 @@ public class EditCurrencyServlet extends HttpServlet {
         String currencyId = req.getParameter("currencyId");
         String newName = req.getParameter("name");
         String newRate = req.getParameter("rate");
-        CurrencyDto currencyDto = currencyService.findById(Integer.valueOf(currencyId));
-        currencyDto.setName(newName);
-        currencyDto.setRate(Double.valueOf(newRate));
-        currencyService.update(currencyDto);
+        Currency currency = currencyService.findById(Integer.valueOf(currencyId));
+        currency.setName(newName);
+        currency.setRate(Double.valueOf(newRate));
+        currencyService.update(currency);
         req.setAttribute("updated", "true");
         doGet(req, resp);
     }

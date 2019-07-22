@@ -1,16 +1,13 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.RoleDao;
-import com.vironit.mwallet.models.dto.RoleDto;
 import com.vironit.mwallet.models.entity.Role;
 import com.vironit.mwallet.services.RoleService;
-import com.vironit.mwallet.services.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
@@ -20,41 +17,34 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
-    @Autowired
-    private RoleMapper roleMapper;
-
     @Override
-    public RoleDto findById(int id) {
-        Role role = roleDao.findById(id);
-        return roleMapper.toDto(role);
+    public Role findById(int id) {
+        return roleDao.findById(id);
     }
 
     @Override
-    public RoleDto findByName(String roleName) {
-        Role role = roleDao.findByName(roleName);
-        return roleMapper.toDto(role);
+    public Role findByName(String roleName) {
+        return roleDao.findByName(roleName);
     }
 
     @Override
-    public void save(RoleDto roleDto) {
-        roleDao.save(roleMapper.toEntity(roleDto));
+    public void save(Role role) {
+        roleDao.save(role);
     }
 
     @Override
-    public void delete(RoleDto roleDto) {
-        roleDao.delete(roleMapper.toEntity(roleDto));
+    public void delete(Role role) {
+        roleDao.delete(role);
     }
 
     @Override
-    public void update(RoleDto roleDto) {
-        roleDao.update(roleMapper.toEntity(roleDto));
+    public void update(Role role) {
+        roleDao.update(role);
     }
 
     @Override
-    public List<RoleDto> findAll() {
-        return roleDao.findAll().stream()
-                .map(role -> roleMapper.toDto(role))
-                .collect(Collectors.toList());
+    public List<Role> findAll() {
+        return roleDao.findAll();
     }
 
 }

@@ -1,6 +1,5 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,13 +17,13 @@ public class SecurityService {
 
     public boolean checkUserId(Authentication authentication, int userId) {
         String login = authentication.getName();
-        UserDto userDto = userService.findByLogin(login);
-        return userDto != null && userDto.getId() == userId;
+        User user = userService.findByLogin(login);
+        return user != null && user.getId() == userId;
     }
 
     public boolean checkWalletId(Authentication authentication, int walletId) {
         String login = authentication.getName();
-        UserDto userDto = userService.findByLogin(login);
-        return userDto.getWallets().contains(walletService.findById(walletId));
+        User user = userService.findByLogin(login);
+        return user.getWallets().contains(walletService.findById(walletId));
     }
 }

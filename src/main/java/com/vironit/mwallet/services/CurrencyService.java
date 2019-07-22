@@ -1,21 +1,21 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.dto.CurrencyDto;
+import com.vironit.mwallet.models.entity.Currency;
 
 import java.util.List;
 
 public interface CurrencyService {
 
-    CurrencyDto findById(int id);
+    Currency findById(int id);
 
-    CurrencyDto findByName(String name);
+    Currency findByName(String name);
 
-    List<CurrencyDto> findAll();
+    List<Currency> findAll();
 
-    void save(CurrencyDto currencyDto);
+    void save(Currency currency);
 
-    void delete(CurrencyDto currencyDto);
+    void delete(Currency currency);
 
-    void update(CurrencyDto currencyDto);
+    void update(Currency currency);
 
 }

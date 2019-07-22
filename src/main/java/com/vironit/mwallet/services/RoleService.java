@@ -1,21 +1,21 @@
 package com.vironit.mwallet.services;
 
-import com.vironit.mwallet.models.dto.RoleDto;
+import com.vironit.mwallet.models.entity.Role;
 
 import java.util.List;
 
 public interface RoleService {
 
-    RoleDto findById(int id);
+    Role findById(int id);
 
-    RoleDto findByName(String roleName);
+    Role findByName(String roleName);
 
-    void save(RoleDto roleDto);
+    void save(Role role);
 
-    void delete(RoleDto roleDto);
+    void delete(Role role);
 
-    void update(RoleDto roleDto);
+    void update(Role role);
 
-    List<RoleDto> findAll();
+    List<Role> findAll();
 
 }
