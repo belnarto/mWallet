@@ -1,5 +1,6 @@
 package com.vironit.mwallet.services.exception;
 
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class WalletServiceException extends Exception {
     public WalletServiceException() {
         super();

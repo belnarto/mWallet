@@ -1,6 +1,7 @@
 package com.vironit.mwallet.servlets;
 
 import com.vironit.mwallet.services.CurrencyService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
+@Log4j2
 @WebServlet("/currencies/deleteCurrency")
 public class DeleteCurrencyServlet extends HttpServlet {
 
@@ -29,10 +31,9 @@ public class DeleteCurrencyServlet extends HttpServlet {
             SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                     config.getServletContext());
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error("error occurred during servlet init", e);
         }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

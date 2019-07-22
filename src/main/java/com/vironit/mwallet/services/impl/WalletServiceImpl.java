@@ -1,9 +1,6 @@
 package com.vironit.mwallet.services.impl;
 
 import com.vironit.mwallet.dao.WalletDao;
-import com.vironit.mwallet.models.dto.CurrencyDto;
-import com.vironit.mwallet.models.dto.UserDto;
-import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.WalletService;
@@ -20,8 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
@@ -44,8 +42,8 @@ public class WalletServiceImpl implements WalletService {
         return walletDao.findById(id);
     }
 
-    public List<Wallet> findAllByUser(User user) {
-        return walletDao.findAllByUser(user);
+    public Set<Wallet> findAllByUser(User user) {
+        return new HashSet<>(walletDao.findAllByUser(user));
     }
 
     public List<Wallet> findAll() {
@@ -111,7 +109,7 @@ public class WalletServiceImpl implements WalletService {
         if (value <= 0) {
             throw new WalletServiceException("Value <= 0");
         }
-        // TODO refactor
+
         if (value < fromWallet.getBalance()) {
             fromWallet.setBalance(fromWallet.getBalance() - value);
             walletDao.update(fromWallet);
@@ -119,7 +117,7 @@ public class WalletServiceImpl implements WalletService {
             double targetValue = fromWallet.getCurrency().getRate() * value; // to BYN
             targetValue = targetValue / toWallet.getCurrency().getRate(); // to target Currency
 
-            targetValue = new BigDecimal(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
+            targetValue = BigDecimal.valueOf(targetValue).setScale(3, RoundingMode.DOWN).doubleValue();
             toWallet.setBalance(toWallet.getBalance() + targetValue);
 
             walletDao.update(toWallet);
@@ -128,13 +126,12 @@ public class WalletServiceImpl implements WalletService {
         }
     }
 
-    //TODO refactor
     private void recalculateBalanceAfterCurrencyChange(
             Wallet wallet, Currency currencyOld) {
         double balance = wallet.getBalance();
         double targetValue = currencyOld.getRate() * balance; // to BYN
         targetValue = targetValue / wallet.getCurrency().getRate(); // to new Currency
-        targetValue = new BigDecimal(targetValue)
+        targetValue = BigDecimal.valueOf(targetValue)
                 .setScale(3, RoundingMode.DOWN)
                 .doubleValue();
         wallet.setBalance(targetValue);

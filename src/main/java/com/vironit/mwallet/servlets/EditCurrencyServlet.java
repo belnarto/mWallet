@@ -4,6 +4,7 @@ import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.mapper.CurrencyMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
+@Log4j2
 @WebServlet("/currencies/editCurrency")
 public class EditCurrencyServlet extends HttpServlet {
 
@@ -36,14 +38,16 @@ public class EditCurrencyServlet extends HttpServlet {
             SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                     config.getServletContext());
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error("error occurred during servlet init", e);
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         String currencyId = req.getParameter("currencyId");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/editCurrency.jsp");
+        RequestDispatcher requestDispatcher =
+                req.getRequestDispatcher("/WEB-INF/pages/currencyPages/editCurrency.jsp");
         CurrencyDto currencyDto = currencyMapper.toDto(
                 currencyService.findById(Integer.valueOf(currencyId)));
         req.setAttribute("currency", currencyDto);
@@ -51,7 +55,8 @@ public class EditCurrencyServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         String currencyId = req.getParameter("currencyId");
         String newName = req.getParameter("name");
         String newRate = req.getParameter("rate");

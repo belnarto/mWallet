@@ -15,7 +15,7 @@ public interface UserService {
 
     void delete(User user);
 
-    void update(User user);
+    void update(User user) throws LoginAlreadyDefinedException;
 
     List<User> findAll();
 

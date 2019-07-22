@@ -1,5 +1,6 @@
 package com.vironit.mwallet.controllers.exception;
 
+@SuppressWarnings("unused")
 public class WalletControllerException extends Exception {
     public WalletControllerException() {
         super();

@@ -3,8 +3,10 @@ package com.vironit.mwallet.controllers;
 import com.vironit.mwallet.models.dto.RoleDto;
 import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.entity.User;
+import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
+import com.vironit.mwallet.services.WalletService;
 import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 import com.vironit.mwallet.services.mapper.RoleMapper;
 import com.vironit.mwallet.services.mapper.UserMapper;
@@ -19,13 +21,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -38,6 +39,9 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private WalletService walletService;
 
     @Autowired
     private UserMapper userMapper;
@@ -64,7 +68,7 @@ public class UserController {
 
     @GetMapping(value = "/users/{userId}")
     public ModelAndView myUserPage(ModelAndView modelAndView,
-                               @PathVariable("userId") int userId) {
+                                   @PathVariable("userId") int userId) {
         List<UserDto> myUser = new ArrayList<>(); // because in JSP array is expected, to reuse same JSP
         myUser.add(userMapper.toDto(userService.findById(userId)));
 
@@ -86,8 +90,8 @@ public class UserController {
 
     @PostMapping(value = "/users/addUser")
     public ModelAndView addUser(ModelAndView modelAndView,
-                                    @Valid @ModelAttribute("user") UserDto userDto,
-                                    BindingResult bindingResult) {
+                                @Valid @ModelAttribute("user") UserDto userDto,
+                                BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             try {
                 userService.save(userMapper.toEntity(userDto));
@@ -109,7 +113,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{userId}/updateUser", method = RequestMethod.GET)
+    @GetMapping(value = "/users/{userId}/updateUser")
     public ModelAndView updateUserGet(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         UserDto userDto = userMapper.toDto(userService.findById(userId));
@@ -117,34 +121,44 @@ public class UserController {
                 .map(role -> roleMapper.toDto(role))
                 .collect(Collectors.toList());
         roles.remove(userDto.getRole());
+
         modelAndView.setViewName("userPages/updateUser");
         modelAndView.addObject("user", userDto);
         modelAndView.addObject("roles", roles);
         return modelAndView;
     }
 
-
-    @SuppressWarnings("MVCPathVariableInspection")
-    @RequestMapping(value = "/users/{userId}/updateUser", method = RequestMethod.POST)
+    @SuppressWarnings("unused")
+    @PostMapping(value = "/users/{userId}/updateUser")
     public ModelAndView updateUserPost(ModelAndView modelAndView,
-                                       @ModelAttribute("user") UserDto userDto,
+                                       @PathVariable("userId") int userId,
+                                       @Valid @ModelAttribute("user") UserDto userDto,
                                        BindingResult bindingResult) {
         List<RoleDto> roles = roleService.findAll().stream()
                 .map(role -> roleMapper.toDto(role))
                 .collect(Collectors.toList());
         roles.remove(userDto.getRole());
+
+        if (!bindingResult.hasErrors()) {
+            User user = userMapper.toEntity(userDto);
+            Set<Wallet> wallets = walletService.findAllByUser(user);
+            user.setWallets(wallets);
+            try {
+                userService.update(user);
+                modelAndView.addObject("updated", true);
+            } catch (LoginAlreadyDefinedException e) {
+                log.debug("login already defined. " + user);
+                bindingResult.addError(new FieldError("user", "login", "login already defined."));
+            }
+        }
+
         modelAndView.setViewName("userPages/updateUser");
         modelAndView.addObject("roles", roles);
-        if (!bindingResult.hasErrors()) {
-            userService.update(userMapper.toEntity(userDto));
-            modelAndView.addObject("updated", true);
-        } else {
-            modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
-        }
+        modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/users/{userId}/deleteUser", method = RequestMethod.POST)
+    @PostMapping(value = "/users/{userId}/deleteUser")
     public ModelAndView deleteUserPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId) {
         userService.delete(userService.findById(userId));

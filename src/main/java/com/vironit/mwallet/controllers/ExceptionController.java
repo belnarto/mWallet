@@ -29,6 +29,7 @@ public class ExceptionController {
         return modelAndView;
     }
 
+    @SuppressWarnings("unused")
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handleError404(HttpServletRequest request,
                                        Exception e) {

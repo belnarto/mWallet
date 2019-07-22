@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,10 +53,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws LoginAlreadyDefinedException {
         User currentUser = userDao.findById(user.getId());
-
         String oldPass = currentUser.getPassword();
+        String oldLogin = currentUser.getLogin();
+        if (!user.getLogin().equals(oldLogin)
+                && findByLogin(user.getLogin()) != null) {
+            throw new LoginAlreadyDefinedException();
+        }
         if (!user.getPassword().equals(oldPass) && !user.getPassword().isEmpty()) {
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         } else {
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = findByLogin(username);
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().toString()));

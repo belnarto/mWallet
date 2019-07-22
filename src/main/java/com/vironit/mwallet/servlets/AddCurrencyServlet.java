@@ -3,6 +3,7 @@ package com.vironit.mwallet.servlets;
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.mapper.CurrencyMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
+@Log4j2
 @WebServlet("/currencies/addCurrency")
 public class AddCurrencyServlet extends HttpServlet {
 
@@ -36,13 +38,15 @@ public class AddCurrencyServlet extends HttpServlet {
             SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                     config.getServletContext());
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error("error occurred during servlet init", e);
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/addCurrency.jsp");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        RequestDispatcher requestDispatcher =
+                req.getRequestDispatcher("/WEB-INF/pages/currencyPages/addCurrency.jsp");
         List<CurrencyDto> currencies = currencyService.findAll().stream()
                 .map(currency -> currencyMapper.toDto(currency))
                 .collect(Collectors.toList());
@@ -51,7 +55,8 @@ public class AddCurrencyServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         String name = req.getParameter("name");
         String rate = req.getParameter("rate");
         CurrencyDto currencyDto = new CurrencyDto(0, name, Double.valueOf(rate));

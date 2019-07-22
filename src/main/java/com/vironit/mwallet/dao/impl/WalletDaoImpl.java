@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "UnnecessaryLocalVariable"})
 @Repository
 public class WalletDaoImpl implements WalletDao {
 
@@ -51,7 +52,7 @@ public class WalletDaoImpl implements WalletDao {
         return wallets;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<Wallet> findAll() {
         List<Wallet> wallets = (List<Wallet>) sessionFactory.getCurrentSession()
                 .createQuery("From Wallet order by id")

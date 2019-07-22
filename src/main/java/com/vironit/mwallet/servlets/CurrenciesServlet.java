@@ -3,6 +3,7 @@ package com.vironit.mwallet.servlets;
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.mapper.CurrencyMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
+@Log4j2
 @WebServlet("/currencies")
 public class CurrenciesServlet extends HttpServlet {
 
@@ -36,13 +38,15 @@ public class CurrenciesServlet extends HttpServlet {
             SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
                     config.getServletContext());
         } catch (ServletException e) {
-            e.printStackTrace();
+            log.error("error occurred during servlet init", e);
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/WEB-INF/pages/currencyPages/currencies.jsp");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        RequestDispatcher requestDispatcher =
+                req.getRequestDispatcher("/WEB-INF/pages/currencyPages/currencies.jsp");
         List<CurrencyDto> currencies = currencyService.findAll().stream()
                 .map(currency -> currencyMapper.toDto(currency))
                 .collect(Collectors.toList());

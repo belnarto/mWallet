@@ -8,12 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 public class RoleMapper {
 
     @Autowired
     private ModelMapper mapper;
 
+    @SuppressWarnings("unused")
     public Role toEntity(RoleDto roleDto) {
         return Objects.isNull(roleDto) ? null : mapper.map(roleDto, Role.class);
     }

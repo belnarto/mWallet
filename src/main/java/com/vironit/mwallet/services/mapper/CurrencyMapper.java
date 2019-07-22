@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Component
 public class CurrencyMapper {
 

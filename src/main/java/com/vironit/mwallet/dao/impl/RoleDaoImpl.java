@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "UnnecessaryLocalVariable"})
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
@@ -31,7 +32,7 @@ public class RoleDaoImpl implements RoleDao {
         return sessionFactory.getCurrentSession().get(Role.class, id);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<Role> findAll() {
         List<Role> roles = (List<Role>) sessionFactory.getCurrentSession()
                 .createQuery("From Role order by id")
@@ -39,6 +40,7 @@ public class RoleDaoImpl implements RoleDao {
         return roles;
     }
 
+    @SuppressWarnings("JpaQlInspection")
     public Role findByName(String roleName) {
         Role role = (Role) sessionFactory.getCurrentSession()
                 .createQuery("From Role where roleEnum= :roleEnum ")

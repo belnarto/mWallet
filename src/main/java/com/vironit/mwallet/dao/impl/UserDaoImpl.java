@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "UnnecessaryLocalVariable"})
 @Log4j2
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -32,6 +33,7 @@ public class UserDaoImpl implements UserDao {
         return sessionFactory.getCurrentSession().get(User.class, id);
     }
 
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<User> findAll() {
         List<User> users = (List<User>) sessionFactory.getCurrentSession()
                 .createQuery("From User order by id")
@@ -39,6 +41,7 @@ public class UserDaoImpl implements UserDao {
         return users;
     }
 
+    @SuppressWarnings("JpaQlInspection")
     public User findByLogin(String login) {
         User user = (User) sessionFactory.getCurrentSession()
                 .createQuery("From User where login = :userLogin ")

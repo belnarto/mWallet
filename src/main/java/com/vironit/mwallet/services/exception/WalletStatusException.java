@@ -1,5 +1,6 @@
 package com.vironit.mwallet.services.exception;
 
+@SuppressWarnings("unused")
 public class WalletStatusException extends WalletServiceException {
 
     public WalletStatusException() {

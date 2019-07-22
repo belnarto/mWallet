@@ -1,7 +1,7 @@
-<%@ page import="com.vironit.mwallet.models.entity.Currency" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
+<jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.models.dto.CurrencyDto"/>
 <html>
 <head>
     <style>
@@ -40,7 +40,7 @@
 <div style="width:700px" class="w3-container w3-center w3-margin-bottom w3-padding">
 
     <div class="w3-container w3-padding">
-        <jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.models.entity.Currency"/>
+
         <%--@elvariable id="updated" type="java.lang.String"--%>
         <c:if test = "${not empty updated}">
             <div class="w3-panel w3-green w3-display-container w3-card-4 w3-round">
@@ -59,7 +59,7 @@
                 </label>
                 <label>Rate:
                     <input type="text" name="rate" class="w3-input w3-animate-input w3-border w3-round-large" value="${currency.rate}" style="width: 100%"><br/>
-                 </label>
+                </label>
                 <button type="submit" class="w3-btn w3-blue w3-round-large w3-margin-bottom">Submit</button>
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>

@@ -1,5 +1,6 @@
 package com.vironit.mwallet.services.exception;
 
+@SuppressWarnings("unused")
 public class LoginAlreadyDefinedException extends UserServiceException {
     public LoginAlreadyDefinedException() {
         super();
