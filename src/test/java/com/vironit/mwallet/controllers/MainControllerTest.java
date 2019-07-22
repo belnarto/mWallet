@@ -80,6 +80,11 @@ public class MainControllerTest {
                 .findAny();
         userOpt.ifPresent(userService::delete);
 
+        userOpt = userService.findAll().stream()
+                .filter(u -> u.getLogin().equals("Test2"))
+                .findAny();
+        userOpt.ifPresent(userService::delete);
+
         Optional<Role> roleOpt = roleService.findAll().stream()
                 .filter(r -> r.getRoleEnum().toString().equals("TST"))
                 .findAny();
