@@ -18,7 +18,7 @@ Technologies used :
     * Maven
     * IntelliJ IDEA
     
-The URI structure :
+The MVC URI structure :
 
 URI	                                                Method	Action                                  Access level
 /main                                               GET     Display main page                       all
@@ -100,6 +100,83 @@ URI	                                                Method	Action               
                                                             any {userId} and {walletId} allowed     ADMIN
                                                             only {userId} and {walletId} 
                                                             for current user                        DEFAULT
+                             
+The REST URI structure :
+
+URI	                                                Method	Action                                  Access level
+/users/addUser	                                    POST	Create user action                      all
+                            
+/users	                                            +GET	    get all users                           ADMIN
+                
+/users/{userId}	                                    +GET	    Display user inf form for {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/updateUser	                        GET	    Display update user form for {userId}   
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/updateUser	                        POST	Update information for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                            
+/users/{userId}/deleteUser	                        POST	delete user with {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                
+/users/{userId}/wallets                             GET	    Display wallets for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                
+/users/{userId}/wallets/addWallet                   GET	    Add wallet form for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+                
+/users/{userId}/wallets/addWallet                   POST    Create wallet for user {userId}       
+                                                            any {userId} allowed                    ADMIN
+                                                            only {userId} for current user          DEFAULT
+    
+/users/{userId}/wallets/{walletId}/editWallet       GET	    Edit wallet form {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/editWallet       POST    Edit wallet {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT                                                            
+
+/users/{userId}/wallets/{walletId}/deleteWallet     POST    Delete wallet {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/addBalance       GET	    Add money form {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/addBalance       POST    Add money {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/reduceBalance    GET	    Reduce money form {walletId}
+                                                            form for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT
+
+/users/{userId}/wallets/{walletId}/reduceBalance    POST    Reduce money {walletId}
+                                                            for user {userId}       
+                                                            any {userId} and {walletId} allowed     ADMIN
+                                                            only {userId} and {walletId} 
+                                                            for current user                        DEFAULT                             
                                                                                                                         
 Цель:
 	Создать мобильный кошелёк в учебных целях.
@@ -205,3 +282,14 @@ URI	                                                Method	Action               
 	
 	пока не прикрутим базу создадим класс, который будет являться хранилищем наших продуктов, 
 		клиентов и аккаунтинга.
+		
+		
+		
+Resource	GET                         POST                    PUT                     DELETE
+            read	                    create                  update                  delete	
+            
+/api/v1/users	    Returns a list of users	    Create a new user	    Bulk update of cars	    Method not   
+                                                                                        allowed (405)
+
+/cars/711	Returns a specific car	    Method not              Updates a specific car  Deletes a specific car
+                                        allowed (405)	        	

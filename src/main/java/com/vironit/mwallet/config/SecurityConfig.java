@@ -67,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         configureSessionManagement(httpSecurity);
+        csrfConfiguration(httpSecurity);
         configureEncodingFilter(httpSecurity, "UTF-8");
         authorizeRequestsPermittedAll(httpSecurity);
         authorizeRequestsWithSecurityLimitation(httpSecurity);
@@ -87,6 +88,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionFixation().migrateSession() // what happens to an existing session when the user tries to authenticate again
                 .maximumSessions(1)
                 .expiredUrl("/login");
+    }
+
+    /**
+     * Disable csrf for rest api.
+     * https://stackoverflow.com/questions/38108357/how-to-enable-post-put-and-delete-methods-in-spring-security
+     */
+    private void csrfConfiguration(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf()
+                .ignoringAntMatchers("/api/v1/**");
     }
 
     /**
@@ -111,7 +122,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/main",
                         "/403",
                         "/users/addUser",
-                        "/currencies"
+                        "/currencies",
+                        "/api/v1/**"
                 ).permitAll();
     }
 

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public void save(User user) throws LoginAlreadyDefinedException {
         if (findByLogin(user.getLogin()) != null) {
-            throw new LoginAlreadyDefinedException();
+            throw new LoginAlreadyDefinedException("login already defined.");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDao.save(user);
