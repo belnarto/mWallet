@@ -50,15 +50,6 @@ public class WebConfig implements WebMvcConfigurer {
         return mapper;
     }
 
-    // getting javax.validation validator
-    // which uses validation annotations
-    // in entities classes
-    @Bean
-    public Validator getJavaxValidator() {
-        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
-        return validatorFactory.usingContext().getValidator();
-    }
-
 
     @Autowired
     StringToRoleConverter stringToRoleConverter;
