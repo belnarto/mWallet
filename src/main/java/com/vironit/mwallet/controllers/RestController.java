@@ -2,6 +2,7 @@ package com.vironit.mwallet.controllers;
 
 import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.dto.UserRestDto;
+import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.UserService;
@@ -37,9 +38,9 @@ class RestController {
     private UserMapper userMapper;
 
     @GetMapping(value = "/users")
-    public List<UserDto> findAllUsers() {
+    public List<UserRestDtoWithoutPassword> findAllUsers() {
         return userService.findAll().stream()
-                .map(user -> userMapper.toDto(user))
+                .map(user -> userMapper.toRestDtoWithoutPassword(user))
                 .collect(Collectors.toList());
     }
 
@@ -67,8 +68,8 @@ class RestController {
     }
 
     @GetMapping(value = "/users/{userId}")
-    public UserDto findUserById(@PathVariable("userId") int userId) {
-        return userMapper.toDto(userService.findById(userId));
+    public UserRestDtoWithoutPassword findUserById(@PathVariable("userId") int userId) {
+        return userMapper.toRestDtoWithoutPassword(userService.findById(userId));
     }
 
     @PutMapping(value = "/users/{userId}/updateUser")
