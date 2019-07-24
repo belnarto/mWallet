@@ -2,10 +2,13 @@ package com.vironit.mwallet.controllers;
 
 import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
+import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.entity.User;
+import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
 import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.services.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +37,9 @@ class RestController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private WalletMapper walletMapper;
 
     @GetMapping(value = "/users")
     public List<UserRestDtoWithoutPassword> findAllUsers() {
@@ -93,8 +99,8 @@ class RestController {
     @SuppressWarnings({"unchecked", "unused"})
     @PutMapping(value = "/users/{userId}")
     public ResponseEntity updateUser(@PathVariable("userId") int userId,
-                              @Valid @RequestBody UserRestDto userRestDto,
-                              BindingResult bindingResult) {
+                                     @Valid @RequestBody UserRestDto userRestDto,
+                                     BindingResult bindingResult) {
         ResponseEntity responseEntity;
 
         if (!bindingResult.hasErrors()) {
@@ -130,13 +136,62 @@ class RestController {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    @GetMapping(value = "/users/{userId}/wallets")
+    public ResponseEntity findAllWalletsOfUser(@PathVariable("userId") int userId) {
+        ResponseEntity responseEntity;
+        User user = userService.findById(userId);
+
+        if (user != null) {
+            List<WalletDto> wallets = walletService.findAllByUser(userService.findById(userId)).stream()
+                    .map(wallet -> walletMapper.toDto(wallet))
+                    .collect(Collectors.toList());
+            responseEntity = new ResponseEntity(wallets, HttpStatus.OK);
+            return responseEntity;
+        } else {
+            responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return responseEntity;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @PostMapping(value = "/users/{userId}/wallets")
+    public ResponseEntity createWallet(@Valid @RequestBody WalletDto walletDto,
+                                       BindingResult bindingResult,
+                                       @PathVariable("userId") int userId) {
+        ResponseEntity responseEntity;
+        User user = userService.findById(userId);
+
+        if (user == null) {
+            responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return responseEntity;
+        }
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                Wallet wallet = walletMapper.toEntity(walletDto);
+                walletService.save(wallet);
+                responseEntity = new ResponseEntity(walletMapper.toDto(wallet),
+                        HttpStatus.CREATED);
+                return responseEntity;
+            } catch (Exception e) {
+                log.debug("Error during wallet saving", e);
+                responseEntity = new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                return responseEntity;
+            }
+        }
+        List<String> errors = transformErrors(bindingResult.getAllErrors());
+        responseEntity = new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
+
     @SuppressWarnings("StringBufferReplaceableByString")
     private List<String> transformErrors(List<ObjectError> errors) {
         List<String> result = new LinkedList<>();
 
         result.addAll(errors.stream()
                 .filter(objectError -> objectError instanceof FieldError)
-                .map( objectError -> (FieldError)objectError)
+                .map(objectError -> (FieldError) objectError)
                 .map(fieldError -> new StringBuilder()
                         .append("field: ")
                         .append(fieldError.getField())
