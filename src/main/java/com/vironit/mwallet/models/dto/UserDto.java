@@ -1,6 +1,5 @@
 package com.vironit.mwallet.models.dto;
 
-import com.vironit.mwallet.services.validator.LoginUnique;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +29,6 @@ public class UserDto {
 
     @NotNull(message = "Can't be null")
     @Size(min = 4, max = 60, message = "Should be bigger than 3 and less than 61")
-    @LoginUnique
     private String login;
 
     @NotNull(message = "Can't be null")

@@ -2,6 +2,7 @@ package com.vironit.mwallet.models.dto;
 
 import com.vironit.mwallet.services.validator.LoginUnique;
 import com.vironit.mwallet.services.validator.RoleIdExists;
+import com.vironit.mwallet.services.validator.UniqueLogin;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@UniqueLogin
 public class UserRestDtoWithoutPassword {
 
     @PositiveOrZero(message = "Can't be negative")
@@ -31,7 +33,7 @@ public class UserRestDtoWithoutPassword {
 
     @NotNull(message = "Can't be null")
     @Size(min = 4, max = 60, message = "Should be bigger than 3 and less than 61")
-    @LoginUnique
+//    @LoginUnique
     private String login;
 
     @NotNull(message = "Can't be null")

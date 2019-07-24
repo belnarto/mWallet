@@ -1,6 +1,5 @@
 package com.vironit.mwallet.services.validator;
 
-import com.vironit.mwallet.dao.UserDao;
 import com.vironit.mwallet.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,9 +13,6 @@ public class LoginUniqueValidator implements ConstraintValidator<LoginUnique, St
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserDao userDao;
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {

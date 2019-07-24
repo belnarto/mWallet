@@ -12,9 +12,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,7 +61,7 @@ class RestController {
                 return responseEntity;
             }
         }
-        List<String> errors = transformErrors(bindingResult.getFieldErrors());
+        List<String> errors = transformErrors(bindingResult.getAllErrors());
         responseEntity = new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
         return responseEntity;
     }
@@ -108,7 +110,7 @@ class RestController {
                 return responseEntity;
             }
         }
-        List<String> errors = transformErrors(bindingResult.getFieldErrors());
+        List<String> errors = transformErrors(bindingResult.getAllErrors());
         responseEntity = new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
         return responseEntity;
     }
@@ -129,8 +131,12 @@ class RestController {
     }
 
     @SuppressWarnings("StringBufferReplaceableByString")
-    private List<String> transformErrors(List<FieldError> errors) {
-        return errors.stream()
+    private List<String> transformErrors(List<ObjectError> errors) {
+        List<String> result = new LinkedList<>();
+
+        result.addAll(errors.stream()
+                .filter(objectError -> objectError instanceof FieldError)
+                .map( objectError -> (FieldError)objectError)
                 .map(fieldError -> new StringBuilder()
                         .append("field: ")
                         .append(fieldError.getField())
@@ -139,6 +145,16 @@ class RestController {
                         .append(", message: ")
                         .append(fieldError.getDefaultMessage())
                         .toString())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
+
+        result.addAll(errors.stream()
+                .filter(objectError -> objectError.getClass().equals(ObjectError.class))
+                .map(objectError -> new StringBuilder()
+                        .append("error: ")
+                        .append(objectError.getDefaultMessage())
+                        .toString())
+                .collect(Collectors.toList()));
+
+        return result;
     }
 }

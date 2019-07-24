@@ -1,7 +1,7 @@
 package com.vironit.mwallet.models.dto;
 
-import com.vironit.mwallet.services.validator.LoginUnique;
 import com.vironit.mwallet.services.validator.RoleIdExists;
+import com.vironit.mwallet.services.validator.UniqueLogin;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,11 +15,11 @@ import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@UniqueLogin
 public class UserRestDto {
 
     @PositiveOrZero(message = "Can't be negative")
@@ -31,7 +31,6 @@ public class UserRestDto {
 
     @NotNull(message = "Can't be null")
     @Size(min = 4, max = 60, message = "Should be bigger than 3 and less than 61")
-    @LoginUnique
     private String login;
 
     @NotNull(message = "Can't be null")
@@ -48,9 +47,5 @@ public class UserRestDto {
     @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    private Set<WalletDto> wallets;
 
 }
