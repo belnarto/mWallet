@@ -1,7 +1,9 @@
 package com.vironit.mwallet.services.mapper;
 
 import com.vironit.mwallet.models.dto.WalletDto;
+import com.vironit.mwallet.models.dto.WalletRestDtoWithUserAndCurrencyId;
 import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.UserService;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -20,6 +22,9 @@ public class WalletMapper {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CurrencyService currencyService;
 
     /**
      * В @PostConstruct мы зададим правила, в которых укажем,
@@ -41,6 +46,11 @@ public class WalletMapper {
         mapper.createTypeMap(WalletDto.class, Wallet.class)
                 .addMappings(m -> m.skip(Wallet::setUser))
                 .setPostConverter(toEntityConverter());
+
+        mapper.createTypeMap(WalletRestDtoWithUserAndCurrencyId.class, Wallet.class)
+                .addMappings(m -> m.skip(Wallet::setUser))
+                .addMappings(m -> m.skip(Wallet::setCurrency))
+                .setPostConverter(toEntityConverterFromRestSImple());
     }
 
     private Converter<Wallet, WalletDto> toDtoConverter() {
@@ -61,8 +71,22 @@ public class WalletMapper {
         };
     }
 
+    private Converter<WalletRestDtoWithUserAndCurrencyId, Wallet> toEntityConverterFromRestSImple() {
+        return context -> {
+            WalletRestDtoWithUserAndCurrencyId source = context.getSource();
+            Wallet destination = context.getDestination();
+            mapSpecificFields(source, destination);
+            return context.getDestination();
+        };
+    }
+
     private void mapSpecificFields(WalletDto source, Wallet destination) {
         destination.setUser(userService.findById(source.getUserId()));
+    }
+
+    private void mapSpecificFields(WalletRestDtoWithUserAndCurrencyId source, Wallet destination) {
+        destination.setUser(userService.findById(Integer.parseInt(source.getUserId())));
+        destination.setCurrency(currencyService.findById(Integer.parseInt(source.getCurrencyId())));
     }
 
     private void mapSpecificFields(Wallet source, WalletDto destination) {
@@ -71,6 +95,11 @@ public class WalletMapper {
 
     public Wallet toEntity(WalletDto walletDto) {
         return Objects.isNull(walletDto) ? null : mapper.map(walletDto, Wallet.class);
+    }
+
+    public Wallet toEntity(WalletRestDtoWithUserAndCurrencyId walletRestDtoWithUserAndCurrencyId) {
+        return Objects.isNull(walletRestDtoWithUserAndCurrencyId) ? null
+                : mapper.map(walletRestDtoWithUserAndCurrencyId, Wallet.class);
     }
 
     public WalletDto toDto(Wallet walletEntity) {

@@ -3,6 +3,7 @@ package com.vironit.mwallet.controllers;
 import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.dto.WalletDto;
+import com.vironit.mwallet.models.dto.WalletRestDtoWithUserAndCurrencyId;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.UserService;
@@ -156,7 +157,7 @@ class RestController {
 
     @SuppressWarnings("unchecked")
     @PostMapping(value = "/users/{userId}/wallets")
-    public ResponseEntity createWallet(@Valid @RequestBody WalletDto walletDto,
+    public ResponseEntity createWallet(@Valid @RequestBody WalletRestDtoWithUserAndCurrencyId walletRestDtoWithUserAndCurrencyId,
                                        BindingResult bindingResult,
                                        @PathVariable("userId") int userId) {
         ResponseEntity responseEntity;
@@ -169,7 +170,7 @@ class RestController {
 
         if (!bindingResult.hasErrors()) {
             try {
-                Wallet wallet = walletMapper.toEntity(walletDto);
+                Wallet wallet = walletMapper.toEntity(walletRestDtoWithUserAndCurrencyId);
                 walletService.save(wallet);
                 responseEntity = new ResponseEntity(walletMapper.toDto(wallet),
                         HttpStatus.CREATED);
