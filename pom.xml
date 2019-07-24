@@ -42,6 +42,7 @@
         <glassfish.version>3.0.1-b08</glassfish.version>
         <hikari.version>2.6.1</hikari.version>
         <modelmapper.version>2.3.5</modelmapper.version>
+        <jackson.version>2.9.8</jackson.version>
     </properties>
 
     <dependencies>
@@ -225,19 +226,15 @@
             <version>${modelmapper.version}</version>
         </dependency>
 
-        <!-- END -->
+        <!-- Jackson -->
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
+            <version>${jackson.version}</version>
         </dependency>
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-            <scope>runtime</scope>
-        </dependency>
+
+        <!-- END -->
 
     </dependencies>
 
