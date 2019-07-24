@@ -20,7 +20,11 @@ public class LoginUniqueValidator implements ConstraintValidator<LoginUnique, St
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return value != null && userService.findByLogin(value) == null;
+        if (value != null) {
+            return  userService.findByLogin(value) == null;
+        } else {
+            return true;
+        }
     }
 
 }

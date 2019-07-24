@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -53,4 +54,13 @@ public class ExceptionController {
         return responseEntity;
     }
 
+    @SuppressWarnings({"unused", "unchecked"})
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity handleTypeMismatchError(HttpServletRequest request,
+                                                  Exception e) {
+        ResponseEntity responseEntity;
+        responseEntity = new ResponseEntity(e.getMessage(),
+                HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
 }

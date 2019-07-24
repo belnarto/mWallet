@@ -1,13 +1,10 @@
 package com.vironit.mwallet.controllers;
 
-import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
-import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
 import com.vironit.mwallet.services.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -54,7 +50,8 @@ class RestController {
             try {
                 User user = userMapper.toEntity(userRestDto);
                 userService.save(user);
-                responseEntity = new ResponseEntity(userMapper.toRestDtoWithoutPassword(user), HttpStatus.CREATED);
+                responseEntity = new ResponseEntity(userMapper.toRestDtoWithoutPassword(user),
+                        HttpStatus.CREATED);
                 return responseEntity;
             } catch (Exception e) {
                 log.debug("Error during user saving", e);
@@ -67,30 +64,68 @@ class RestController {
         return responseEntity;
     }
 
+    @SuppressWarnings("unchecked")
     @GetMapping(value = "/users/{userId}")
-    public UserRestDtoWithoutPassword findUserById(@PathVariable("userId") int userId) {
-        return userMapper.toRestDtoWithoutPassword(userService.findById(userId));
-    }
+    public ResponseEntity findUserById(@PathVariable("userId") int userId) {
+        ResponseEntity responseEntity;
+        User user = userService.findById(userId);
 
-    @PutMapping(value = "/users/{userId}/updateUser")
-    @ResponseStatus(HttpStatus.OK)
-    public UserDto updateUser(@PathVariable("userId") int userId,
-                              @RequestBody UserDto userDto) {
-        User user = userMapper.toEntity(userDto);
-        Set<Wallet> wallets = walletService.findAllByUser(user);
-        user.setWallets(wallets);
-        try {
-            userService.update(user);
-        } catch (LoginAlreadyDefinedException e) {
-            log.debug("Error during user saving", e);
+        if (user != null) {
+            responseEntity = new ResponseEntity(userMapper.toRestDtoWithoutPassword(user),
+                    HttpStatus.OK);
+            return responseEntity;
+        } else {
+            responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return responseEntity;
         }
-        return userMapper.toDto(user);
     }
 
-    @DeleteMapping(value = "/users/{userId}/deleteUser")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("userId") int userId) {
-        userService.delete(userService.findById(userId));
+    @SuppressWarnings("unused")
+    @PostMapping(value = "/users/{userId}")
+    public ResponseEntity postUserById(@PathVariable("userId") int userId) {
+        ResponseEntity responseEntity;
+        responseEntity = new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
+        return responseEntity;
+    }
+
+    @SuppressWarnings({"unchecked", "unused"})
+    @PutMapping(value = "/users/{userId}")
+    public ResponseEntity updateUser(@PathVariable("userId") int userId,
+                              @Valid @RequestBody UserRestDto userRestDto,
+                              BindingResult bindingResult) {
+        ResponseEntity responseEntity;
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                User user = userMapper.toEntity(userRestDto);
+                userService.update(user);
+                responseEntity = new ResponseEntity(userMapper.toRestDtoWithoutPassword(user),
+                        HttpStatus.OK);
+                return responseEntity;
+            } catch (Exception e) {
+                log.debug("Error during user updating", e);
+                responseEntity = new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                return responseEntity;
+            }
+        }
+        List<String> errors = transformErrors(bindingResult.getFieldErrors());
+        responseEntity = new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
+
+    @DeleteMapping(value = "/users/{userId}")
+    public ResponseEntity deleteUser(@PathVariable("userId") int userId) {
+        ResponseEntity responseEntity;
+        User user = userService.findById(userId);
+
+        if (user != null) {
+            userService.delete(user);
+            responseEntity = new ResponseEntity(HttpStatus.OK);
+            return responseEntity;
+        } else {
+            responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return responseEntity;
+        }
     }
 
     @SuppressWarnings("StringBufferReplaceableByString")

@@ -5,6 +5,8 @@ import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.services.RoleService;
+import com.vironit.mwallet.services.UserService;
+import com.vironit.mwallet.services.WalletService;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class UserMapper {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private WalletService walletService;
+
+    @Autowired
+    private UserService userService;
 
     @PostConstruct
     public void setupMapper() {
@@ -66,6 +74,11 @@ public class UserMapper {
 
     private void mapSpecificFields(UserRestDto source, User destination) {
         destination.setRole(roleService.findById(Integer.parseInt(source.getRoleId())));
+        User currentUser = userService.findById(source.getId());
+        if (currentUser != null) {
+            destination.setWallets(currentUser.getWallets());
+        }
+
     }
 
     private void mapSpecificFields(User source, UserRestDto destination) {

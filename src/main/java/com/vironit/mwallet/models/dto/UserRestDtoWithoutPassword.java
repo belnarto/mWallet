@@ -44,8 +44,8 @@ public class UserRestDtoWithoutPassword {
     @Setter(AccessLevel.NONE)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Set<WalletDto> wallets;
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<WalletDto> wallets;
 
 }
