@@ -43,6 +43,7 @@
         <hikari.version>2.6.1</hikari.version>
         <modelmapper.version>2.3.5</modelmapper.version>
         <jackson.version>2.9.8</jackson.version>
+        <jwt.version>0.9.0</jwt.version>
     </properties>
 
     <dependencies>
@@ -235,6 +236,12 @@
         </dependency>
 
         <!-- END -->
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
 
     </dependencies>
 

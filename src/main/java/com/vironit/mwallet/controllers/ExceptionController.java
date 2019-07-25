@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.access.AccessDeniedException;
 
 /**
  * Apply globally to all Controllers
@@ -61,6 +62,16 @@ public class ExceptionController {
         ResponseEntity responseEntity;
         responseEntity = new ResponseEntity(e.getMessage(),
                 HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
+
+    @SuppressWarnings({"unused", "unchecked"})
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity accessDenied(HttpServletRequest request,
+                                                  Exception e) {
+        ResponseEntity responseEntity;
+        responseEntity = new ResponseEntity(e.getMessage(),
+                HttpStatus.FORBIDDEN);
         return responseEntity;
     }
 }

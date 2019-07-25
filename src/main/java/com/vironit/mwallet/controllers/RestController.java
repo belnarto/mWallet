@@ -18,6 +18,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -83,6 +84,8 @@ class RestController {
         return responseEntity;
     }
 
+    //@PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping(value = "/users")
     public List<UserRestDtoWithoutPassword> findAllUsers() {
         return userService.findAll().stream()
@@ -115,6 +118,7 @@ class RestController {
     }
 
     @SuppressWarnings("unchecked")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId)")
     @GetMapping(value = "/users/{userId}")
     public ResponseEntity findUserById(@PathVariable("userId") int userId) {
         ResponseEntity responseEntity;
