@@ -3,6 +3,7 @@ package com.vironit.mwallet.dao.impl;
 import com.vironit.mwallet.dao.CurrencyDao;
 import com.vironit.mwallet.models.entity.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -58,11 +59,23 @@ public class CurrencyDaoImpl implements CurrencyDao {
 
     @Override
     public Currency findById(int id) {
-        return jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_ID, rowMapper, id);
+        Currency currency;
+        try {
+            currency = jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_ID, rowMapper, id);
+        } catch (EmptyResultDataAccessException e) {
+            currency = null;
+        }
+        return currency;
     }
 
     @Override
     public Currency findByName(String name) {
-        return jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_NAME, rowMapper, name);
+        Currency currency;
+        try {
+            currency = jdbcTemplate.queryForObject(PREPARED_SQL_FIND_BY_NAME, rowMapper, name);
+        } catch (EmptyResultDataAccessException e) {
+            currency = null;
+        }
+        return currency;
     }
 }

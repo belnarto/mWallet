@@ -1,13 +1,17 @@
 package com.vironit.mwallet.controllers;
 
+import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.dto.WalletRestDtoWithUserAndCurrencyId;
+import com.vironit.mwallet.models.entity.Currency;
 import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.services.CurrencyService;
 import com.vironit.mwallet.services.UserService;
 import com.vironit.mwallet.services.WalletService;
+import com.vironit.mwallet.services.mapper.CurrencyMapper;
 import com.vironit.mwallet.services.mapper.UserMapper;
 import com.vironit.mwallet.services.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
@@ -37,10 +41,47 @@ class RestController {
     private WalletService walletService;
 
     @Autowired
+    private CurrencyService currencyService;
+
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired
     private WalletMapper walletMapper;
+
+    @Autowired
+    private CurrencyMapper currencyMapper;
+
+    @GetMapping(value = "/currencies")
+    public List<CurrencyDto> findAllCurrencies() {
+        return currencyService.findAll().stream()
+                .map(currency -> currencyMapper.toDto(currency))
+                .collect(Collectors.toList());
+    }
+
+    @SuppressWarnings("unchecked")
+    @PostMapping(value = "/currencies")
+    public ResponseEntity createCurrency(@Valid @RequestBody CurrencyDto currencyDto,
+                                     BindingResult bindingResult) {
+        ResponseEntity responseEntity;
+
+        if (!bindingResult.hasErrors()) {
+            try {
+                Currency currency = currencyMapper.toEntity(currencyDto);
+                currencyService.save(currency);
+                responseEntity = new ResponseEntity(currencyMapper.toDto(currency),
+                        HttpStatus.CREATED);
+                return responseEntity;
+            } catch (Exception e) {
+                log.debug("Error during currency saving", e);
+                responseEntity = new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+                return responseEntity;
+            }
+        }
+        List<String> errors = transformErrors(bindingResult.getAllErrors());
+        responseEntity = new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+        return responseEntity;
+    }
 
     @GetMapping(value = "/users")
     public List<UserRestDtoWithoutPassword> findAllUsers() {
@@ -161,12 +202,6 @@ class RestController {
                                        BindingResult bindingResult,
                                        @PathVariable("userId") int userId) {
         ResponseEntity responseEntity;
-        User user = userService.findById(userId);
-
-        if (user == null) {
-            responseEntity = new ResponseEntity(HttpStatus.NOT_FOUND);
-            return responseEntity;
-        }
 
         if (!bindingResult.hasErrors()) {
             try {
