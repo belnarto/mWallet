@@ -116,6 +116,7 @@ public class UserController {
         return modelAndView;
     }
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/updateUser")
     public ModelAndView updateUserGet(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
@@ -132,6 +133,7 @@ public class UserController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/updateUser")
     public ModelAndView updateUserPost(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
@@ -161,6 +163,7 @@ public class UserController {
         return modelAndView;
     }
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/deleteUser")
     public ModelAndView deleteUserPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId) {

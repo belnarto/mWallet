@@ -13,6 +13,7 @@ import com.vironit.mwallet.services.mapper.CurrencyMapper;
 import com.vironit.mwallet.services.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -47,6 +48,7 @@ public class WalletController {
     @Autowired
     private CurrencyMapper currencyMapper;
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets")
     public ModelAndView userWalletsPage(ModelAndView modelAndView,
                                         @PathVariable("userId") int userId) {
@@ -60,6 +62,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/addWallet")
     public ModelAndView addWalletPage(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
@@ -73,6 +76,7 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/addWallet")
     public ModelAndView addWallet(ModelAndView modelAndView,
                                   @PathVariable("userId") int userId,
@@ -97,6 +101,9 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     public ModelAndView editWalletPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
@@ -119,6 +126,9 @@ public class WalletController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     public ModelAndView editWallet(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
@@ -134,6 +144,9 @@ public class WalletController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/deleteWallet")
     public ModelAndView deleteWallet(ModelAndView modelAndView,
                                      @PathVariable("userId") int userId,
@@ -144,6 +157,9 @@ public class WalletController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     public ModelAndView addBalancePage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
@@ -153,6 +169,9 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     public ModelAndView addBalance(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
@@ -173,6 +192,9 @@ public class WalletController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     public ModelAndView reduceBalancePage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
@@ -182,6 +204,9 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     public ModelAndView reduceBalance(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,
@@ -202,6 +227,9 @@ public class WalletController {
     }
 
     @SuppressWarnings("unused")
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     public ModelAndView transferMoneyPage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
@@ -211,6 +239,9 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
+            " and @securityService.checkWalletId(authentication,#walletId))" +
+            " or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     public ModelAndView transferMoney(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,

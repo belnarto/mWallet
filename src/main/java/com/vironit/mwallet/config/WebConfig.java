@@ -16,10 +16,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-
 import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -27,6 +23,18 @@ import static org.modelmapper.config.Configuration.AccessLevel.PRIVATE;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.vironit.mwallet")
 public class WebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    StringToRoleConverter stringToRoleConverter;
+
+    @Autowired
+    StringToCurrencyConverter stringToCurrencyConverter;
+
+    @Autowired
+    UserIdToUserConverter userIdToUserConverter;
+
+    @Autowired
+    StringToWalletStatusConverter stringToWalletStatusConverter;
 
     @Bean
     ViewResolver viewResolver() {
@@ -49,19 +57,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .setFieldAccessLevel(PRIVATE);
         return mapper;
     }
-
-
-    @Autowired
-    StringToRoleConverter stringToRoleConverter;
-
-    @Autowired
-    StringToCurrencyConverter stringToCurrencyConverter;
-
-    @Autowired
-    UserIdToUserConverter userIdToUserConverter;
-
-    @Autowired
-    StringToWalletStatusConverter stringToWalletStatusConverter;
 
     /**
      * By overriding this method we add converting strategies

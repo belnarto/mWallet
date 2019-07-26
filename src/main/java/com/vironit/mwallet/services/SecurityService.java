@@ -25,9 +25,8 @@ public class SecurityService {
     public boolean checkWalletId(Authentication authentication, int walletId) {
         String login = authentication.getName();
         User user = userService.findByLogin(login);
-        Wallet wallet = walletService.findById(walletId);
         return user.getWallets().stream()
-                .map(wallet1 -> wallet.getId())
+                .map(Wallet::getId)
                 .anyMatch(walletId1 -> walletId1.equals(walletId));
     }
 }
