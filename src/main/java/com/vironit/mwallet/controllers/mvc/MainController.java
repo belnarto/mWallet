@@ -1,4 +1,4 @@
-package com.vironit.mwallet.controllers;
+package com.vironit.mwallet.controllers.mvc;
 
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;
@@ -21,25 +21,13 @@ public class MainController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = {"/", "main"})
     public ModelAndView rootPage(ModelAndView modelAndView,
-                                 Principal user) {
+                                 Principal principal) {
         modelAndView.setViewName("main");
 
-        if (user != null) {
-            modelAndView.addObject("userId", userService.findByLogin(user.getName()).getId());
-        }
-
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/main")
-    public ModelAndView mainPage(ModelAndView modelAndView,
-                                 Principal user) {
-        modelAndView.setViewName("main");
-
-        if (user != null) {
-            modelAndView.addObject("userId", userService.findByLogin(user.getName()).getId());
+        if (principal != null) {
+            modelAndView.addObject("userId", userService.findByLogin(principal.getName()).getId());
         }
 
         return modelAndView;
@@ -62,12 +50,12 @@ public class MainController {
 
     @GetMapping(value = "/403")
     public ModelAndView accessDeniedPage(ModelAndView modelAndView,
-                                         Principal user) {
+                                         Principal principal) {
 
         modelAndView.addObject("errorTitle", "Access is denied.");
 
-        if (user != null) {
-            modelAndView.addObject("errorMsg", "Hi " + user.getName()
+        if (principal != null) {
+            modelAndView.addObject("errorMsg", "Hi " + principal.getName()
                     + ", you do not have permission to access this page!");
         } else {
             modelAndView.addObject("errorMsg",
@@ -80,7 +68,7 @@ public class MainController {
 
     @PostMapping(value = "/403")
     public ModelAndView accessDenied(ModelAndView modelAndView,
-                                     Principal user) {
-        return accessDeniedPage(modelAndView, user);
+                                     Principal principal) {
+        return accessDeniedPage(modelAndView, principal);
     }
 }

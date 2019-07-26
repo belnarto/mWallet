@@ -1,4 +1,4 @@
-package com.vironit.mwallet.controllers;
+package com.vironit.mwallet.controllers.rest;
 
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.dto.UserRestDto;

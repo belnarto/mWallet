@@ -1,12 +1,10 @@
-package com.vironit.mwallet.controllers;
+package com.vironit.mwallet.controllers.mvc;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -48,12 +46,12 @@ public class ExceptionWebController {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView accessDeniedPage(ModelAndView modelAndView,
-                                         Principal user) {
+                                         Principal principal) {
 
         modelAndView.addObject("errorTitle", "Access is denied.");
 
-        if (user != null) {
-            modelAndView.addObject("errorMsg", "Hi " + user.getName()
+        if (principal != null) {
+            modelAndView.addObject("errorMsg", "Hi " + principal.getName()
                     + ", you do not have permission to access this page!");
         } else {
             modelAndView.addObject("errorMsg",

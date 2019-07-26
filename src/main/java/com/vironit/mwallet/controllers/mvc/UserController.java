@@ -1,5 +1,6 @@
-package com.vironit.mwallet.controllers;
+package com.vironit.mwallet.controllers.mvc;
 
+import com.vironit.mwallet.controllers.mvc.exception.UserControllerException;
 import com.vironit.mwallet.models.dto.RoleDto;
 import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.entity.User;
@@ -50,14 +51,13 @@ public class UserController {
     @Autowired
     private RoleMapper roleMapper;
 
-
     @Qualifier("springValidationService")
     @SuppressWarnings("unused")
     @Autowired
     private Validator validator;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/users")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView allUsersPage(ModelAndView modelAndView) {
         List<UserDto> users = userService.findAll().stream()
                 .map(user -> userMapper.toDto(user))
@@ -68,15 +68,15 @@ public class UserController {
         return modelAndView;
     }
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView myUserPage(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId) {
-        List<UserDto> myUser = new ArrayList<>(); // because in JSP array is expected, to reuse same JSP
-        myUser.add(userMapper.toDto(userService.findById(userId)));
+        List<UserDto> user = new ArrayList<>(); // because in JSP array is expected, to reuse same JSP
+        user.add(userMapper.toDto(userService.findById(userId)));
 
         modelAndView.setViewName("userPages/users");
-        modelAndView.addObject("users", myUser);
+        modelAndView.addObject("users", user);
         return modelAndView;
     }
 
@@ -94,7 +94,7 @@ public class UserController {
     @PostMapping(value = "/users/addUser")
     public ModelAndView addUser(ModelAndView modelAndView,
                                 @Valid @ModelAttribute("user") UserDto userDto,
-                                BindingResult bindingResult) {
+                                BindingResult bindingResult) throws UserControllerException {
         if (!bindingResult.hasErrors()) {
             try {
                 userService.save(userMapper.toEntity(userDto));
@@ -103,8 +103,13 @@ public class UserController {
                 return modelAndView;
             } catch (LoginAlreadyDefinedException e) {
                 log.debug("login already defined. " + userDto);
-                bindingResult.addError(new FieldError("user", "login", "login already defined."));
+                bindingResult.addError(
+                        new FieldError("user", "login", "login already defined."));
+            } catch (Exception e) {
+                log.error("error occurred during addition new user ", e);
+                throw new UserControllerException("error occurred during addition new user", e);
             }
+
         }
         List<RoleDto> roles = roleService.findAll().stream()
                 .map(role -> roleMapper.toDto(role))
@@ -116,8 +121,8 @@ public class UserController {
         return modelAndView;
     }
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/updateUser")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView updateUserGet(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         UserDto userDto = userMapper.toDto(userService.findById(userId));
@@ -133,12 +138,12 @@ public class UserController {
     }
 
     @SuppressWarnings("unused")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/updateUser")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView updateUserPost(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
                                        @Valid @ModelAttribute("user") UserDto userDto,
-                                       BindingResult bindingResult) {
+                                       BindingResult bindingResult) throws UserControllerException {
         List<RoleDto> roles = roleService.findAll().stream()
                 .map(role -> roleMapper.toDto(role))
                 .collect(Collectors.toList());
@@ -153,7 +158,11 @@ public class UserController {
                 modelAndView.addObject("updated", true);
             } catch (LoginAlreadyDefinedException e) {
                 log.debug("login already defined. " + user);
-                bindingResult.addError(new FieldError("user", "login", "login already defined."));
+                bindingResult.addError(
+                        new FieldError("user", "login", "login already defined."));
+            } catch (Exception e) {
+                log.error("error occurred during updating user ", e);
+                throw new UserControllerException("error occurred during updating user", e);
             }
         }
 
@@ -163,11 +172,16 @@ public class UserController {
         return modelAndView;
     }
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/deleteUser")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView deleteUserPage(ModelAndView modelAndView,
-                                       @PathVariable("userId") int userId) {
-        userService.delete(userService.findById(userId));
+                                       @PathVariable("userId") int userId) throws UserControllerException {
+        try {
+            userService.delete(userService.findById(userId));
+        } catch (Exception e) {
+            log.error("error occurred during deletion user ", e);
+            throw new UserControllerException("error occurred during deletion user", e);
+        }
         modelAndView.setViewName("redirect:/users");
         return modelAndView;
     }

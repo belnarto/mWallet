@@ -1,6 +1,6 @@
-package com.vironit.mwallet.controllers;
+package com.vironit.mwallet.controllers.mvc;
 
-import com.vironit.mwallet.controllers.exception.WalletControllerException;
+import com.vironit.mwallet.controllers.mvc.exception.WalletControllerException;
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.attributes.WalletStatusEnum;
@@ -48,8 +48,8 @@ public class WalletController {
     @Autowired
     private CurrencyMapper currencyMapper;
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView userWalletsPage(ModelAndView modelAndView,
                                         @PathVariable("userId") int userId) {
         List<WalletDto> wallets = walletService.findAllByUser(userService.findById(userId)).stream()
@@ -62,8 +62,8 @@ public class WalletController {
         return modelAndView;
     }
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}/wallets/addWallet")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView addWalletPage(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         List<CurrencyDto> currencies = currencyService.findAll().stream()
@@ -76,8 +76,8 @@ public class WalletController {
         return modelAndView;
     }
 
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @PostMapping(value = "/users/{userId}/wallets/addWallet")
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView addWallet(ModelAndView modelAndView,
                                   @PathVariable("userId") int userId,
                                   @Valid @ModelAttribute("wallet") WalletDto walletDto,
@@ -91,8 +91,8 @@ public class WalletController {
             try {
                 walletService.save(walletMapper.toEntity(walletDto));
             } catch (WalletServiceException e) {
-                log.debug("wallet service exception", e);
-                throw new WalletControllerException("error occurred", e);
+                log.error("wallet service exception", e);
+                throw new WalletControllerException("error occurred during addition new wallet", e);
             }
         }
 
@@ -101,10 +101,10 @@ public class WalletController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @GetMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     public ModelAndView editWalletPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
                                        @PathVariable("walletId") int walletId) {
@@ -125,42 +125,49 @@ public class WalletController {
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
+    @PostMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @PostMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
     public ModelAndView editWallet(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
                                    @PathVariable("walletId") int walletId,
                                    @Valid @ModelAttribute("wallet") WalletDto walletDto,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult) throws WalletControllerException {
         if (!bindingResult.hasErrors()) {
-            walletService.update(walletMapper.toEntity(walletDto));
+            try {
+                walletService.update(walletMapper.toEntity(walletDto));
+            } catch (Exception e) {
+                log.error("error occurred during updating wallet", e);
+                throw new WalletControllerException("error occurred during updating wallet", e);
+            }
         }
         modelAndView = userWalletsPage(modelAndView, userId);
         modelAndView.addObject("fieldErrors", bindingResult.getFieldErrors());
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
+    @PostMapping(value = "/users/{userId}/wallets/{walletId}/deleteWallet")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @PostMapping(value = "/users/{userId}/wallets/{walletId}/deleteWallet")
     public ModelAndView deleteWallet(ModelAndView modelAndView,
                                      @PathVariable("userId") int userId,
-                                     @PathVariable("walletId") int walletId) {
-        walletService.delete(walletService.findById(walletId));
+                                     @PathVariable("walletId") int walletId) throws WalletControllerException {
+        try {
+            walletService.delete(walletService.findById(walletId));
+        } catch (Exception e) {
+            log.error("error occurred during deletion wallet", e);
+            throw new WalletControllerException("error occurred during deletion wallet", e);
+        }
         modelAndView.setViewName("redirect:/users/{userId}/wallets");
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
+    @GetMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @GetMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     public ModelAndView addBalancePage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
                                        @PathVariable("walletId") int walletId) {
@@ -169,10 +176,10 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @PostMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
     public ModelAndView addBalance(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
                                    @PathVariable("walletId") int walletId,
@@ -182,7 +189,7 @@ public class WalletController {
         try {
             walletService.addBalance(wallet, amountToAdd);
         } catch (WalletServiceException e) {
-            log.debug("can't add balance to wallet " + wallet
+            log.error("can't add balance to wallet " + wallet
                     + " because " + e);
             bindingResult.addError(new FieldError("wallet", "status", e.getMessage()));
         }
@@ -191,11 +198,10 @@ public class WalletController {
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
+    @GetMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @GetMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     public ModelAndView reduceBalancePage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
                                           @PathVariable("walletId") int walletId) {
@@ -204,10 +210,10 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @PostMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
     public ModelAndView reduceBalance(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,
                                       @PathVariable("walletId") int walletId,
@@ -226,11 +232,10 @@ public class WalletController {
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
+    @GetMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @GetMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     public ModelAndView transferMoneyPage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
                                           @PathVariable("walletId") int walletId) {
@@ -239,10 +244,10 @@ public class WalletController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
             " and @securityService.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
-    @PostMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
     public ModelAndView transferMoney(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,
                                       @PathVariable("walletId") int walletId,
