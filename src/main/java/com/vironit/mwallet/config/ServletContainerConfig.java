@@ -24,7 +24,7 @@ public class ServletContainerConfig
     // Load persistence and spring security configuration
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{SecurityConfig.class, PersistenceConfig.class};
+        return new Class[]{SecurityMvcConfig.class, PersistenceConfig.class};
     }
 
     // Load spring web configuration

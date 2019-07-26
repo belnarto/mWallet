@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +22,8 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "com.vironit.mwallet")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(2)
+public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -67,14 +69,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         configureSessionManagement(httpSecurity);
-        csrfConfiguration(httpSecurity);
         configureEncodingFilter(httpSecurity, "UTF-8");
+
         authorizeRequestsPermittedAll(httpSecurity);
         authorizeRequestsWithSecurityLimitation(httpSecurity);
+
         httpSecurity.authorizeRequests().anyRequest().authenticated();
+
         configureLogin(httpSecurity);
         configureLogout(httpSecurity);
         configureRememberMe(httpSecurity);
+
         httpSecurity.exceptionHandling().accessDeniedPage("/403");
     }
 
@@ -88,16 +93,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionFixation().migrateSession() // what happens to an existing session when the user tries to authenticate again
                 .maximumSessions(1)
                 .expiredUrl("/login");
-    }
-
-    /**
-     * Disable csrf for rest api.
-     * https://stackoverflow.com/questions/38108357/how-to-enable-post-put-and-delete-methods-in-spring-security
-     */
-    private void csrfConfiguration(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf()
-                .ignoringAntMatchers("/api/v1/**");
     }
 
     /**
@@ -122,8 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/main",
                         "/403",
                         "/users/addUser",
-                        "/currencies",
-                        "/api/v1/**"
+                        "/currencies"
                 ).permitAll();
     }
 
@@ -149,11 +143,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         " or hasRole('ADMIN')")
 
                 .antMatchers("/users/{userId}/updateUser",
-                        "/users/{userId}/deleteUser",
-                        "/users/{userId}")
+                        "/users/{userId}/deleteUser")
                 .access("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
 
-                .antMatchers("/users/**",
+                .antMatchers(
                         "/currencies/**")
                 .access("hasRole('ADMIN')");
     }

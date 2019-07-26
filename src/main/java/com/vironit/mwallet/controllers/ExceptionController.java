@@ -2,23 +2,22 @@ package com.vironit.mwallet.controllers;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.access.AccessDeniedException;
 
-/**
- * Apply globally to all Controllers
- * by annotation @ControllerAdvice
- */
+import java.security.Principal;
+
+@SuppressWarnings("unused")
 @Log4j2
-@ControllerAdvice
+@ControllerAdvice(annotations = Controller.class)
 public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
@@ -34,10 +33,9 @@ public class ExceptionController {
         return modelAndView;
     }
 
-    @SuppressWarnings("unused")
     @ExceptionHandler(NoHandlerFoundException.class)
     public ModelAndView handleError404(HttpServletRequest request,
-                                       Exception e) {
+                                       NoHandlerFoundException e) {
         ModelAndView modelAndView = new ModelAndView("/errorPage");
         modelAndView.addObject("errorTitle", "Page not found.");
         modelAndView.addObject("errorMsg", "Sorry, but page you are looking " +
@@ -45,33 +43,22 @@ public class ExceptionController {
         return modelAndView;
     }
 
-    @SuppressWarnings({"unused", "unchecked"})
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity handleError400(HttpServletRequest request,
-                                         Exception e) {
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity(e.getMessage().replaceAll("nested exception[\\W\\w]+", ""),
-                HttpStatus.BAD_REQUEST);
-        return responseEntity;
-    }
-
-    @SuppressWarnings({"unused", "unchecked"})
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity handleTypeMismatchError(HttpServletRequest request,
-                                                  Exception e) {
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity(e.getMessage(),
-                HttpStatus.BAD_REQUEST);
-        return responseEntity;
-    }
-
-    @SuppressWarnings({"unused", "unchecked"})
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity accessDenied(HttpServletRequest request,
-                                                  Exception e) {
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity(e.getMessage(),
-                HttpStatus.FORBIDDEN);
-        return responseEntity;
+    public ModelAndView accessDeniedPage(ModelAndView modelAndView,
+                                         Principal user) {
+
+        modelAndView.addObject("errorTitle", "Access is denied.");
+
+        if (user != null) {
+            modelAndView.addObject("errorMsg", "Hi " + user.getName()
+                    + ", you do not have permission to access this page!");
+        } else {
+            modelAndView.addObject("errorMsg",
+                    "You do not have permission to access this page!");
+        }
+
+        modelAndView.setViewName("errorPage");
+        return modelAndView;
     }
+
 }

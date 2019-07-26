@@ -13,6 +13,7 @@ import com.vironit.mwallet.services.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -55,6 +56,7 @@ public class UserController {
     @Autowired
     private Validator validator;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/users")
     public ModelAndView allUsersPage(ModelAndView modelAndView) {
         List<UserDto> users = userService.findAll().stream()
@@ -66,6 +68,7 @@ public class UserController {
         return modelAndView;
     }
 
+    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     @GetMapping(value = "/users/{userId}")
     public ModelAndView myUserPage(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId) {

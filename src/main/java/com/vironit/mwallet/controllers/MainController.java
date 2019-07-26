@@ -20,9 +20,21 @@ public class MainController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(value = "/*")
-    public ModelAndView mainPage(ModelAndView modelAndView,
+    @GetMapping(value = "/")
+    public ModelAndView rootPage(ModelAndView modelAndView,
                                 Principal user) {
+        modelAndView.setViewName("main");
+
+        if (user != null) {
+            modelAndView.addObject("userId", userService.findByLogin(user.getName()).getId());
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/main")
+    public ModelAndView mainPage(ModelAndView modelAndView,
+                                 Principal user) {
         modelAndView.setViewName("main");
 
         if (user != null) {
