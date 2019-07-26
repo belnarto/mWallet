@@ -1,4 +1,4 @@
-package com.vironit.mwallet.controllers.mvc;
+package com.vironit.mwallet.controller.mvc;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;

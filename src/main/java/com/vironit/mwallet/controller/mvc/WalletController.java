@@ -1,6 +1,6 @@
-package com.vironit.mwallet.controllers.mvc;
+package com.vironit.mwallet.controller.mvc;
 
-import com.vironit.mwallet.controllers.mvc.exception.WalletControllerException;
+import com.vironit.mwallet.controller.mvc.exception.WalletControllerException;
 import com.vironit.mwallet.models.dto.CurrencyDto;
 import com.vironit.mwallet.models.dto.WalletDto;
 import com.vironit.mwallet.models.attributes.WalletStatusEnum;

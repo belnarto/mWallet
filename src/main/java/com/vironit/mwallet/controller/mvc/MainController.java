@@ -1,4 +1,4 @@
-package com.vironit.mwallet.controllers.mvc;
+package com.vironit.mwallet.controller.mvc;
 
 import com.vironit.mwallet.services.RoleService;
 import com.vironit.mwallet.services.UserService;

@@ -1,6 +1,6 @@
-package com.vironit.mwallet.controllers.mvc;
+package com.vironit.mwallet.controller.mvc;
 
-import com.vironit.mwallet.controllers.mvc.exception.UserControllerException;
+import com.vironit.mwallet.controller.mvc.exception.UserControllerException;
 import com.vironit.mwallet.models.dto.RoleDto;
 import com.vironit.mwallet.models.dto.UserDto;
 import com.vironit.mwallet.models.entity.User;

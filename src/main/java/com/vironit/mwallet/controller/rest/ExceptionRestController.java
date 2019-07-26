@@ -1,5 +1,9 @@
-package com.vironit.mwallet.controllers.rest;
+package com.vironit.mwallet.controller.rest;
 
+import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
+import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
+import com.vironit.mwallet.controller.rest.exception.ValidationErrorException;
+import com.vironit.mwallet.utils.ErrorTransformator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,9 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings({"unused", "unchecked"})
 @Log4j2
@@ -43,10 +50,22 @@ public class ExceptionRestController {
                 HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity notFound(HttpServletRequest request) {
-        return new ResponseEntity("404",
-                HttpStatus.NOT_FOUND);
+    @ExceptionHandler(ValidationErrorException.class)
+    public ResponseEntity<List<String>> validationError(HttpServletRequest request,
+                                                 ValidationErrorException e) {
+        List<String> errors = ErrorTransformator.transformErrors(e.getObjectErrors());
+        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UserRestControllerException.class)
+    public ResponseEntity<List<String>> serverError(HttpServletRequest request) {
+        return new ResponseEntity(Collections.singletonList("Server internal error"),
+                HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<List<String>> notFound(HttpServletRequest request) {
+        return new ResponseEntity(Collections.singletonList("Resource not found"),
+                HttpStatus.NOT_FOUND);
+    }
 }

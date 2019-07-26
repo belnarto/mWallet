@@ -1,4 +1,4 @@
-package com.vironit.mwallet.controllers.mvc.exception;
+package com.vironit.mwallet.controller.mvc.exception;
 
 @SuppressWarnings("unused")
 public class UserControllerException extends Exception {
