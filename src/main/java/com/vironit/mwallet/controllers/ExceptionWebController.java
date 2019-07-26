@@ -1,6 +1,7 @@
 package com.vironit.mwallet.controllers;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +18,9 @@ import java.security.Principal;
 
 @SuppressWarnings("unused")
 @Log4j2
-@ControllerAdvice(annotations = Controller.class)
-public class ExceptionController {
+@ControllerAdvice
+@Order(2)
+public class ExceptionWebController {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleError(HttpServletRequest request,
@@ -40,6 +42,7 @@ public class ExceptionController {
         modelAndView.addObject("errorTitle", "Page not found.");
         modelAndView.addObject("errorMsg", "Sorry, but page you are looking " +
                 "for is not found.");
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
     }
 

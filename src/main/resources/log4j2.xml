@@ -25,7 +25,7 @@
         </Logger>
         <Logger level="error" name="org.hibernate">
         </Logger>
-        <Logger level="error" name="org.springframework">
+        <Logger level="debug" name="org.springframework">
         </Logger>
         <Logger level="error" name="com.mchange.v2">
         </Logger>

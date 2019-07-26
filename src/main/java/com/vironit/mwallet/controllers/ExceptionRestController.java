@@ -1,6 +1,7 @@
 package com.vironit.mwallet.controllers;
 
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -8,12 +9,14 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
 @SuppressWarnings({"unused", "unchecked"})
 @Log4j2
 @ControllerAdvice(annotations = org.springframework.web.bind.annotation.RestController.class)
+@Order(1)
 public class ExceptionRestController {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -38,6 +41,12 @@ public class ExceptionRestController {
     public ResponseEntity accessDenied(HttpServletRequest request) {
         return new ResponseEntity("Access denied",
                 HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity notFound(HttpServletRequest request) {
+        return new ResponseEntity("404",
+                HttpStatus.NOT_FOUND);
     }
 
 }
