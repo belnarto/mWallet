@@ -1,6 +1,8 @@
 package com.vironit.mwallet.utils;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Collections;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -38,15 +40,38 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
         String token = jwtTokenProvider.resolveToken(httpServletRequest);
+
+        if (token == null &&
+                (httpServletRequest.getRequestURI().equals("/api/v1/signin") ||
+                httpServletRequest.getRequestURI().equals("/api/v1/signup") ||
+                httpServletRequest.getRequestURI().equals("/api/v1/currencies"))) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
+
+        if (token == null) {
+            PrintWriter out = httpServletResponse.getWriter();
+            httpServletResponse.setContentType("application/json");
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.flush();
+            return;
+        }
         try {
-            if (token != null && jwtTokenProvider.validateToken(token)) {
+            if (jwtTokenProvider.validateToken(token)) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         } catch (SecurityFilteringException ex) {
             //this is very important, since it guarantees the user is not authenticated at all
             SecurityContextHolder.clearContext();
-            httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());
+
+            PrintWriter out = httpServletResponse.getWriter();
+            httpServletResponse.setContentType("application/json");
+            httpServletResponse.setCharacterEncoding("UTF-8");
+            httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            out.print(Collections.singletonList("Security error: " + ex.getMessage()));
+            out.flush();
             return;
         }
 

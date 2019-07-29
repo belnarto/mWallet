@@ -10,7 +10,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import com.vironit.mwallet.models.entity.Role;
+import com.vironit.mwallet.models.entity.User;
 import com.vironit.mwallet.utils.exception.SecurityFilteringException;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -45,11 +47,14 @@ public class JwtTokenProvider {
     @Value("${security.jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    @Value("${security.jwt.token.expire-length:3600000}")
-    private long validityInMilliseconds = 3600000; // 1h
+    @Value("${security.jwt.token.expire-length:28800000}")
+    private long validityInMilliseconds = 28800000; // 8h
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private UserService userService;
 
     @PostConstruct
     protected void init() {
@@ -93,7 +98,11 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            User user = userService.findByLogin(claims.getBody().getSubject());
+            if (user == null) {
+                throw new JwtException("username from token doesn't exist");
+            }
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             throw new SecurityFilteringException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);

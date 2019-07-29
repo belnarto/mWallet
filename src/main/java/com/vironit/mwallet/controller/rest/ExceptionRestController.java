@@ -1,8 +1,14 @@
 package com.vironit.mwallet.controller.rest;
 
+import com.vironit.mwallet.controller.rest.exception.CurrencyRestControllerException;
+import com.vironit.mwallet.controller.rest.exception.CurrencyValidationErrorException;
 import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
 import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
-import com.vironit.mwallet.controller.rest.exception.ValidationErrorException;
+import com.vironit.mwallet.controller.rest.exception.UserValidationErrorException;
+import com.vironit.mwallet.controller.rest.exception.ValidationException;
+import com.vironit.mwallet.controller.rest.exception.WalletRestControllerException;
+import com.vironit.mwallet.controller.rest.exception.WalletValidationErrorException;
+import com.vironit.mwallet.services.exception.AuthServiceException;
 import com.vironit.mwallet.utils.ErrorTransformator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;
@@ -13,10 +19,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,15 +54,27 @@ public class ExceptionRestController {
                 HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(ValidationErrorException.class)
+    @ExceptionHandler(AuthServiceException.class)
+    public ResponseEntity loginFailure(HttpServletRequest request) {
+        return new ResponseEntity("Invalid username/password supplied",
+                HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({UserValidationErrorException.class,
+            WalletValidationErrorException.class,
+            CurrencyValidationErrorException.class})
     public ResponseEntity<List<String>> validationError(HttpServletRequest request,
-                                                 ValidationErrorException e) {
+                                                 ValidationException e) {
         List<String> errors = ErrorTransformator.transformErrors(e.getObjectErrors());
         return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(UserRestControllerException.class)
-    public ResponseEntity<List<String>> serverError(HttpServletRequest request) {
+    @ExceptionHandler({Exception.class, UserRestControllerException.class,
+            WalletRestControllerException.class,
+            CurrencyRestControllerException.class})
+    public ResponseEntity<List<String>> serverError(HttpServletRequest request,
+                                                    Exception e) {
+        log.error("Error in REST occurred. ", e);
         return new ResponseEntity(Collections.singletonList("Server internal error"),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }

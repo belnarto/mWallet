@@ -2,9 +2,8 @@ package com.vironit.mwallet.utils.exception;
 
 import org.springframework.http.HttpStatus;
 
+@SuppressWarnings("unused")
 public class SecurityFilteringException extends RuntimeException {
-
-    private static final long serialVersionUID = 1L;
 
     private final String message;
     private final HttpStatus httpStatus;

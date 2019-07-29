@@ -2,7 +2,7 @@ package com.vironit.mwallet.controller.rest;
 
 import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
 import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
-import com.vironit.mwallet.controller.rest.exception.ValidationErrorException;
+import com.vironit.mwallet.controller.rest.exception.UserValidationErrorException;
 import com.vironit.mwallet.models.dto.UserRestDto;
 import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
 import com.vironit.mwallet.models.entity.User;
@@ -42,13 +42,14 @@ class UserRestController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @SuppressWarnings("Duplicates")
     @PostMapping(value = "/users")
     public ResponseEntity<UserRestDtoWithoutPassword> createUser(@Valid @RequestBody UserRestDto userRestDto,
                                                                  BindingResult bindingResult)
             throws UserRestControllerException {
 
         if (bindingResult.hasErrors()) {
-            throw new ValidationErrorException(bindingResult.getAllErrors());
+            throw new UserValidationErrorException(bindingResult.getAllErrors());
         }
         try {
             User user = userMapper.toEntity(userRestDto);
@@ -59,6 +60,16 @@ class UserRestController {
             log.error("Error during user saving", e);
             throw new UserRestControllerException("Error during user saving", e);
         }
+    }
+
+    @PutMapping(value = "/users")
+    public ResponseEntity putUsers() {
+        return new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @DeleteMapping(value = "/users")
+    public ResponseEntity deleteUsers() {
+        return new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @GetMapping(value = "/users/{userId}")
@@ -76,9 +87,7 @@ class UserRestController {
 
     @PostMapping(value = "/users/{userId}")
     public ResponseEntity postUserById(@PathVariable("userId") int userId) {
-        ResponseEntity responseEntity;
-        responseEntity = new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
-        return responseEntity;
+        return new ResponseEntity(HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @PutMapping(value = "/users/{userId}")
@@ -95,7 +104,7 @@ class UserRestController {
             bindingResult.addError(new ObjectError("id", "user ids don't match."));
         }
         if (bindingResult.hasErrors()) {
-            throw new ValidationErrorException(bindingResult.getAllErrors());
+            throw new UserValidationErrorException(bindingResult.getAllErrors());
         }
         try {
             User user = userMapper.toEntity(userRestDto);

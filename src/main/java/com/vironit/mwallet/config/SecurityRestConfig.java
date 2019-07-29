@@ -52,6 +52,8 @@ public class SecurityRestConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/api/v1/signin").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/v1/signup").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/v1/currencies").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

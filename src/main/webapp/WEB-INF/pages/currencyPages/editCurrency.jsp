@@ -4,6 +4,7 @@
 <jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.models.dto.CurrencyDto"/>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         <%@ include file="../../resources/css/w3.css" %>
     </style>

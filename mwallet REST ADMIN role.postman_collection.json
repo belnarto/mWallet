@@ -1,0 +1,2496 @@
+{
+	"info": {
+		"_postman_id": "de764c2e-05a7-4086-9114-27be78910ed6",
+		"name": "mwallet REST ADMIN role",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add user unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"qwert12345\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+							"postman.setEnvironmentVariable(\"userLogin\", jsonData.login);",
+							"",
+							"pm.test(\"Successful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"qwert12345\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/signup",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in unsuccesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "19f4693d-ecb7-4052-b3fb-99a8d62565ce",
+						"exec": [
+							"pm.test(\"Unsuccessful user login\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/signin?username={{userLogin}}&password=qwert123456",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{userLogin}}"
+						},
+						{
+							"key": "password",
+							"value": "qwert123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6e01105-c0a2-41ff-8d88-a6fe3d2a8ab2",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Successful user login\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/signin?username={{userLogin}}&password=qwert12345",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{userLogin}}"
+						},
+						{
+							"key": "password",
+							"value": "qwert12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "incorrect URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3599953d-585d-4d7b-a637-f352fed29608",
+						"exec": [
+							"tests[\"Status code is 404\"] = (responseCode.code === 404);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}api/weg",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"weg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all users succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);\r",
+							"\r",
+							"if (responseCode.code === 200) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests['Users more than 0'] = (jsonData.length > 0);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user unsuccessful (validation 1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"123\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"37\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user unsuccessful (validation 2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"{{$guid}}\",\n    \"login\": \"belnarto\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"37\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user unsuccessful (validation 3)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"99999\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user unsuccessful (validation 4)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"www\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update users unsuccessful no auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful users updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update users unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful users updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete users unsuccessful no auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful users deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([401]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete users unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful users deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);\r",
+							"\r",
+							"if (responseCode.code === 200) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests[\"Body is NOT empty\"] = (jsonData!==null);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id unsuccesful 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 404\"] = (responseCode.code === 404);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/1",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id unsuccesful 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 400\"] = (responseCode.code === 400);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/tt",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"tt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful users post\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userLogin\", jsonData.login);",
+							"",
+							"pm.test(\"Successful user updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"if (responseCode.code === 200) {",
+							"    tests[\"Role id changed\"] = (jsonData.roleId === \"8\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{userId}}\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"12345qwert\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in succesful after login changes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6e01105-c0a2-41ff-8d88-a6fe3d2a8ab2",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Successful user login\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/signin?username={{userLogin}}&password=12345qwert",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{userLogin}}"
+						},
+						{
+							"key": "password",
+							"value": "12345qwert"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user successful 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Successful user updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});",
+							"",
+							"if (responseCode.code === 200) {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    tests[\"Role id changed\"] = (jsonData.roleId === \"8\");",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{userId}}\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{userLogin}}\",\n    \"password\": \"12345qwert\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user unsuccessful (validation 1)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{userId}}\",\n    \"name\": \"123\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user unsuccessful (validation 2)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{userId}}\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"belnarto\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user unsuccessful (validation 3)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"{{userId}}\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"999999\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update user unsuccessful (validation 4)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"www\",\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"{{$guid}}\",\n    \"roleId\": \"37\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user unsuccessful 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unuccessful users deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users/0",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Successful users deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user unsuccessful 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unuccessful users deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([403]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users/0",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add user successful after deletion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"userId\", jsonData.id);",
+							"postman.setEnvironmentVariable(\"userLogin\", jsonData.login);",
+							"",
+							"pm.test(\"Successful user creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"{{$guid}}\",\n    \"login\": \"{{$guid}}\",\n    \"password\": \"qwert12345\",\n    \"roleId\": \"8\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/signup",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in succesful after deletion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6e01105-c0a2-41ff-8d88-a6fe3d2a8ab2",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);",
+							"",
+							"pm.test(\"Successful user login\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/signin?username={{userLogin}}&password=qwert12345",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"signin"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "{{userLogin}}"
+						},
+						{
+							"key": "password",
+							"value": "qwert12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add wallet successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Successful wallet creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"userId\": {{userId}},\n    \"currencyId\": \"1438\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add wallet unsuccessful 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"Unsuccessful wallet creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"userId\": {{userId}},\n    \"currencyId\": \"999999\"\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all wallets of user succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);\r",
+							"\r",
+							"if (responseCode.code === 200) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests['Users more than 0'] = (jsonData.length > 0);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all wallets of user succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);",
+							"",
+							"if (responseCode.code === 200) {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    tests[\"Body is NOT empty\"] = (jsonData!==null);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users/13276/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"13276",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update wallets unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful wallets updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete wallets unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful wallets deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/users/{{userId}}/wallets",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userId}}",
+						"wallets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all currencies succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);\r",
+							"\r",
+							"if (responseCode.code === 200) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests['Users more than 0'] = (jsonData.length > 0);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add currency successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"currencyId\", jsonData.id);",
+							"",
+							"pm.test(\"Successful currency creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"TST\",\n    \"rate\": 1.2\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add currency unsuccessful 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful currency creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"name\": \"TS\",\n    \"rate\": -1.2\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add currency unsuccessful 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful currency creation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([400]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"rate\": 5\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update currencies unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful wallets updation\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete currencies unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful currencies deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/currencies",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get currency succesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies/2",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get currency unsuccesful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 404\"] = (responseCode.code === 404);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies/999999",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies",
+						"999999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post currency unsuccessful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Unsuccessful currency post\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([405]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{local}}api/v1/currencies/{{currencyId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies",
+						"{{currencyId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put currency successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Successful currency update\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{currencyId}},\n    \"name\": \"TST\",\n    \"rate\": 2.2\n}"
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies/{{currencyId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies",
+						"{{currencyId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete currency successful",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86acfe93-11e7-4773-b4df-6deef043707d",
+						"exec": [
+							"pm.test(\"Successful currency deletion\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/currencies/{{currencyId}}",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"currencies",
+						"{{currencyId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

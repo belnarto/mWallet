@@ -5,6 +5,7 @@
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         <%@ include file="../../resources/css/w3.css" %>
     </style>

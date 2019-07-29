@@ -5,7 +5,8 @@ import org.springframework.validation.ObjectError;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class ValidationErrorException extends UserRestControllerException {
+public class WalletValidationErrorException extends WalletRestControllerException
+        implements ValidationException {
 
     private List<ObjectError> objectErrors;
 
@@ -13,23 +14,23 @@ public class ValidationErrorException extends UserRestControllerException {
         return objectErrors;
     }
 
-    public ValidationErrorException() {
+    public WalletValidationErrorException() {
         super();
     }
 
-    public ValidationErrorException(String message) {
+    public WalletValidationErrorException(String message) {
         super(message);
     }
 
-    public ValidationErrorException(String message, Throwable cause) {
+    public WalletValidationErrorException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public ValidationErrorException(Throwable cause) {
+    public WalletValidationErrorException(Throwable cause) {
         super(cause);
     }
 
-    public ValidationErrorException(List<ObjectError> objectErrors) {
+    public WalletValidationErrorException(List<ObjectError> objectErrors) {
         super();
         this.objectErrors = objectErrors;
     }

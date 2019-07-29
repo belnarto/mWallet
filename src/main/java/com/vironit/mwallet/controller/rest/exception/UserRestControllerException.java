@@ -1,6 +1,6 @@
 package com.vironit.mwallet.controller.rest.exception;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class UserRestControllerException extends Exception {
     public UserRestControllerException() {
         super();
