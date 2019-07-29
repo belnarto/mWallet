@@ -1,16 +1,16 @@
 package com.vironit.mwallet.controller.mvc;
 
 import com.vironit.mwallet.controller.mvc.exception.WalletControllerException;
-import com.vironit.mwallet.models.dto.CurrencyDto;
-import com.vironit.mwallet.models.dto.WalletDto;
-import com.vironit.mwallet.models.attributes.WalletStatusEnum;
-import com.vironit.mwallet.models.entity.Wallet;
-import com.vironit.mwallet.services.CurrencyService;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.WalletService;
-import com.vironit.mwallet.services.exception.WalletServiceException;
-import com.vironit.mwallet.services.mapper.CurrencyMapper;
-import com.vironit.mwallet.services.mapper.WalletMapper;
+import com.vironit.mwallet.model.dto.CurrencyDto;
+import com.vironit.mwallet.model.dto.WalletDto;
+import com.vironit.mwallet.model.attribute.WalletStatusEnum;
+import com.vironit.mwallet.model.entity.Wallet;
+import com.vironit.mwallet.service.CurrencyService;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.WalletService;
+import com.vironit.mwallet.service.exception.WalletServiceException;
+import com.vironit.mwallet.service.mapper.CurrencyMapper;
+import com.vironit.mwallet.service.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -49,7 +49,7 @@ public class WalletController {
     private CurrencyMapper currencyMapper;
 
     @GetMapping(value = "/users/{userId}/wallets")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView userWalletsPage(ModelAndView modelAndView,
                                         @PathVariable("userId") int userId) {
         List<WalletDto> wallets = walletService.findAllByUser(userService.findById(userId)).stream()
@@ -63,7 +63,7 @@ public class WalletController {
     }
 
     @GetMapping(value = "/users/{userId}/wallets/addWallet")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView addWalletPage(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         List<CurrencyDto> currencies = currencyService.findAll().stream()
@@ -77,7 +77,7 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/addWallet")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView addWallet(ModelAndView modelAndView,
                                   @PathVariable("userId") int userId,
                                   @Valid @ModelAttribute("wallet") WalletDto walletDto,
@@ -102,8 +102,8 @@ public class WalletController {
     }
 
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView editWalletPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
@@ -126,8 +126,8 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/editWallet")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView editWallet(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
@@ -148,8 +148,8 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/deleteWallet")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView deleteWallet(ModelAndView modelAndView,
                                      @PathVariable("userId") int userId,
@@ -165,8 +165,8 @@ public class WalletController {
     }
 
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView addBalancePage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
@@ -177,8 +177,8 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/addBalance")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView addBalance(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId,
@@ -199,8 +199,8 @@ public class WalletController {
     }
 
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView reduceBalancePage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
@@ -211,8 +211,8 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/reduceBalance")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView reduceBalance(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,
@@ -233,8 +233,8 @@ public class WalletController {
     }
 
     @GetMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView transferMoneyPage(ModelAndView modelAndView,
                                           @PathVariable("userId") int userId,
@@ -245,8 +245,8 @@ public class WalletController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets/{walletId}/transferMoney")
-    @PreAuthorize("(@securityService.checkUserId(authentication,#userId)" +
-            " and @securityService.checkWalletId(authentication,#walletId))" +
+    @PreAuthorize("(@securityServiceImpl.checkUserId(authentication,#userId)" +
+            " and @securityServiceImpl.checkWalletId(authentication,#walletId))" +
             " or hasRole('ADMIN')")
     public ModelAndView transferMoney(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId,

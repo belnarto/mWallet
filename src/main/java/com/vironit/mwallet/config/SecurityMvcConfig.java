@@ -81,7 +81,7 @@ public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
             configureEncodingFilter(httpSecurity, "UTF-8");
 
             authorizeRequestsPermittedAll(httpSecurity);
-            authorizeRequestsWithSecurityLimitation(httpSecurity);  // used only for servlets
+            authorizeRequestsWithSecurityLimitation(httpSecurity);  // used only for servlet
 
             httpSecurity.authorizeRequests().anyRequest().authenticated();
 

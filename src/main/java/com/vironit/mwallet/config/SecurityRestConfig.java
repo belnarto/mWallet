@@ -1,8 +1,8 @@
 package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.config.exception.SecurityConfigurationException;
-import com.vironit.mwallet.services.JwtTokenProvider;
-import com.vironit.mwallet.utils.JwtTokenFilter;
+import com.vironit.mwallet.service.JwtTokenService;
+import com.vironit.mwallet.util.JwtTokenFilter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityRestConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    JwtTokenService jwtTokenService;
 
     @Bean
     @Override
@@ -56,7 +56,7 @@ public class SecurityRestConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/api/v1/currencies").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(new JwtTokenFilter(jwtTokenService), UsernamePasswordAuthenticationFilter.class);
         } catch (Exception e) {
             log.error("Security configuration error.", e);
             throw new SecurityConfigurationException("Security configuration error.", e);

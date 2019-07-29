@@ -1,8 +1,8 @@
 package com.vironit.mwallet.dao.impl;
 
 import com.vironit.mwallet.dao.RoleDao;
-import com.vironit.mwallet.models.entity.Role;
-import com.vironit.mwallet.models.attributes.RoleEnum;
+import com.vironit.mwallet.model.entity.Role;
+import com.vironit.mwallet.model.attribute.RoleEnum;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

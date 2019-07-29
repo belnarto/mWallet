@@ -8,8 +8,8 @@ import com.vironit.mwallet.controller.rest.exception.UserValidationErrorExceptio
 import com.vironit.mwallet.controller.rest.exception.ValidationException;
 import com.vironit.mwallet.controller.rest.exception.WalletRestControllerException;
 import com.vironit.mwallet.controller.rest.exception.WalletValidationErrorException;
-import com.vironit.mwallet.services.exception.AuthServiceException;
-import com.vironit.mwallet.utils.ErrorTransformator;
+import com.vironit.mwallet.service.exception.AuthServiceException;
+import com.vironit.mwallet.util.ErrorTransformator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

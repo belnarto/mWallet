@@ -3,11 +3,11 @@ package com.vironit.mwallet.controller.rest;
 import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
 import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
 import com.vironit.mwallet.controller.rest.exception.UserValidationErrorException;
-import com.vironit.mwallet.models.dto.UserRestDto;
-import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.model.dto.UserRestDto;
+import com.vironit.mwallet.model.dto.UserRestDtoWithoutPassword;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,7 +73,7 @@ class UserRestController {
     }
 
     @GetMapping(value = "/users/{userId}")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ResponseEntity<UserRestDtoWithoutPassword> findUserById(@PathVariable("userId") int userId)
             throws ResourceNotFoundException {
 
@@ -91,7 +91,7 @@ class UserRestController {
     }
 
     @PutMapping(value = "/users/{userId}")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ResponseEntity updateUser(@PathVariable("userId") int userId,
                                      @Valid @RequestBody UserRestDto userRestDto,
                                      BindingResult bindingResult)
@@ -118,7 +118,7 @@ class UserRestController {
     }
 
     @DeleteMapping(value = "/users/{userId}")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ResponseEntity deleteUser(@PathVariable("userId") int userId) throws ResourceNotFoundException {
 
         User user = userService.findById(userId);

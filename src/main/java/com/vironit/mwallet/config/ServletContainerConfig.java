@@ -1,6 +1,6 @@
 package com.vironit.mwallet.config;
 
-import com.vironit.mwallet.utils.SessionListener;
+import com.vironit.mwallet.util.SessionListener;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.ServletContext;

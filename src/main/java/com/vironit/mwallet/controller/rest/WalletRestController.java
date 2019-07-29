@@ -3,13 +3,13 @@ package com.vironit.mwallet.controller.rest;
 import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
 import com.vironit.mwallet.controller.rest.exception.WalletRestControllerException;
 import com.vironit.mwallet.controller.rest.exception.WalletValidationErrorException;
-import com.vironit.mwallet.models.dto.WalletDto;
-import com.vironit.mwallet.models.dto.WalletRestDtoWithUserAndCurrencyId;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.WalletService;
-import com.vironit.mwallet.services.mapper.WalletMapper;
+import com.vironit.mwallet.model.dto.WalletDto;
+import com.vironit.mwallet.model.dto.WalletRestDtoWithUserAndCurrencyId;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.model.entity.Wallet;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.WalletService;
+import com.vironit.mwallet.service.mapper.WalletMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +45,7 @@ class WalletRestController {
     private WalletMapper walletMapper;
 
     @GetMapping(value = "/users/{userId}/wallets")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ResponseEntity<List<WalletDto>> findAllWalletsOfUser(@PathVariable("userId") int userId)
             throws ResourceNotFoundException {
 
@@ -62,7 +62,7 @@ class WalletRestController {
     }
 
     @PostMapping(value = "/users/{userId}/wallets")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ResponseEntity<WalletDto> createWallet(@PathVariable("userId") int userId,
                                                   @Valid @RequestBody WalletRestDtoWithUserAndCurrencyId walletRestDtoWithUserAndCurrencyId,
                                                   BindingResult bindingResult)

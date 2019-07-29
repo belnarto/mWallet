@@ -2,15 +2,15 @@ package com.vironit.mwallet.controller.rest;
 
 import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
 import com.vironit.mwallet.controller.rest.exception.UserValidationErrorException;
-import com.vironit.mwallet.models.dto.TokenDto;
-import com.vironit.mwallet.models.dto.UserRestDto;
-import com.vironit.mwallet.models.dto.UserRestDtoWithoutPassword;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.services.AuthService;
-import com.vironit.mwallet.services.JwtTokenProvider;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.exception.AuthServiceException;
-import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.model.dto.TokenDto;
+import com.vironit.mwallet.model.dto.UserRestDto;
+import com.vironit.mwallet.model.dto.UserRestDtoWithoutPassword;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.service.JwtTokenService;
+import com.vironit.mwallet.service.SecurityService;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.exception.AuthServiceException;
+import com.vironit.mwallet.service.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,13 +35,13 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtTokenService jwtTokenService;
 
     @Autowired
     private UserService userService;
 
     @Autowired
-    private AuthService authService;
+    private SecurityService securityService;
 
     @Autowired
     private UserMapper userMapper;
@@ -49,7 +49,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<TokenDto> signin(@RequestParam String username,
                                            @RequestParam String password) throws AuthServiceException {
-        return new ResponseEntity<>(new TokenDto(authService.signin(username, password)),
+        return new ResponseEntity<>(new TokenDto(securityService.signIn(username, password)),
                 HttpStatus.OK);
     }
 

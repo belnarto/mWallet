@@ -1,16 +1,16 @@
 package com.vironit.mwallet.controllers;
 
 import com.vironit.mwallet.config.WebConfig;
-import com.vironit.mwallet.models.attributes.RoleEnum;
-import com.vironit.mwallet.models.entity.Currency;
-import com.vironit.mwallet.models.entity.Role;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.services.CurrencyService;
-import com.vironit.mwallet.services.RoleService;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
-import com.vironit.mwallet.services.mapper.RoleMapper;
-import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.model.attribute.RoleEnum;
+import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.Role;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.service.CurrencyService;
+import com.vironit.mwallet.service.RoleService;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.exception.LoginAlreadyDefinedException;
+import com.vironit.mwallet.service.mapper.RoleMapper;
+import com.vironit.mwallet.service.mapper.UserMapper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

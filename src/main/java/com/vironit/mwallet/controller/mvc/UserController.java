@@ -1,16 +1,16 @@
 package com.vironit.mwallet.controller.mvc;
 
 import com.vironit.mwallet.controller.mvc.exception.UserControllerException;
-import com.vironit.mwallet.models.dto.RoleDto;
-import com.vironit.mwallet.models.dto.UserDto;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
-import com.vironit.mwallet.services.RoleService;
-import com.vironit.mwallet.services.UserService;
-import com.vironit.mwallet.services.WalletService;
-import com.vironit.mwallet.services.exception.LoginAlreadyDefinedException;
-import com.vironit.mwallet.services.mapper.RoleMapper;
-import com.vironit.mwallet.services.mapper.UserMapper;
+import com.vironit.mwallet.model.dto.RoleDto;
+import com.vironit.mwallet.model.dto.UserDto;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.model.entity.Wallet;
+import com.vironit.mwallet.service.RoleService;
+import com.vironit.mwallet.service.UserService;
+import com.vironit.mwallet.service.WalletService;
+import com.vironit.mwallet.service.exception.LoginAlreadyDefinedException;
+import com.vironit.mwallet.service.mapper.RoleMapper;
+import com.vironit.mwallet.service.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userId}")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView myUserPage(ModelAndView modelAndView,
                                    @PathVariable("userId") int userId) {
         List<UserDto> user = new ArrayList<>(); // because in JSP array is expected, to reuse same JSP
@@ -122,7 +122,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/users/{userId}/updateUser")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView updateUserGet(ModelAndView modelAndView,
                                       @PathVariable("userId") int userId) {
         UserDto userDto = userMapper.toDto(userService.findById(userId));
@@ -139,7 +139,7 @@ public class UserController {
 
     @SuppressWarnings("unused")
     @PostMapping(value = "/users/{userId}/updateUser")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView updateUserPost(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId,
                                        @Valid @ModelAttribute("user") UserDto userDto,
@@ -173,7 +173,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/users/{userId}/deleteUser")
-    @PreAuthorize("@securityService.checkUserId(authentication,#userId) or hasRole('ADMIN')")
+    @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
     public ModelAndView deleteUserPage(ModelAndView modelAndView,
                                        @PathVariable("userId") int userId) throws UserControllerException {
         try {

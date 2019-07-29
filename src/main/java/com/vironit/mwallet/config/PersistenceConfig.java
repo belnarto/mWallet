@@ -1,10 +1,10 @@
 package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.config.exception.PersistenceConfigurationException;
-import com.vironit.mwallet.models.entity.Currency;
-import com.vironit.mwallet.models.entity.Role;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.Role;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.model.entity.Wallet;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.log4j.Log4j2;

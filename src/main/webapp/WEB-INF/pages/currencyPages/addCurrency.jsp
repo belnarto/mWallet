@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.vironit.mwallet.models.entity.Currency" %>
+<%@ page import="com.vironit.mwallet.model.entity.Currency" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
 <html>
@@ -42,7 +42,7 @@
 <div style="width:700px" class="w3-container w3-center w3-margin-bottom w3-padding">
 
     <div class="w3-container w3-padding">
-        <%--@elvariable id="currency" type="com.vironit.mwallet.models.entity.Currency"--%>
+        <%--@elvariable id="currency" type="com.vironit.mwallet.model.entity.Currency"--%>
         <c:if test="${not empty currency}">
             <div class="w3-panel w3-green w3-display-container w3-card-4 w3-round">
             <span onclick="this.parentElement.style.display='none'"

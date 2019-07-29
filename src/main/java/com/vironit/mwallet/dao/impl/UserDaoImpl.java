@@ -1,7 +1,7 @@
 package com.vironit.mwallet.dao.impl;
 
 import com.vironit.mwallet.dao.UserDao;
-import com.vironit.mwallet.models.entity.User;
+import com.vironit.mwallet.model.entity.User;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

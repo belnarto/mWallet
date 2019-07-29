@@ -1,9 +1,9 @@
 package com.vironit.mwallet.config;
 
-import com.vironit.mwallet.services.converters.StringToCurrencyConverter;
-import com.vironit.mwallet.services.converters.StringToRoleConverter;
-import com.vironit.mwallet.services.converters.UserIdToUserConverter;
-import com.vironit.mwallet.services.converters.StringToWalletStatusConverter;
+import com.vironit.mwallet.service.converter.StringToCurrencyConverter;
+import com.vironit.mwallet.service.converter.StringToRoleConverter;
+import com.vironit.mwallet.service.converter.UserIdToUserConverter;
+import com.vironit.mwallet.service.converter.StringToWalletStatusConverter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;

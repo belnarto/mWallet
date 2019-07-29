@@ -2,9 +2,9 @@ package com.vironit.mwallet.dao.impl;
 
 
 import com.vironit.mwallet.dao.WalletDao;
-import com.vironit.mwallet.models.entity.Currency;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.model.entity.Wallet;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

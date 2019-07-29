@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
-<jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.models.dto.CurrencyDto"/>
+<jsp:useBean id="currency" scope="request" type="com.vironit.mwallet.model.dto.CurrencyDto"/>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

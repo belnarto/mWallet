@@ -1,7 +1,7 @@
 package com.vironit.mwallet.controller.mvc;
 
-import com.vironit.mwallet.services.RoleService;
-import com.vironit.mwallet.services.UserService;
+import com.vironit.mwallet.service.RoleService;
+import com.vironit.mwallet.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

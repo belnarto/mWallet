@@ -1,8 +1,8 @@
 package com.vironit.mwallet.dao;
 
-import com.vironit.mwallet.models.entity.Currency;
-import com.vironit.mwallet.models.entity.User;
-import com.vironit.mwallet.models.entity.Wallet;
+import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.User;
+import com.vironit.mwallet.model.entity.Wallet;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
