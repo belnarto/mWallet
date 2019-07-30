@@ -1,5 +1,7 @@
 package com.vironit.mwallet.controller.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
 import com.vironit.mwallet.controller.rest.exception.WalletRestControllerException;
 import com.vironit.mwallet.controller.rest.exception.WalletValidationErrorException;
@@ -23,10 +25,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "unused"})
@@ -43,6 +47,28 @@ class WalletRestController {
 
     @Autowired
     private WalletMapper walletMapper;
+
+    @GetMapping(value = "/wallets")
+    @PreAuthorize("hasRole('DEFAULT')or hasRole('ADMIN')")
+    public ResponseEntity<String> findUserNameByWalletId(
+            @RequestParam Map<String, String> allParams) throws JsonProcessingException {
+        ObjectMapper Obj = new ObjectMapper();
+
+        if (allParams.containsKey("walletId")) {
+            WalletDto walletDto = walletMapper.toDto(walletService
+                    .findById(Integer.parseInt(allParams.get("walletId"))));
+            if (walletDto != null) {
+                String userName = userService
+                        .findById(walletDto.getUserId())
+                        .getName();
+                return new ResponseEntity<>(Obj.writeValueAsString(userName), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 
     @GetMapping(value = "/users/{userId}/wallets")
     @PreAuthorize("@securityServiceImpl.checkUserId(authentication,#userId) or hasRole('ADMIN')")
