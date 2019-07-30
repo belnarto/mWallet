@@ -304,6 +304,71 @@
 			"response": []
 		},
 		{
+			"name": "get all users succesful by namePart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07e94e83-c482-498b-b068-f9b594418453",
+						"exec": [
+							"tests[\"Status code is 200\"] = (responseCode.code === 200);\r",
+							"\r",
+							"if (responseCode.code === 200) {\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"    tests['Users more than 0'] = (jsonData.length > 0);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{local}}api/v1/users?namePart=1",
+					"host": [
+						"{{local}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "namePart",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "add user unsuccessful (validation 1)",
 			"event": [
 				{
@@ -1736,67 +1801,6 @@
 						"v1",
 						"users",
 						"{{userId}}",
-						"wallets"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get all wallets of user succesful",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "07e94e83-c482-498b-b068-f9b594418453",
-						"exec": [
-							"tests[\"Status code is 200\"] = (responseCode.code === 200);",
-							"",
-							"if (responseCode.code === 200) {",
-							"    var jsonData = JSON.parse(responseBody);",
-							"    tests[\"Body is NOT empty\"] = (jsonData!==null);",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{local}}api/v1/users/13276/wallets",
-					"host": [
-						"{{local}}api"
-					],
-					"path": [
-						"v1",
-						"users",
-						"13276",
 						"wallets"
 					]
 				}

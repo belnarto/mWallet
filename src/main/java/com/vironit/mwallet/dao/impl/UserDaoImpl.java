@@ -49,4 +49,13 @@ public class UserDaoImpl implements UserDao {
                 .uniqueResult();
         return user;
     }
+
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
+    public List<User> findAllByNamePart(String namePart) {
+        List<User> users = (List<User>) sessionFactory.getCurrentSession()
+                .createQuery("From User where UPPER(name) like UPPER(:namePart) order by id")
+                .setParameter("namePart", "%" + namePart + "%")
+                .list();
+        return users;
+    }
 }

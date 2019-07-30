@@ -10,6 +10,7 @@
 
     <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
     <title>Main</title>
+
 </head>
 <body class="w3-light-grey">
 
@@ -29,7 +30,7 @@
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
                     <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
@@ -52,10 +53,13 @@
 
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
-                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/users/${userId}'">My user</button>
+                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/users/${userId}'">My
+                    user
+                </button>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/login'">My user</button>
+                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/login'">My user
+                </button>
             </c:otherwise>
         </c:choose>
 

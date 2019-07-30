@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @SuppressWarnings({"SpringJavaAutowiredFieldsWarningInspection", "unused"})
@@ -35,11 +36,25 @@ class UserRestController {
 
     @GetMapping(value = "/users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserRestDtoWithoutPassword>> findAllUsers() {
-        List<UserRestDtoWithoutPassword> users = userService.findAll().stream()
-                .map(user -> userMapper.toRestDtoWithoutPassword(user))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<List<UserRestDtoWithoutPassword>> findAllUsers(
+            @RequestParam Map<String, String> allParams) {
+
+        if (allParams.isEmpty()) {
+            List<UserRestDtoWithoutPassword> users = userService.findAll().stream()
+                    .map(user -> userMapper.toRestDtoWithoutPassword(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+
+        if (allParams.containsKey("namePart")) {
+            List<UserRestDtoWithoutPassword> users = userService
+                    .findAllByNamePart(allParams.get("namePart")).stream()
+                    .map(user -> userMapper.toRestDtoWithoutPassword(user))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @SuppressWarnings("Duplicates")

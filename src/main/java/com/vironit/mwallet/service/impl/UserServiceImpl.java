@@ -83,4 +83,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 user.getPassword(),
                 roles);
     }
+
+    @Override
+    public List<User> findAllByNamePart(String namePart) {
+        return userDao.findAllByNamePart(namePart);
+    }
 }

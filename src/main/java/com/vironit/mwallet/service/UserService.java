@@ -19,4 +19,6 @@ public interface UserService {
 
     List<User> findAll();
 
+    List<User> findAllByNamePart(String namePart);
+
 }

@@ -1,6 +1,7 @@
 package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.config.exception.SecurityConfigurationException;
+import com.vironit.mwallet.util.JwtTokenHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,9 @@ public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
+
+    @Autowired
+    JwtTokenHandler jwtTokenHandler ;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -175,7 +179,8 @@ public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .failureUrl("/login?error=true")
                     .defaultSuccessUrl("/")
-                    .permitAll();
+                    .permitAll()
+                    .successHandler(jwtTokenHandler);
         } catch (Exception e) {
             log.error("Security configuration error.", e);
             throw new SecurityConfigurationException("Security configuration error.", e);
@@ -190,6 +195,7 @@ public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
             httpSecurity
                     .logout()
                     .deleteCookies("JSESSIONID")
+                    .deleteCookies("JwtToken")
                     .invalidateHttpSession(true)
                     .logoutSuccessUrl("/login?logout=true")
                     .permitAll();
