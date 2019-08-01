@@ -2,7 +2,9 @@ package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.config.exception.PersistenceConfigurationException;
 import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.RechargeTransaction;
 import com.vironit.mwallet.model.entity.Role;
+import com.vironit.mwallet.model.entity.Transaction;
 import com.vironit.mwallet.model.entity.User;
 import com.vironit.mwallet.model.entity.Wallet;
 import com.zaxxer.hikari.HikariConfig;
@@ -75,7 +77,12 @@ public class PersistenceConfig {
             props.put(USE_SQL_COMMENTS, Objects.requireNonNull(env.getProperty("hibernate.use_sql_comments")));
             props.put(HBM2DDL_AUTO, Objects.requireNonNull(env.getProperty("hibernate.hbm2ddl.auto")));
             factoryBean.setHibernateProperties(props);
-            factoryBean.setAnnotatedClasses(User.class, Wallet.class, Role.class, Currency.class);
+            factoryBean.setAnnotatedClasses(User.class,
+                    Wallet.class,
+                    Role.class,
+                    Currency.class,
+                    Transaction.class,
+                    RechargeTransaction.class);
             return factoryBean;
         } catch (Exception e) {
             log.error("Hibernate session factory error.", e);
