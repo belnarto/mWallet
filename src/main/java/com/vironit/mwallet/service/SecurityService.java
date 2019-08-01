@@ -10,5 +10,7 @@ public interface SecurityService {
 
     boolean checkWalletId(Authentication authentication, int walletId);
 
+    boolean checkTransactionId(Authentication authentication, int transactionId);
+
     String signIn(String username, String password) throws AuthServiceException;
 }

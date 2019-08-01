@@ -13,7 +13,9 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({@JsonSubTypes.Type(value = RechargeTransactionRestDto.class, name = "RechargeTransaction")})
+@JsonSubTypes({@JsonSubTypes.Type(value = RechargeTransactionRestDto.class, name = "RechargeTransaction"),
+        @JsonSubTypes.Type(value = PaymentTransactionRestDto.class, name = "PaymentTransaction"),
+        @JsonSubTypes.Type(value = MoneyTransferTransactionRestDto.class, name = "MoneyTransferTransaction")})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

@@ -2,6 +2,8 @@ package com.vironit.mwallet.config;
 
 import com.vironit.mwallet.config.exception.PersistenceConfigurationException;
 import com.vironit.mwallet.model.entity.Currency;
+import com.vironit.mwallet.model.entity.MoneyTransferTransaction;
+import com.vironit.mwallet.model.entity.PaymentTransaction;
 import com.vironit.mwallet.model.entity.RechargeTransaction;
 import com.vironit.mwallet.model.entity.Role;
 import com.vironit.mwallet.model.entity.Transaction;
@@ -82,7 +84,9 @@ public class PersistenceConfig {
                     Role.class,
                     Currency.class,
                     Transaction.class,
-                    RechargeTransaction.class);
+                    RechargeTransaction.class,
+                    PaymentTransaction.class,
+                    MoneyTransferTransaction.class);
             return factoryBean;
         } catch (Exception e) {
             log.error("Hibernate session factory error.", e);

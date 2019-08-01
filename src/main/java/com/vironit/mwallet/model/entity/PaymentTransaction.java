@@ -1,6 +1,5 @@
 package com.vironit.mwallet.model.entity;
 
-import com.vironit.mwallet.service.validator.WalletIdExists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,23 +10,28 @@ import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Entity
-@Table(name = "RECHARGE_TRANSACTIONS")
-@PrimaryKeyJoinColumn(foreignKey=@ForeignKey(name = "recharge_transactions_details_id_fk"))
+@Table(name = "PAYMENT_TRANSACTIONS")
+@PrimaryKeyJoinColumn(foreignKey=@ForeignKey(name = "payment_transactions_details_id_fk"))
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class RechargeTransaction extends Transaction {
+public class PaymentTransaction extends Transaction {
 
     @Column(name = "wallet_id")
-    @PositiveOrZero(message = "Can't be negative")
+    @Positive(message = "Can't be negative or zero")
     private int walletId;
 
     @Column(name = "amount")
-    @PositiveOrZero(message = "Can't be negative")
+    @Positive(message = "Can't be negative or zero")
     private double amount;
+
+    @Column(name = "account_id")
+    @Positive(message = "Can't be negative or zero")
+    private int accountId;
 
 }

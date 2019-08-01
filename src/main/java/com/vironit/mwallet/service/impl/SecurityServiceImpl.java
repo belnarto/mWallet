@@ -1,10 +1,15 @@
 package com.vironit.mwallet.service.impl;
 
+import com.vironit.mwallet.model.entity.MoneyTransferTransaction;
+import com.vironit.mwallet.model.entity.PaymentTransaction;
+import com.vironit.mwallet.model.entity.RechargeTransaction;
 import com.vironit.mwallet.model.entity.Role;
+import com.vironit.mwallet.model.entity.Transaction;
 import com.vironit.mwallet.model.entity.User;
 import com.vironit.mwallet.model.entity.Wallet;
 import com.vironit.mwallet.service.JwtTokenService;
 import com.vironit.mwallet.service.SecurityService;
+import com.vironit.mwallet.service.TransactionService;
 import com.vironit.mwallet.service.UserService;
 import com.vironit.mwallet.service.WalletService;
 import com.vironit.mwallet.service.exception.AuthServiceException;
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Log4j2
@@ -30,6 +36,9 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
     private WalletService walletService;
+
+    @Autowired
+    private TransactionService transactionService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -54,6 +63,37 @@ public class SecurityServiceImpl implements SecurityService {
         return user.getWallets().stream()
                 .map(Wallet::getId)
                 .anyMatch(walletId1 -> walletId1.equals(walletId));
+    }
+
+    //TODO refactor
+    @Override
+    public boolean checkTransactionId(Authentication authentication, int transactionId) {
+        Transaction transaction = transactionService.findById(transactionId);
+
+        if (transaction == null) {
+            return false;
+        }
+
+        String login = authentication.getName();
+        User user = userService.findByLogin(login);
+        List<Integer> walletsId = walletService.findAllByUser(user).stream()
+                .map(Wallet::getId)
+                .collect(Collectors.toList());
+
+        boolean result = false;
+
+        if (transaction instanceof RechargeTransaction) {
+            int walletId = ((RechargeTransaction) transaction).getWalletId();
+            result = walletsId.contains(walletId);
+        } else if (transaction instanceof PaymentTransaction) {
+            int walletId = ((PaymentTransaction) transaction).getWalletId();
+            result = walletsId.contains(walletId);
+        } else if (transaction instanceof MoneyTransferTransaction) {
+            int walletId = ((MoneyTransferTransaction) transaction).getFromWalletId();
+            result = walletsId.contains(walletId);
+        }
+
+        return result;
     }
 
     @Override

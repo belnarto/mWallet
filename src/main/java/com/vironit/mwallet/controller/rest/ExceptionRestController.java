@@ -1,13 +1,6 @@
 package com.vironit.mwallet.controller.rest;
 
-import com.vironit.mwallet.controller.rest.exception.CurrencyRestControllerException;
-import com.vironit.mwallet.controller.rest.exception.CurrencyValidationErrorException;
-import com.vironit.mwallet.controller.rest.exception.ResourceNotFoundException;
-import com.vironit.mwallet.controller.rest.exception.UserRestControllerException;
-import com.vironit.mwallet.controller.rest.exception.UserValidationErrorException;
-import com.vironit.mwallet.controller.rest.exception.ValidationException;
-import com.vironit.mwallet.controller.rest.exception.WalletRestControllerException;
-import com.vironit.mwallet.controller.rest.exception.WalletValidationErrorException;
+import com.vironit.mwallet.controller.rest.exception.*;
 import com.vironit.mwallet.service.exception.AuthServiceException;
 import com.vironit.mwallet.util.ErrorTransformator;
 import lombok.extern.log4j.Log4j2;
@@ -62,7 +55,8 @@ public class ExceptionRestController {
 
     @ExceptionHandler({UserValidationErrorException.class,
             WalletValidationErrorException.class,
-            CurrencyValidationErrorException.class})
+            CurrencyValidationErrorException.class,
+            TransactionValidationErrorException.class})
     public ResponseEntity<List<String>> validationError(HttpServletRequest request,
                                                  ValidationException e) {
         List<String> errors = ErrorTransformator.transformErrors(e.getObjectErrors());
@@ -71,7 +65,8 @@ public class ExceptionRestController {
 
     @ExceptionHandler({Exception.class, UserRestControllerException.class,
             WalletRestControllerException.class,
-            CurrencyRestControllerException.class})
+            CurrencyRestControllerException.class,
+            TransactionRestControllerException.class})
     public ResponseEntity<List<String>> serverError(HttpServletRequest request,
                                                     Exception e) {
         log.error("Error in REST occurred. ", e);

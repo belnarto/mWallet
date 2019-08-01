@@ -48,37 +48,37 @@ public class TransactionServiceImplTest {
 
 //        ModelMapper modelMapper = new ModelMapper();
 
-        TypeMap<TransactionRestDto, Transaction> typeMap = modelMapper
-                .createTypeMap(TransactionRestDto.class, Transaction.class)
-                .include(RechargeTransactionRestDto.class, RechargeTransaction.class);
-
-        modelMapper.typeMap(RechargeTransactionRestDto.class, Transaction.class)
-                .setProvider(new Provider<Transaction>() {
-            public Transaction get(ProvisionRequest<Transaction> request) {
-                Object source = request.getSource();
-                RechargeTransactionRestDto source2 = (RechargeTransactionRestDto) source;
-                return new RechargeTransaction(source2.getWalletId(),source2.getAmount());
-            }
-        });
-
-        TransactionRestDto transactionRestDto = new RechargeTransactionRestDto(1,3);
-        transactionRestDto.setId(2);
-        Transaction transaction = modelMapper.map(transactionRestDto, Transaction.class);
-
-        TypeMap<Transaction, TransactionRestDto> typeMap2 = modelMapper
-                .createTypeMap(Transaction.class, TransactionRestDto.class)
-                .include(RechargeTransaction.class, RechargeTransactionRestDto.class);
-
-        modelMapper.typeMap(RechargeTransaction.class, TransactionRestDto.class)
-                .setProvider(new Provider<TransactionRestDto>() {
-                    public TransactionRestDto get(ProvisionRequest<TransactionRestDto> request) {
-                        Object source = request.getSource();
-                        RechargeTransaction source2 = (RechargeTransaction) source;
-                        return new RechargeTransactionRestDto(source2.getWalletId(),source2.getAmount());
-                    }
-                });
-
-        TransactionRestDto transactionRestDto2 = modelMapper.map(transaction, TransactionRestDto.class);
+//        TypeMap<TransactionRestDto, Transaction> typeMap = modelMapper
+//                .createTypeMap(TransactionRestDto.class, Transaction.class)
+//                .include(RechargeTransactionRestDto.class, RechargeTransaction.class);
+//
+//        modelMapper.typeMap(RechargeTransactionRestDto.class, Transaction.class)
+//                .setProvider(new Provider<Transaction>() {
+//            public Transaction get(ProvisionRequest<Transaction> request) {
+//                Object source = request.getSource();
+//                RechargeTransactionRestDto source2 = (RechargeTransactionRestDto) source;
+//                return new RechargeTransaction(source2.getWalletId(),source2.getAmount());
+//            }
+//        });
+//
+//        TransactionRestDto transactionRestDto = new RechargeTransactionRestDto(1,3);
+//        transactionRestDto.setId(2);
+//        Transaction transaction = modelMapper.map(transactionRestDto, Transaction.class);
+//
+//        TypeMap<Transaction, TransactionRestDto> typeMap2 = modelMapper
+//                .createTypeMap(Transaction.class, TransactionRestDto.class)
+//                .include(RechargeTransaction.class, RechargeTransactionRestDto.class);
+//
+//        modelMapper.typeMap(RechargeTransaction.class, TransactionRestDto.class)
+//                .setProvider(new Provider<TransactionRestDto>() {
+//                    public TransactionRestDto get(ProvisionRequest<TransactionRestDto> request) {
+//                        Object source = request.getSource();
+//                        RechargeTransaction source2 = (RechargeTransaction) source;
+//                        return new RechargeTransactionRestDto(source2.getWalletId(),source2.getAmount());
+//                    }
+//                });
+//
+//        TransactionRestDto transactionRestDto2 = modelMapper.map(transaction, TransactionRestDto.class);
     }
 
     @Test
