@@ -5,13 +5,8 @@ import com.vironit.mwallet.controller.rest.exception.TransactionRestControllerEx
 import com.vironit.mwallet.controller.rest.exception.TransactionValidationErrorException;
 import com.vironit.mwallet.model.attribute.TransactionStatus;
 import com.vironit.mwallet.model.dto.TransactionRestDto;
-import com.vironit.mwallet.model.entity.MoneyTransferTransaction;
-import com.vironit.mwallet.model.entity.PaymentTransaction;
-import com.vironit.mwallet.model.entity.RechargeTransaction;
 import com.vironit.mwallet.model.entity.Transaction;
 import com.vironit.mwallet.service.TransactionService;
-import com.vironit.mwallet.service.WalletService;
-import com.vironit.mwallet.service.exception.WalletServiceException;
 import com.vironit.mwallet.service.mapper.TransactionMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +31,6 @@ public class TransactionRestController {
     private TransactionService transactionService;
 
     @Autowired
-    private WalletService walletService;
-
-    @Autowired
     private TransactionMapper transactionMapper;
 
     @GetMapping(value = "/transactions")
@@ -58,8 +50,9 @@ public class TransactionRestController {
 
     @PostMapping(value = "/transactions")
     @PreAuthorize("hasRole('DEFAULT') or hasRole('ADMIN')")
-    public ResponseEntity<TransactionRestDto> createTransaction(@Valid @RequestBody TransactionRestDto transactionRestDto,
-                                                                BindingResult bindingResult)
+    public ResponseEntity<TransactionRestDto> createTransaction(
+            @Valid @RequestBody TransactionRestDto transactionRestDto,
+            BindingResult bindingResult)
             throws TransactionRestControllerException {
 
         if (bindingResult.hasErrors()) {
@@ -69,9 +62,6 @@ public class TransactionRestController {
         try {
             Transaction transaction = transactionMapper.toEntity(transactionRestDto);
             transactionService.save(transaction);
-            executeTransaction(transaction);
-            transaction.setStatus(TransactionStatus.FINISHED);
-            transactionService.update(transaction);
             return new ResponseEntity<>(transactionMapper.toDto(transaction), HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("Error during transaction saving", e);
@@ -91,7 +81,8 @@ public class TransactionRestController {
 
     @GetMapping(value = "/transactions/{transactionId}")
     @PreAuthorize("@securityServiceImpl.checkTransactionId(authentication,#transactionId) or hasRole('ADMIN')")
-    public ResponseEntity<TransactionRestDto> findTransactionById(@PathVariable("transactionId") int transactionId)
+    public ResponseEntity<TransactionRestDto> findTransactionById(
+            @PathVariable("transactionId") int transactionId)
             throws ResourceNotFoundException {
 
         Transaction transaction = transactionService.findById(transactionId);
@@ -119,8 +110,9 @@ public class TransactionRestController {
 
     @PatchMapping(value = "/transactions/{transactionId}")
     @PreAuthorize("@securityServiceImpl.checkTransactionId(authentication,#transactionId) or hasRole('ADMIN')")
-    public ResponseEntity<TransactionRestDto> createTransaction(@PathVariable("transactionId") int transactionId,
-                                                                @RequestParam Map<String, String> allParams)
+    public ResponseEntity<TransactionRestDto> createTransaction(
+            @PathVariable("transactionId") int transactionId,
+            @RequestParam Map<String, String> allParams)
             throws TransactionRestControllerException, ResourceNotFoundException {
 
         Transaction transaction = transactionService.findById(transactionId);
@@ -143,27 +135,4 @@ public class TransactionRestController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    // TODO refactor
-    private void executeTransaction(Transaction transaction) throws TransactionRestControllerException {
-        try {
-            if (transaction instanceof RechargeTransaction) {
-                RechargeTransaction rechargeTransaction = (RechargeTransaction) transaction;
-                walletService.addBalance(walletService.findById(rechargeTransaction.getWalletId()), rechargeTransaction.getAmount());
-            } else if (transaction instanceof PaymentTransaction) {
-                PaymentTransaction paymentTransaction = (PaymentTransaction) transaction;
-                walletService.reduceBalance(walletService.findById(paymentTransaction.getWalletId()), paymentTransaction.getAmount());
-            } else if (transaction instanceof MoneyTransferTransaction) {
-                MoneyTransferTransaction moneyTransferTransaction = (MoneyTransferTransaction) transaction;
-                walletService.transferMoney(walletService.findById(moneyTransferTransaction.getFromWalletId()),
-                        walletService.findById(moneyTransferTransaction.getToWalletId()),
-                        moneyTransferTransaction.getAmount());
-            } else {
-                log.error("Error during transaction executing");
-                throw new TransactionRestControllerException("Error during transaction executing");
-            }
-        } catch (WalletServiceException e) {
-            log.error("Error during transaction executing", e);
-            throw new TransactionRestControllerException("Error during transaction executing", e);
-        }
-    }
 }

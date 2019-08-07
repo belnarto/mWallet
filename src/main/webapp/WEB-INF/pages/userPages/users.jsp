@@ -65,7 +65,8 @@
         <script type="text/javascript">
             function get_action(form) {
                 var userName = document.getElementById("namePart").value;
-                var url = "http://localhost:8080/api/v1/users?namePart=" + userName
+               var url = "http://localhost:8080/api/v1/users?namePart=" + userName
+//                 var url = "http://87.252.246.155:8080/api/v1/users?namePart=" + userName
                 var xhr = new XMLHttpRequest();
                 var usersObjectArray;
                 var usersStringArray;
@@ -92,6 +93,7 @@
         <script>
             function findUser(namePart) {
                 var url = "http://localhost:8080/api/v1/users?namePart=" + namePart
+//                var url = "http://87.252.246.155:8080/api/v1/users?namePart=" + namePart
                 var xhr = new XMLHttpRequest();
                 var usersObjectArray;
                 var usersStringArray;
