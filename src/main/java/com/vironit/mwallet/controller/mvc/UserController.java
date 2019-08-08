@@ -27,8 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -151,8 +151,8 @@ public class UserController {
 
         if (!bindingResult.hasErrors()) {
             User user = userMapper.toEntity(userDto);
-            Set<Wallet> wallets = walletService.findAllByUser(user);
-            user.setWallets(wallets);
+            List<Wallet> wallets = walletService.findAllByUser(user);
+            user.setWallets(new HashSet<>(wallets));
             try {
                 userService.update(user);
                 modelAndView.addObject("updated", true);

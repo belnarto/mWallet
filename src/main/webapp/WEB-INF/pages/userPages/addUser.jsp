@@ -149,6 +149,32 @@
             </form>
         </div>
     </div>
+
 </div>
+
+<div id="chat-page" class="hidden">
+    <div class="chat-container">
+        <div class="chat-header">
+            <h6>Notifications:</h6>
+        </div>
+        <ul id="messageArea">
+        </ul>
+        <form id="messageForm" name="messageForm">
+            <div class="form-group">
+                <div class="input-group clearfix">
+                    <input type="text" id="message" placeholder="Type a message to bot" autocomplete="off"
+                           class="form-control"/>
+                    <button type="submit" class="primary">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    <%@ include file="../../resources/js/notification.js" %>
+</script>
 </body>
 </html>

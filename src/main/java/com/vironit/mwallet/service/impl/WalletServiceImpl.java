@@ -17,9 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
@@ -42,8 +41,8 @@ public class WalletServiceImpl implements WalletService {
         return walletDao.findById(id);
     }
 
-    public Set<Wallet> findAllByUser(User user) {
-        return new HashSet<>(walletDao.findAllByUser(user));
+    public List<Wallet> findAllByUser(User user) {
+        return new ArrayList<>(walletDao.findAllByUser(user));
     }
 
     public List<Wallet> findAll() {

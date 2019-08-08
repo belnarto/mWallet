@@ -1,5 +1,3 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.vironit.mwallet.model.entity.Currency" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="_csrf" scope="request" type="org.springframework.security.web.csrf.CsrfToken"/>
@@ -8,16 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         <%@ include file="../../resources/css/w3.css" %>
-    </style>
-
-    <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
-    <title>Currencies</title>
-    <style>
         table {
             table-layout: fixed; /* Фиксированная ширина ячеек */
             width: 50%; /* Ширина таблицы */
         }
     </style>
+    <link rel="icon" type="image/png" href="https://www.onpage.com/wp-content/uploads/wallet-e1518717250505.png"/>
+    <title>Currencies</title>
 </head>
 <body>
 
@@ -48,6 +43,32 @@
 </div>
 
 <div style="width:665px" class="w3-container w3-center w3-margin-bottom w3-padding">
+
+    <div class="w3-container w3-padding">
+        <div id="chat-page" class="hidden">
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h6>Notifications:</h6>
+                </div>
+                <ul id="messageArea">
+                </ul>
+                <form id="messageForm" name="messageForm">
+                    <div class="form-group">
+                        <div class="input-group clearfix">
+                            <input type="text" id="message" placeholder="Type a message to bot" autocomplete="off"
+                                   class="form-control"/>
+                            <button type="submit" class="primary">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style="height:40px" class="w3-container w3-padding">
+    </div>
+
     <div class="w3-container w3-padding">
         <div class="w3-card-4">
             <div class="w3-container w3-center w3-light-blue">
@@ -98,6 +119,13 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    <%@ include file="../../resources/js/notification.js" %>
+</script>
+
 </body>
 
 </html>

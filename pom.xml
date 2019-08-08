@@ -142,6 +142,18 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- Spring Security -->
 
         <dependency>
@@ -250,6 +262,12 @@
         </dependency>
 
         <!-- Jackson -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

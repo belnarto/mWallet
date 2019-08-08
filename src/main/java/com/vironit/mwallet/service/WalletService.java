@@ -5,13 +5,12 @@ import com.vironit.mwallet.model.entity.Wallet;
 import com.vironit.mwallet.service.exception.WalletServiceException;
 
 import java.util.List;
-import java.util.Set;
 
 public interface WalletService {
 
     Wallet findById(int id);
 
-    Set<Wallet> findAllByUser(User user);
+    List<Wallet> findAllByUser(User user);
 
     List<Wallet> findAll();
 

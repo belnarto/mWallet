@@ -14,7 +14,8 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users/${userId}'"><b>Back to user</b></button>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users/${userId}'"><b>Back to user</b>
+    </button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -40,6 +41,33 @@
 </div>
 
 <div style="width:1265px" class="w3-container w3-center w3-margin-bottom w3-padding">
+
+    <div class="w3-container w3-padding">
+        <div id="chat-page" class="hidden">
+
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h6>Notifications:</h6>
+                </div>
+                <ul id="messageArea">
+                </ul>
+                <form id="messageForm" name="messageForm">
+                    <div class="form-group">
+                        <div class="input-group clearfix">
+                            <%--suppress HtmlFormInputWithoutLabel --%>
+                            <input type="text" id="message" placeholder="Type a message to bot" autocomplete="off"
+                                   class="form-control"/>
+                            <button type="submit" class="primary">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style="height:40px" class="w3-container w3-padding">
+    </div>
+
     <div class="w3-container w3-padding">
         <c:if test="${not empty fieldErrors}">
             <div class="w3-panel w3-red w3-display-container w3-card-4 w3-round">
@@ -51,6 +79,7 @@
                 </c:forEach>
             </div>
         </c:if>
+
         <div class="w3-card-4">
             <div class="w3-container w3-center w3-light-blue">
                 <h2>Wallets:</h2>
@@ -111,5 +140,12 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    <%@ include file="../../resources/js/notification.js" %>
+</script>
+
 </body>
 </html>

@@ -141,7 +141,13 @@ public class SecurityMvcConfig extends WebSecurityConfigurerAdapter {
                             "/main",
                             "/403",
                             "/users/addUser",
-                            "/currencies"
+                            "/currencies",
+                            "/ws",
+                            "/ws/**",
+                            "/app",
+                            "/app/**",
+                            "/topic",
+                            "/topic/**"
                     ).permitAll();
         } catch (Exception e) {
             log.error("Security configuration error.", e);
