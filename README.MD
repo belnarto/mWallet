@@ -72,7 +72,3 @@ The WEB URL structure:
 |/users/{userId}/wallets/{walletId}/reduceBalance |  POST  | Reduce money {walletId} for user {userId}          |           |
 |                                                 |        | -any {userId} and {walletId} allowed               | ADMIN     |
 |                                                 |        | -only {userId} and {walletId} for current user     | DEFAULT   |                     
-                             
-The REST URI structure :
-
-![alt text](REST%20URL%20structure.JPG)
