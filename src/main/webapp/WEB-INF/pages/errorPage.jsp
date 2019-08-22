@@ -13,7 +13,7 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/mWallet/main'"><b>Back to main</b></button>
 </div>
 
 <div style="width:1265px" class="w3-container w3-center w3-margin-bottom w3-padding">

@@ -1,7 +1,7 @@
 function get_action(form) {
     var userName = document.getElementById("namePart").value;
-    var url = "http://localhost:8080/api/v1/users?namePart=" + userName
-//                 var url = "http://87.252.246.155:8080/api/v1/users?namePart=" + userName
+    var url = "http://localhost:8080/mWallet/api/v1/users?namePart=" + userName
+//                 var url = "http://87.252.246.155:8080/mWallet/api/v1/users?namePart=" + userName
     var xhr = new XMLHttpRequest();
     var usersObjectArray;
     var usersStringArray;
@@ -21,12 +21,12 @@ function get_action(form) {
     xhr.send(null);
     userId = usersStringArray[0];
 
-    form.action = "/users/" + userId;
+    form.action = "/mWallet/users/" + userId;
 }
 
 function findUser(namePart) {
-    var url = "http://localhost:8080/api/v1/users?namePart=" + namePart
-//                var url = "http://87.252.246.155:8080/api/v1/users?namePart=" + namePart
+    var url = "http://localhost:8080/mWallet/api/v1/users?namePart=" + namePart
+//                var url = "http://87.252.246.155:8080/mWallet/api/v1/users?namePart=" + namePart
     var xhr = new XMLHttpRequest();
     var usersObjectArray;
     var usersStringArray;

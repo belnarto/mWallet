@@ -20,7 +20,7 @@ function connect() {
     if (username) {
         chatPage.classList.remove('hidden');
 
-        socket = new SockJS('/ws');
+        socket = new SockJS('/mWallet/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected);

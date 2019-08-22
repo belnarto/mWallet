@@ -23,7 +23,7 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/mWallet/main'"><b>Back to main</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -37,12 +37,12 @@
                     </c:otherwise>
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/logout'"><b>Logout</b></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+                <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/login'"><b>Login</b></button>
             </c:otherwise>
         </c:choose>
     </div>
@@ -53,7 +53,7 @@
 
         <div id="chat-page" class="hidden">
             <form autocomplete="off" name="findUserByNamePart" method="get" onsubmit="get_action(this);"
-                  class="w3-selection w3-padding w3-center" action="/">
+                  class="w3-selection w3-padding w3-center" action="/mWallet/">
                 <label for="namePart">Search by name: </label>
                 <div class="autocomplete">
                     <input type="text" name="namePart" id="namePart" placeholder="Name"
@@ -126,13 +126,13 @@
                             <br>${user.updatedAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))}</td>
                         <td class="w3-hover-sand w3-center">
                             <p>
-                            <form action="/users/${user.id}/wallets">
+                            <form action="/mWallet/users/${user.id}/wallets">
                                 <input class="w3-btn w3-hover w3-round-large" type="submit" value="Wallets">
                             </form>
                             <button class="w3-btn w3-hover w3-round-large"
-                                    onclick="location.href='/users/${user.id}/updateUser'">Update
+                                    onclick="location.href='/mWallet/users/${user.id}/updateUser'">Update
                             </button>
-                            <form action="/users/${user.id}/deleteUser" method="post">
+                            <form action="/mWallet/users/${user.id}/deleteUser" method="post">
                                 <input class="w3-btn w3-hover w3-round-large" type="submit" value="Delete">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
@@ -143,7 +143,7 @@
             </table>
 
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
-                    onclick="location.href='/users/addUser'">Add new user
+                    onclick="location.href='/mWallet/users/addUser'">Add new user
             </button>
         </div>
     </div>

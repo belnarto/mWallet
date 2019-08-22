@@ -17,7 +17,7 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/main'"><b>Back to main</b></button>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/mWallet/main'"><b>Back to main</b></button>
     <div class="w3-right">
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
@@ -31,12 +31,12 @@
                     </c:otherwise>
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/logout'"><b>Logout</b></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+                <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/login'"><b>Login</b></button>
             </c:otherwise>
         </c:choose>
     </div>
@@ -114,7 +114,7 @@
                 </c:otherwise>
             </c:choose>
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
-                    onclick="location.href='/currencies/addCurrency'">Add new currency
+                    onclick="location.href='/mWallet/currencies/addCurrency'">Add new currency
             </button>
         </div>
     </div>

@@ -42,9 +42,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String token = jwtTokenService.resolveToken(httpServletRequest);
 
         if (token == null &&
-                (httpServletRequest.getRequestURI().equals("/api/v1/signin") ||
-                httpServletRequest.getRequestURI().equals("/api/v1/signup") ||
-                httpServletRequest.getRequestURI().equals("/api/v1/currencies"))) {
+                (httpServletRequest.getRequestURI().equals("/mWallet/api/v1/signin") ||
+                httpServletRequest.getRequestURI().equals("/mWallet/api/v1/signup") ||
+                httpServletRequest.getRequestURI().equals("/mWallet/api/v1/currencies"))) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }

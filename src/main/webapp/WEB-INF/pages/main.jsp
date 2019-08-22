@@ -29,12 +29,12 @@
                     </c:otherwise>
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/logout'"><b>Logout</b></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+                <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/login'"><b>Login</b></button>
             </c:otherwise>
         </c:choose>
     </div>
@@ -53,19 +53,19 @@
 
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
-                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/users/${userId}'">My
+                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/mWallet/users/${userId}'">My
                     user
                 </button>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/login'">My user
+                <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/mWallet/login'">My user
                 </button>
             </c:otherwise>
         </c:choose>
 
 
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/users'">All users</button>
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/currencies'">Currencies
+        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/mWallet/users'">All users</button>
+        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/mWallet/currencies'">Currencies
         </button>
     </div>
 </div>

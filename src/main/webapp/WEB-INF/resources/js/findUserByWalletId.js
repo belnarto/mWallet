@@ -1,6 +1,6 @@
 function findUserName(id) {
-    var url = "http://localhost:8080/api/v1/wallets?walletId=" + id
-//                    var url = "http://87.252.246.155:8080/api/v1/wallets?walletId=" + id
+    var url = "http://localhost:8080/mWallet/api/v1/wallets?walletId=" + id
+//                    var url = "http://87.252.246.155:8080/mWallet/api/v1/wallets?walletId=" + id
     var xhr = new XMLHttpRequest();
     //var usersObjectArray;
     //var usersStringArray;

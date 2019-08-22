@@ -14,7 +14,7 @@
 <body>
 
 <div class="w3-container w3-grey w3-opacity w3-padding">
-    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/users/${userId}'"><b>Back to user</b>
+    <button class="w3-btn w3-round-large w3-left" onclick="location.href='/mWallet/users/${userId}'"><b>Back to user</b>
     </button>
     <div class="w3-right">
         <c:choose>
@@ -29,12 +29,12 @@
                     </c:otherwise>
                 </c:choose>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
-                    <button class="w3-btn w3-round-large" onclick="location.href='/logout'"><b>Logout</b></button>
+                    <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/logout'"><b>Logout</b></button>
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 </form>
             </c:when>
             <c:otherwise>
-                <button class="w3-btn w3-round-large" onclick="location.href='/login'"><b>Login</b></button>
+                <button class="w3-btn w3-round-large" onclick="location.href='/mWallet/login'"><b>Login</b></button>
             </c:otherwise>
         </c:choose>
     </div>
@@ -103,19 +103,19 @@
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.currency}</td>
                             <td style="text-align:center" class="w3-hover-sand"><br>${wallet.walletStatus}</td>
                             <td class="w3-hover-sand w3-center">
-                                <form action="/users/${userId}/wallets/${wallet.id}/addBalance">
+                                <form action="/mWallet/users/${userId}/wallets/${wallet.id}/addBalance">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Add money"/>
                                 </form>
-                                <form action="/users/${userId}/wallets/${wallet.id}/reduceBalance">
+                                <form action="/mWallet/users/${userId}/wallets/${wallet.id}/reduceBalance">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Spend money"/>
                                 </form>
-                                <form action="/users/${userId}/wallets/${wallet.id}/transferMoney">
+                                <form action="/mWallet/users/${userId}/wallets/${wallet.id}/transferMoney">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Transfer money"/>
                                 </form>
-                                <form action="/users/${userId}/wallets/${wallet.id}/editWallet">
+                                <form action="/mWallet/users/${userId}/wallets/${wallet.id}/editWallet">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Edit"/>
                                 </form>
-                                <form action="/users/${userId}/wallets/${wallet.id}/deleteWallet"
+                                <form action="/mWallet/users/${userId}/wallets/${wallet.id}/deleteWallet"
                                       method="post">
                                     <input class="w3-btn w3-hover w3-round-large" type="submit" value="Delete"/>
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -135,7 +135,7 @@
             </c:choose>
 
             <button class="w3-btn w3-blue w3-round-large w3-margin-bottom"
-                    onclick="location.href='/users/${userId}/wallets/addWallet'">Add new wallet
+                    onclick="location.href='/mWallet/users/${userId}/wallets/addWallet'">Add new wallet
             </button>
         </div>
     </div>
